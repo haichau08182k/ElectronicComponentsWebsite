@@ -1,0 +1,2049 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="electronicComponents1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AccessTimeCount">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="datee" Type="datetime" />
+          <Property Name="acessTime" Type="int" />
+        </EntityType>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="productID" Type="int" />
+          <Property Name="memberID" Type="int" />
+          <Property Name="name" Type="nvarchar" MaxLength="500" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="total" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="imagee" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="productID" Type="int" />
+          <Property Name="memberID" Type="int" />
+          <Property Name="content" Type="nvarchar(max)" />
+          <Property Name="datee" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fullName" Type="nvarchar" MaxLength="500" />
+          <Property Name="addresss" Type="nvarchar(max)" />
+          <Property Name="phoneNumber" Type="nchar" MaxLength="20" />
+          <Property Name="email" Type="nchar" MaxLength="50" />
+          <Property Name="memberCategoryID" Type="int" />
+        </EntityType>
+        <EntityType Name="Decentralization">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="roleID" Type="int" />
+          <Property Name="note" Type="nvarchar" MaxLength="1" />
+          <Property Name="employeeTypeID" Type="int" />
+        </EntityType>
+        <EntityType Name="DiscountCode">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="expirationDate" Type="datetime" />
+          <Property Name="numberDiscount" Type="int" />
+          <Property Name="employeeID" Type="int" />
+          <Property Name="isActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="DiscountCodeDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="discountCodeID" Type="int" />
+          <Property Name="code" Type="varchar(max)" />
+          <Property Name="isUsed" Type="bit" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userName" Type="nvarchar" MaxLength="500" />
+          <Property Name="passwordd" Type="nvarchar" MaxLength="500" />
+          <Property Name="fullName" Type="nvarchar" MaxLength="500" />
+          <Property Name="addresss" Type="nvarchar(max)" />
+          <Property Name="email" Type="nchar" MaxLength="50" />
+          <Property Name="phoneNumber" Type="nchar" MaxLength="20" />
+          <Property Name="imagee" Type="varchar(max)" />
+          <Property Name="employeeTypeID" Type="int" />
+        </EntityType>
+        <EntityType Name="EmployeeType">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="ImportCoupon">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="datee" Type="datetime" />
+          <Property Name="isDelete" Type="bit" />
+          <Property Name="employeeID" Type="int" />
+          <Property Name="supplierID" Type="int" />
+        </EntityType>
+        <EntityType Name="ImportCouponDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="importCouponID" Type="int" />
+          <Property Name="productID" Type="int" />
+          <Property Name="price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="memberCategoryID" Type="int" />
+          <Property Name="userName" Type="nvarchar" MaxLength="500" />
+          <Property Name="passwordd" Type="nvarchar" MaxLength="500" />
+          <Property Name="fullName" Type="nvarchar" MaxLength="500" />
+          <Property Name="addresss" Type="nvarchar(max)" />
+          <Property Name="email" Type="nchar" MaxLength="50" />
+          <Property Name="phoneNumber" Type="nchar" MaxLength="20" />
+          <Property Name="emailConfirmed" Type="bit" />
+          <Property Name="capcha" Type="varchar(max)" />
+          <Property Name="amountPurchased" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="MemberCategory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="MemberDiscountCode">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="memberID" Type="int" />
+          <Property Name="discountCodeDetailID" Type="int" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="orderID" Type="int" />
+          <Property Name="productID" Type="int" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="isRating" Type="bit" />
+        </EntityType>
+        <EntityType Name="OrderShip">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="customerID" Type="int" />
+          <Property Name="dateOrder" Type="datetime" />
+          <Property Name="dateShip" Type="datetime" />
+          <Property Name="offer" Type="int" />
+          <Property Name="isPaid" Type="bit" />
+          <Property Name="isCancel" Type="bit" />
+          <Property Name="isDelete" Type="bit" />
+          <Property Name="isDelivere" Type="bit" />
+          <Property Name="isApproved" Type="bit" />
+          <Property Name="isReceived" Type="bit" />
+          <Property Name="total" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="Producer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="500" />
+          <Property Name="imformation" Type="nvarchar(max)" />
+          <Property Name="logo" Type="varchar(max)" />
+          <Property Name="isActive" Type="bit" />
+          <Property Name="lastUpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="500" />
+          <Property Name="categoryID" Type="int" />
+          <Property Name="image1" Type="varchar(max)" />
+          <Property Name="image2" Type="varchar(max)" />
+          <Property Name="image3" Type="varchar(max)" />
+          <Property Name="clipReview" Type="varchar(max)" />
+          <Property Name="price" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="promotionPrice" Type="int" />
+          <Property Name="quantity" Type="int" />
+          <Property Name="descriptionn" Type="nvarchar(max)" />
+          <Property Name="homeFlag" Type="bit" />
+          <Property Name="hotFlag" Type="bit" />
+          <Property Name="viewCount" Type="int" />
+          <Property Name="commentCount" Type="int" />
+          <Property Name="purchaseCount" Type="int" />
+          <Property Name="supplierID" Type="int" />
+          <Property Name="producerID" Type="int" />
+          <Property Name="isNew" Type="bit" />
+          <Property Name="isActive" Type="bit" />
+          <Property Name="lastUpdatedDate" Type="datetime" />
+          <Property Name="discount" Type="int" />
+        </EntityType>
+        <EntityType Name="ProductCategory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="500" />
+          <Property Name="descriptionn" Type="nvarchar(max)" />
+          <Property Name="imagee" Type="varchar(max)" />
+          <Property Name="isActive" Type="bit" />
+          <Property Name="lastUpdatedDate" Type="datetime" />
+          <Property Name="parentID" Type="int" />
+        </EntityType>
+        <EntityType Name="ProductCategoryParent">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="500" />
+          <Property Name="isDelete" Type="bit" />
+          <Property Name="isActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="ProductViewed">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="productID" Type="int" />
+          <Property Name="memberID" Type="int" />
+          <Property Name="datee" Type="datetime" />
+        </EntityType>
+        <EntityType Name="QA">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="productID" Type="int" />
+          <Property Name="memberID" Type="int" />
+          <Property Name="statuss" Type="bit" />
+          <Property Name="question" Type="nvarchar(max)" />
+          <Property Name="answer" Type="nvarchar(max)" />
+          <Property Name="dateQuestion" Type="datetime" />
+          <Property Name="dateAnswer" Type="datetime" />
+          <Property Name="employeeID" Type="int" />
+        </EntityType>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="productID" Type="int" />
+          <Property Name="memberID" Type="int" />
+          <Property Name="star" Type="int" />
+          <Property Name="content" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Rolee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar(max)" />
+          <Property Name="isActive" Type="bit" />
+          <Property Name="namedDisplay" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Statistic">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="employeeID" Type="int" />
+          <Property Name="datee" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="500" />
+          <Property Name="addresss" Type="nvarchar(max)" />
+          <Property Name="phoneNumber" Type="nchar" MaxLength="20" />
+          <Property Name="email" Type="nchar" MaxLength="50" />
+          <Property Name="isActive" Type="bit" />
+          <Property Name="lastUpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="fk_c_idm">
+          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="memberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_c_idp">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cm_idm">
+          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="memberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cm_idp">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ctm_id">
+          <End Role="MemberCategory" Type="Self.MemberCategory" Multiplicity="0..1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberCategory">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="memberCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_dcc_id">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="DiscountCode" Type="Self.DiscountCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DiscountCode">
+              <PropertyRef Name="employeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_dccd_id">
+          <End Role="DiscountCode" Type="Self.DiscountCode" Multiplicity="0..1" />
+          <End Role="DiscountCodeDetail" Type="Self.DiscountCodeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiscountCode">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DiscountCodeDetail">
+              <PropertyRef Name="discountCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_dtl_ide">
+          <End Role="EmployeeType" Type="Self.EmployeeType" Multiplicity="0..1" />
+          <End Role="Decentralization" Type="Self.Decentralization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeType">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Decentralization">
+              <PropertyRef Name="employeeTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_dtl_idr">
+          <End Role="Rolee" Type="Self.Rolee" Multiplicity="0..1" />
+          <End Role="Decentralization" Type="Self.Decentralization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rolee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Decentralization">
+              <PropertyRef Name="roleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_eml_id">
+          <End Role="EmployeeType" Type="Self.EmployeeType" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeType">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="employeeTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ipc_ide">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="ImportCoupon" Type="Self.ImportCoupon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ImportCoupon">
+              <PropertyRef Name="employeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ipc_ids">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
+          <End Role="ImportCoupon" Type="Self.ImportCoupon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ImportCoupon">
+              <PropertyRef Name="supplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ipcd_id">
+          <End Role="ImportCoupon" Type="Self.ImportCoupon" Multiplicity="0..1" />
+          <End Role="ImportCouponDetail" Type="Self.ImportCouponDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportCoupon">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ImportCouponDetail">
+              <PropertyRef Name="importCouponID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ipcd_idp">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="ImportCouponDetail" Type="Self.ImportCouponDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ImportCouponDetail">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_mb_id">
+          <End Role="MemberCategory" Type="Self.MemberCategory" Multiplicity="0..1" />
+          <End Role="Member" Type="Self.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberCategory">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Member">
+              <PropertyRef Name="memberCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_mbdc_idd">
+          <End Role="DiscountCodeDetail" Type="Self.DiscountCodeDetail" Multiplicity="0..1" />
+          <End Role="MemberDiscountCode" Type="Self.MemberDiscountCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiscountCodeDetail">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MemberDiscountCode">
+              <PropertyRef Name="discountCodeDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_mbdc_idm">
+          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
+          <End Role="MemberDiscountCode" Type="Self.MemberDiscountCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MemberDiscountCode">
+              <PropertyRef Name="memberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_od_id">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="OrderShip" Type="Self.OrderShip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OrderShip">
+              <PropertyRef Name="customerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_odd_ido">
+          <End Role="OrderShip" Type="Self.OrderShip" Multiplicity="0..1" />
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderShip">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="orderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_odd_idp">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pc_id">
+          <End Role="ProductCategoryParent" Type="Self.ProductCategoryParent" Multiplicity="0..1" />
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategoryParent">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProductCategory">
+              <PropertyRef Name="parentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pd_id">
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="categoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pv_idm">
+          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
+          <End Role="ProductViewed" Type="Self.ProductViewed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProductViewed">
+              <PropertyRef Name="memberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pv_idp">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="ProductViewed" Type="Self.ProductViewed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProductViewed">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_qa_ide">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="QA" Type="Self.QA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="QA">
+              <PropertyRef Name="employeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_qa_idm">
+          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
+          <End Role="QA" Type="Self.QA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="QA">
+              <PropertyRef Name="memberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_qa_idp">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="QA" Type="Self.QA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="QA">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_rt_idm">
+          <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
+          <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="memberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_rt_idp">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Rating" Type="Self.Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_st_ide">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Statistic" Type="Self.Statistic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Statistic">
+              <PropertyRef Name="employeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="electronicComponents1ModelStoreContainer">
+          <EntitySet Name="AccessTimeCount" EntityType="Self.AccessTimeCount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Decentralization" EntityType="Self.Decentralization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DiscountCode" EntityType="Self.DiscountCode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DiscountCodeDetail" EntityType="Self.DiscountCodeDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeType" EntityType="Self.EmployeeType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ImportCoupon" EntityType="Self.ImportCoupon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ImportCouponDetail" EntityType="Self.ImportCouponDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Member" EntityType="Self.Member" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MemberCategory" EntityType="Self.MemberCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MemberDiscountCode" EntityType="Self.MemberDiscountCode" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderDetail" EntityType="Self.OrderDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderShip" EntityType="Self.OrderShip" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Producer" EntityType="Self.Producer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductCategoryParent" EntityType="Self.ProductCategoryParent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductViewed" EntityType="Self.ProductViewed" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QA" EntityType="Self.QA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rating" EntityType="Self.Rating" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rolee" EntityType="Self.Rolee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Statistic" EntityType="Self.Statistic" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_c_idm" Association="Self.fk_c_idm">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <AssociationSet Name="fk_c_idp" Association="Self.fk_c_idp">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cm_idm" Association="Self.fk_cm_idm">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cm_idp" Association="Self.fk_cm_idp">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ctm_id" Association="Self.fk_ctm_id">
+            <End Role="MemberCategory" EntitySet="MemberCategory" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="fk_dcc_id" Association="Self.fk_dcc_id">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="DiscountCode" EntitySet="DiscountCode" />
+          </AssociationSet>
+          <AssociationSet Name="fk_dccd_id" Association="Self.fk_dccd_id">
+            <End Role="DiscountCode" EntitySet="DiscountCode" />
+            <End Role="DiscountCodeDetail" EntitySet="DiscountCodeDetail" />
+          </AssociationSet>
+          <AssociationSet Name="fk_dtl_ide" Association="Self.fk_dtl_ide">
+            <End Role="EmployeeType" EntitySet="EmployeeType" />
+            <End Role="Decentralization" EntitySet="Decentralization" />
+          </AssociationSet>
+          <AssociationSet Name="fk_dtl_idr" Association="Self.fk_dtl_idr">
+            <End Role="Rolee" EntitySet="Rolee" />
+            <End Role="Decentralization" EntitySet="Decentralization" />
+          </AssociationSet>
+          <AssociationSet Name="fk_eml_id" Association="Self.fk_eml_id">
+            <End Role="EmployeeType" EntitySet="EmployeeType" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ipc_ide" Association="Self.fk_ipc_ide">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="ImportCoupon" EntitySet="ImportCoupon" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ipc_ids" Association="Self.fk_ipc_ids">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="ImportCoupon" EntitySet="ImportCoupon" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ipcd_id" Association="Self.fk_ipcd_id">
+            <End Role="ImportCoupon" EntitySet="ImportCoupon" />
+            <End Role="ImportCouponDetail" EntitySet="ImportCouponDetail" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ipcd_idp" Association="Self.fk_ipcd_idp">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ImportCouponDetail" EntitySet="ImportCouponDetail" />
+          </AssociationSet>
+          <AssociationSet Name="fk_mb_id" Association="Self.fk_mb_id">
+            <End Role="MemberCategory" EntitySet="MemberCategory" />
+            <End Role="Member" EntitySet="Member" />
+          </AssociationSet>
+          <AssociationSet Name="fk_mbdc_idd" Association="Self.fk_mbdc_idd">
+            <End Role="DiscountCodeDetail" EntitySet="DiscountCodeDetail" />
+            <End Role="MemberDiscountCode" EntitySet="MemberDiscountCode" />
+          </AssociationSet>
+          <AssociationSet Name="fk_mbdc_idm" Association="Self.fk_mbdc_idm">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="MemberDiscountCode" EntitySet="MemberDiscountCode" />
+          </AssociationSet>
+          <AssociationSet Name="fk_od_id" Association="Self.fk_od_id">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="OrderShip" EntitySet="OrderShip" />
+          </AssociationSet>
+          <AssociationSet Name="fk_odd_ido" Association="Self.fk_odd_ido">
+            <End Role="OrderShip" EntitySet="OrderShip" />
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="fk_odd_idp" Association="Self.fk_odd_idp">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="OrderDetail" EntitySet="OrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pc_id" Association="Self.fk_pc_id">
+            <End Role="ProductCategoryParent" EntitySet="ProductCategoryParent" />
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pd_id" Association="Self.fk_pd_id">
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pv_idm" Association="Self.fk_pv_idm">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="ProductViewed" EntitySet="ProductViewed" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pv_idp" Association="Self.fk_pv_idp">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductViewed" EntitySet="ProductViewed" />
+          </AssociationSet>
+          <AssociationSet Name="fk_qa_ide" Association="Self.fk_qa_ide">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="QA" EntitySet="QA" />
+          </AssociationSet>
+          <AssociationSet Name="fk_qa_idm" Association="Self.fk_qa_idm">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="QA" EntitySet="QA" />
+          </AssociationSet>
+          <AssociationSet Name="fk_qa_idp" Association="Self.fk_qa_idp">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="QA" EntitySet="QA" />
+          </AssociationSet>
+          <AssociationSet Name="fk_rt_idm" Association="Self.fk_rt_idm">
+            <End Role="Member" EntitySet="Member" />
+            <End Role="Rating" EntitySet="Rating" />
+          </AssociationSet>
+          <AssociationSet Name="fk_rt_idp" Association="Self.fk_rt_idp">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Rating" EntitySet="Rating" />
+          </AssociationSet>
+          <AssociationSet Name="fk_st_ide" Association="Self.fk_st_ide">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Statistic" EntitySet="Statistic" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="electronicComponents1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="electronicComponents1Entities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AccessTimeCounts" EntityType="electronicComponents1Model.AccessTimeCount" />
+          <EntitySet Name="Carts" EntityType="electronicComponents1Model.Cart" />
+          <EntitySet Name="Comments" EntityType="electronicComponents1Model.Comment" />
+          <EntitySet Name="Customers" EntityType="electronicComponents1Model.Customer" />
+          <EntitySet Name="Decentralizations" EntityType="electronicComponents1Model.Decentralization" />
+          <EntitySet Name="DiscountCodes" EntityType="electronicComponents1Model.DiscountCode" />
+          <EntitySet Name="DiscountCodeDetails" EntityType="electronicComponents1Model.DiscountCodeDetail" />
+          <EntitySet Name="Employees" EntityType="electronicComponents1Model.Employee" />
+          <EntitySet Name="EmployeeTypes" EntityType="electronicComponents1Model.EmployeeType" />
+          <EntitySet Name="ImportCoupons" EntityType="electronicComponents1Model.ImportCoupon" />
+          <EntitySet Name="ImportCouponDetails" EntityType="electronicComponents1Model.ImportCouponDetail" />
+          <EntitySet Name="Members" EntityType="electronicComponents1Model.Member" />
+          <EntitySet Name="MemberCategories" EntityType="electronicComponents1Model.MemberCategory" />
+          <EntitySet Name="MemberDiscountCodes" EntityType="electronicComponents1Model.MemberDiscountCode" />
+          <EntitySet Name="OrderDetails" EntityType="electronicComponents1Model.OrderDetail" />
+          <EntitySet Name="OrderShips" EntityType="electronicComponents1Model.OrderShip" />
+          <EntitySet Name="Producers" EntityType="electronicComponents1Model.Producer" />
+          <EntitySet Name="Products" EntityType="electronicComponents1Model.Product" />
+          <EntitySet Name="ProductCategories" EntityType="electronicComponents1Model.ProductCategory" />
+          <EntitySet Name="ProductCategoryParents" EntityType="electronicComponents1Model.ProductCategoryParent" />
+          <EntitySet Name="ProductVieweds" EntityType="electronicComponents1Model.ProductViewed" />
+          <EntitySet Name="QAs" EntityType="electronicComponents1Model.QA" />
+          <EntitySet Name="Ratings" EntityType="electronicComponents1Model.Rating" />
+          <EntitySet Name="Rolees" EntityType="electronicComponents1Model.Rolee" />
+          <EntitySet Name="Statistics" EntityType="electronicComponents1Model.Statistic" />
+          <EntitySet Name="Suppliers" EntityType="electronicComponents1Model.Supplier" />
+          <EntitySet Name="sysdiagrams" EntityType="electronicComponents1Model.sysdiagram" />
+          <AssociationSet Name="fk_c_idm" Association="electronicComponents1Model.fk_c_idm">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="Cart" EntitySet="Carts" />
+          </AssociationSet>
+          <AssociationSet Name="fk_c_idp" Association="electronicComponents1Model.fk_c_idp">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Cart" EntitySet="Carts" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cm_idm" Association="electronicComponents1Model.fk_cm_idm">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cm_idp" Association="electronicComponents1Model.fk_cm_idp">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ctm_id" Association="electronicComponents1Model.fk_ctm_id">
+            <End Role="MemberCategory" EntitySet="MemberCategories" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="fk_od_id" Association="electronicComponents1Model.fk_od_id">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="OrderShip" EntitySet="OrderShips" />
+          </AssociationSet>
+          <AssociationSet Name="fk_dtl_ide" Association="electronicComponents1Model.fk_dtl_ide">
+            <End Role="EmployeeType" EntitySet="EmployeeTypes" />
+            <End Role="Decentralization" EntitySet="Decentralizations" />
+          </AssociationSet>
+          <AssociationSet Name="fk_dtl_idr" Association="electronicComponents1Model.fk_dtl_idr">
+            <End Role="Rolee" EntitySet="Rolees" />
+            <End Role="Decentralization" EntitySet="Decentralizations" />
+          </AssociationSet>
+          <AssociationSet Name="fk_dcc_id" Association="electronicComponents1Model.fk_dcc_id">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="DiscountCode" EntitySet="DiscountCodes" />
+          </AssociationSet>
+          <AssociationSet Name="fk_dccd_id" Association="electronicComponents1Model.fk_dccd_id">
+            <End Role="DiscountCode" EntitySet="DiscountCodes" />
+            <End Role="DiscountCodeDetail" EntitySet="DiscountCodeDetails" />
+          </AssociationSet>
+          <AssociationSet Name="fk_mbdc_idd" Association="electronicComponents1Model.fk_mbdc_idd">
+            <End Role="DiscountCodeDetail" EntitySet="DiscountCodeDetails" />
+            <End Role="MemberDiscountCode" EntitySet="MemberDiscountCodes" />
+          </AssociationSet>
+          <AssociationSet Name="fk_eml_id" Association="electronicComponents1Model.fk_eml_id">
+            <End Role="EmployeeType" EntitySet="EmployeeTypes" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ipc_ide" Association="electronicComponents1Model.fk_ipc_ide">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="ImportCoupon" EntitySet="ImportCoupons" />
+          </AssociationSet>
+          <AssociationSet Name="fk_qa_ide" Association="electronicComponents1Model.fk_qa_ide">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="QA" EntitySet="QAs" />
+          </AssociationSet>
+          <AssociationSet Name="fk_st_ide" Association="electronicComponents1Model.fk_st_ide">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Statistic" EntitySet="Statistics" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ipc_ids" Association="electronicComponents1Model.fk_ipc_ids">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="ImportCoupon" EntitySet="ImportCoupons" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ipcd_id" Association="electronicComponents1Model.fk_ipcd_id">
+            <End Role="ImportCoupon" EntitySet="ImportCoupons" />
+            <End Role="ImportCouponDetail" EntitySet="ImportCouponDetails" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ipcd_idp" Association="electronicComponents1Model.fk_ipcd_idp">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ImportCouponDetail" EntitySet="ImportCouponDetails" />
+          </AssociationSet>
+          <AssociationSet Name="fk_mb_id" Association="electronicComponents1Model.fk_mb_id">
+            <End Role="MemberCategory" EntitySet="MemberCategories" />
+            <End Role="Member" EntitySet="Members" />
+          </AssociationSet>
+          <AssociationSet Name="fk_mbdc_idm" Association="electronicComponents1Model.fk_mbdc_idm">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="MemberDiscountCode" EntitySet="MemberDiscountCodes" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pv_idm" Association="electronicComponents1Model.fk_pv_idm">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="ProductViewed" EntitySet="ProductVieweds" />
+          </AssociationSet>
+          <AssociationSet Name="fk_qa_idm" Association="electronicComponents1Model.fk_qa_idm">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="QA" EntitySet="QAs" />
+          </AssociationSet>
+          <AssociationSet Name="fk_rt_idm" Association="electronicComponents1Model.fk_rt_idm">
+            <End Role="Member" EntitySet="Members" />
+            <End Role="Rating" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="fk_odd_ido" Association="electronicComponents1Model.fk_odd_ido">
+            <End Role="OrderShip" EntitySet="OrderShips" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="fk_odd_idp" Association="electronicComponents1Model.fk_odd_idp">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pd_id" Association="electronicComponents1Model.fk_pd_id">
+            <End Role="ProductCategory" EntitySet="ProductCategories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pv_idp" Association="electronicComponents1Model.fk_pv_idp">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProductViewed" EntitySet="ProductVieweds" />
+          </AssociationSet>
+          <AssociationSet Name="fk_qa_idp" Association="electronicComponents1Model.fk_qa_idp">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="QA" EntitySet="QAs" />
+          </AssociationSet>
+          <AssociationSet Name="fk_rt_idp" Association="electronicComponents1Model.fk_rt_idp">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Rating" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pc_id" Association="electronicComponents1Model.fk_pc_id">
+            <End Role="ProductCategoryParent" EntitySet="ProductCategoryParents" />
+            <End Role="ProductCategory" EntitySet="ProductCategories" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AccessTimeCount">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="datee" Type="DateTime" Precision="3" />
+          <Property Name="acessTime" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="productID" Type="Int32" />
+          <Property Name="memberID" Type="Int32" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="total" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="imagee" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Member" Relationship="electronicComponents1Model.fk_c_idm" FromRole="Cart" ToRole="Member" />
+          <NavigationProperty Name="Product" Relationship="electronicComponents1Model.fk_c_idp" FromRole="Cart" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="productID" Type="Int32" />
+          <Property Name="memberID" Type="Int32" />
+          <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="datee" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Member" Relationship="electronicComponents1Model.fk_cm_idm" FromRole="Comment" ToRole="Member" />
+          <NavigationProperty Name="Product" Relationship="electronicComponents1Model.fk_cm_idp" FromRole="Comment" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fullName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="addresss" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="phoneNumber" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="memberCategoryID" Type="Int32" />
+          <NavigationProperty Name="MemberCategory" Relationship="electronicComponents1Model.fk_ctm_id" FromRole="Customer" ToRole="MemberCategory" />
+          <NavigationProperty Name="OrderShips" Relationship="electronicComponents1Model.fk_od_id" FromRole="Customer" ToRole="OrderShip" />
+        </EntityType>
+        <EntityType Name="Decentralization">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="roleID" Type="Int32" />
+          <Property Name="note" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="employeeTypeID" Type="Int32" />
+          <NavigationProperty Name="EmployeeType" Relationship="electronicComponents1Model.fk_dtl_ide" FromRole="Decentralization" ToRole="EmployeeType" />
+          <NavigationProperty Name="Rolee" Relationship="electronicComponents1Model.fk_dtl_idr" FromRole="Decentralization" ToRole="Rolee" />
+        </EntityType>
+        <EntityType Name="DiscountCode">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="expirationDate" Type="DateTime" Precision="3" />
+          <Property Name="numberDiscount" Type="Int32" />
+          <Property Name="employeeID" Type="Int32" />
+          <Property Name="isActive" Type="Boolean" />
+          <NavigationProperty Name="Employee" Relationship="electronicComponents1Model.fk_dcc_id" FromRole="DiscountCode" ToRole="Employee" />
+          <NavigationProperty Name="DiscountCodeDetails" Relationship="electronicComponents1Model.fk_dccd_id" FromRole="DiscountCode" ToRole="DiscountCodeDetail" />
+        </EntityType>
+        <EntityType Name="DiscountCodeDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="discountCodeID" Type="Int32" />
+          <Property Name="code" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="isUsed" Type="Boolean" />
+          <NavigationProperty Name="DiscountCode" Relationship="electronicComponents1Model.fk_dccd_id" FromRole="DiscountCodeDetail" ToRole="DiscountCode" />
+          <NavigationProperty Name="MemberDiscountCodes" Relationship="electronicComponents1Model.fk_mbdc_idd" FromRole="DiscountCodeDetail" ToRole="MemberDiscountCode" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="passwordd" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="fullName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="addresss" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="phoneNumber" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="imagee" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="employeeTypeID" Type="Int32" />
+          <NavigationProperty Name="DiscountCodes" Relationship="electronicComponents1Model.fk_dcc_id" FromRole="Employee" ToRole="DiscountCode" />
+          <NavigationProperty Name="EmployeeType" Relationship="electronicComponents1Model.fk_eml_id" FromRole="Employee" ToRole="EmployeeType" />
+          <NavigationProperty Name="ImportCoupons" Relationship="electronicComponents1Model.fk_ipc_ide" FromRole="Employee" ToRole="ImportCoupon" />
+          <NavigationProperty Name="QAs" Relationship="electronicComponents1Model.fk_qa_ide" FromRole="Employee" ToRole="QA" />
+          <NavigationProperty Name="Statistics" Relationship="electronicComponents1Model.fk_st_ide" FromRole="Employee" ToRole="Statistic" />
+        </EntityType>
+        <EntityType Name="EmployeeType">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Decentralizations" Relationship="electronicComponents1Model.fk_dtl_ide" FromRole="EmployeeType" ToRole="Decentralization" />
+          <NavigationProperty Name="Employees" Relationship="electronicComponents1Model.fk_eml_id" FromRole="EmployeeType" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="ImportCoupon">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="datee" Type="DateTime" Precision="3" />
+          <Property Name="isDelete" Type="Boolean" />
+          <Property Name="employeeID" Type="Int32" />
+          <Property Name="supplierID" Type="Int32" />
+          <NavigationProperty Name="Employee" Relationship="electronicComponents1Model.fk_ipc_ide" FromRole="ImportCoupon" ToRole="Employee" />
+          <NavigationProperty Name="Supplier" Relationship="electronicComponents1Model.fk_ipc_ids" FromRole="ImportCoupon" ToRole="Supplier" />
+          <NavigationProperty Name="ImportCouponDetails" Relationship="electronicComponents1Model.fk_ipcd_id" FromRole="ImportCoupon" ToRole="ImportCouponDetail" />
+        </EntityType>
+        <EntityType Name="ImportCouponDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="importCouponID" Type="Int32" />
+          <Property Name="productID" Type="Int32" />
+          <Property Name="price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="quantity" Type="Int32" />
+          <NavigationProperty Name="ImportCoupon" Relationship="electronicComponents1Model.fk_ipcd_id" FromRole="ImportCouponDetail" ToRole="ImportCoupon" />
+          <NavigationProperty Name="Product" Relationship="electronicComponents1Model.fk_ipcd_idp" FromRole="ImportCouponDetail" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="memberCategoryID" Type="Int32" />
+          <Property Name="userName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="passwordd" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="fullName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="addresss" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="phoneNumber" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="emailConfirmed" Type="Boolean" />
+          <Property Name="capcha" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="amountPurchased" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Carts" Relationship="electronicComponents1Model.fk_c_idm" FromRole="Member" ToRole="Cart" />
+          <NavigationProperty Name="Comments" Relationship="electronicComponents1Model.fk_cm_idm" FromRole="Member" ToRole="Comment" />
+          <NavigationProperty Name="MemberCategory" Relationship="electronicComponents1Model.fk_mb_id" FromRole="Member" ToRole="MemberCategory" />
+          <NavigationProperty Name="MemberDiscountCodes" Relationship="electronicComponents1Model.fk_mbdc_idm" FromRole="Member" ToRole="MemberDiscountCode" />
+          <NavigationProperty Name="ProductVieweds" Relationship="electronicComponents1Model.fk_pv_idm" FromRole="Member" ToRole="ProductViewed" />
+          <NavigationProperty Name="QAs" Relationship="electronicComponents1Model.fk_qa_idm" FromRole="Member" ToRole="QA" />
+          <NavigationProperty Name="Ratings" Relationship="electronicComponents1Model.fk_rt_idm" FromRole="Member" ToRole="Rating" />
+        </EntityType>
+        <EntityType Name="MemberCategory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Customers" Relationship="electronicComponents1Model.fk_ctm_id" FromRole="MemberCategory" ToRole="Customer" />
+          <NavigationProperty Name="Members" Relationship="electronicComponents1Model.fk_mb_id" FromRole="MemberCategory" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="MemberDiscountCode">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="memberID" Type="Int32" />
+          <Property Name="discountCodeDetailID" Type="Int32" />
+          <NavigationProperty Name="DiscountCodeDetail" Relationship="electronicComponents1Model.fk_mbdc_idd" FromRole="MemberDiscountCode" ToRole="DiscountCodeDetail" />
+          <NavigationProperty Name="Member" Relationship="electronicComponents1Model.fk_mbdc_idm" FromRole="MemberDiscountCode" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="OrderDetail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="orderID" Type="Int32" />
+          <Property Name="productID" Type="Int32" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="isRating" Type="Boolean" />
+          <NavigationProperty Name="OrderShip" Relationship="electronicComponents1Model.fk_odd_ido" FromRole="OrderDetail" ToRole="OrderShip" />
+          <NavigationProperty Name="Product" Relationship="electronicComponents1Model.fk_odd_idp" FromRole="OrderDetail" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="OrderShip">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="customerID" Type="Int32" />
+          <Property Name="dateOrder" Type="DateTime" Precision="3" />
+          <Property Name="dateShip" Type="DateTime" Precision="3" />
+          <Property Name="offer" Type="Int32" />
+          <Property Name="isPaid" Type="Boolean" />
+          <Property Name="isCancel" Type="Boolean" />
+          <Property Name="isDelete" Type="Boolean" />
+          <Property Name="isDelivere" Type="Boolean" />
+          <Property Name="isApproved" Type="Boolean" />
+          <Property Name="isReceived" Type="Boolean" />
+          <Property Name="total" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Customer" Relationship="electronicComponents1Model.fk_od_id" FromRole="OrderShip" ToRole="Customer" />
+          <NavigationProperty Name="OrderDetails" Relationship="electronicComponents1Model.fk_odd_ido" FromRole="OrderShip" ToRole="OrderDetail" />
+        </EntityType>
+        <EntityType Name="Producer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="imformation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="logo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="lastUpdateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="categoryID" Type="Int32" />
+          <Property Name="image1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="image2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="image3" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="clipReview" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="promotionPrice" Type="Int32" />
+          <Property Name="quantity" Type="Int32" />
+          <Property Name="descriptionn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="homeFlag" Type="Boolean" />
+          <Property Name="hotFlag" Type="Boolean" />
+          <Property Name="viewCount" Type="Int32" />
+          <Property Name="commentCount" Type="Int32" />
+          <Property Name="purchaseCount" Type="Int32" />
+          <Property Name="supplierID" Type="Int32" />
+          <Property Name="producerID" Type="Int32" />
+          <Property Name="isNew" Type="Boolean" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="lastUpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="discount" Type="Int32" />
+          <NavigationProperty Name="Carts" Relationship="electronicComponents1Model.fk_c_idp" FromRole="Product" ToRole="Cart" />
+          <NavigationProperty Name="Comments" Relationship="electronicComponents1Model.fk_cm_idp" FromRole="Product" ToRole="Comment" />
+          <NavigationProperty Name="ImportCouponDetails" Relationship="electronicComponents1Model.fk_ipcd_idp" FromRole="Product" ToRole="ImportCouponDetail" />
+          <NavigationProperty Name="OrderDetails" Relationship="electronicComponents1Model.fk_odd_idp" FromRole="Product" ToRole="OrderDetail" />
+          <NavigationProperty Name="ProductCategory" Relationship="electronicComponents1Model.fk_pd_id" FromRole="Product" ToRole="ProductCategory" />
+          <NavigationProperty Name="ProductVieweds" Relationship="electronicComponents1Model.fk_pv_idp" FromRole="Product" ToRole="ProductViewed" />
+          <NavigationProperty Name="QAs" Relationship="electronicComponents1Model.fk_qa_idp" FromRole="Product" ToRole="QA" />
+          <NavigationProperty Name="Ratings" Relationship="electronicComponents1Model.fk_rt_idp" FromRole="Product" ToRole="Rating" />
+        </EntityType>
+        <EntityType Name="ProductCategory">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="descriptionn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="imagee" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="lastUpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="parentID" Type="Int32" />
+          <NavigationProperty Name="Products" Relationship="electronicComponents1Model.fk_pd_id" FromRole="ProductCategory" ToRole="Product" />
+          <NavigationProperty Name="ProductCategoryParent" Relationship="electronicComponents1Model.fk_pc_id" FromRole="ProductCategory" ToRole="ProductCategoryParent" />
+        </EntityType>
+        <EntityType Name="ProductCategoryParent">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="isDelete" Type="Boolean" />
+          <Property Name="isActive" Type="Boolean" />
+          <NavigationProperty Name="ProductCategories" Relationship="electronicComponents1Model.fk_pc_id" FromRole="ProductCategoryParent" ToRole="ProductCategory" />
+        </EntityType>
+        <EntityType Name="ProductViewed">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="productID" Type="Int32" />
+          <Property Name="memberID" Type="Int32" />
+          <Property Name="datee" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Member" Relationship="electronicComponents1Model.fk_pv_idm" FromRole="ProductViewed" ToRole="Member" />
+          <NavigationProperty Name="Product" Relationship="electronicComponents1Model.fk_pv_idp" FromRole="ProductViewed" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="QA">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="productID" Type="Int32" />
+          <Property Name="memberID" Type="Int32" />
+          <Property Name="statuss" Type="Boolean" />
+          <Property Name="question" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="answer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="dateQuestion" Type="DateTime" Precision="3" />
+          <Property Name="dateAnswer" Type="DateTime" Precision="3" />
+          <Property Name="employeeID" Type="Int32" />
+          <NavigationProperty Name="Employee" Relationship="electronicComponents1Model.fk_qa_ide" FromRole="QA" ToRole="Employee" />
+          <NavigationProperty Name="Member" Relationship="electronicComponents1Model.fk_qa_idm" FromRole="QA" ToRole="Member" />
+          <NavigationProperty Name="Product" Relationship="electronicComponents1Model.fk_qa_idp" FromRole="QA" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="productID" Type="Int32" />
+          <Property Name="memberID" Type="Int32" />
+          <Property Name="star" Type="Int32" />
+          <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Member" Relationship="electronicComponents1Model.fk_rt_idm" FromRole="Rating" ToRole="Member" />
+          <NavigationProperty Name="Product" Relationship="electronicComponents1Model.fk_rt_idp" FromRole="Rating" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Rolee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="namedDisplay" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Decentralizations" Relationship="electronicComponents1Model.fk_dtl_idr" FromRole="Rolee" ToRole="Decentralization" />
+        </EntityType>
+        <EntityType Name="Statistic">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="employeeID" Type="Int32" />
+          <Property Name="datee" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Employee" Relationship="electronicComponents1Model.fk_st_ide" FromRole="Statistic" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="addresss" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="phoneNumber" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="lastUpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ImportCoupons" Relationship="electronicComponents1Model.fk_ipc_ids" FromRole="Supplier" ToRole="ImportCoupon" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="fk_c_idm">
+          <End Type="electronicComponents1Model.Member" Role="Member" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.Cart" Role="Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="memberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_c_idp">
+          <End Type="electronicComponents1Model.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.Cart" Role="Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cm_idm">
+          <End Type="electronicComponents1Model.Member" Role="Member" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="memberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cm_idp">
+          <End Type="electronicComponents1Model.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ctm_id">
+          <End Type="electronicComponents1Model.MemberCategory" Role="MemberCategory" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.Customer" Role="Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberCategory">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="memberCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_od_id">
+          <End Type="electronicComponents1Model.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.OrderShip" Role="OrderShip" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OrderShip">
+              <PropertyRef Name="customerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_dtl_ide">
+          <End Type="electronicComponents1Model.EmployeeType" Role="EmployeeType" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.Decentralization" Role="Decentralization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeType">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Decentralization">
+              <PropertyRef Name="employeeTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_dtl_idr">
+          <End Type="electronicComponents1Model.Rolee" Role="Rolee" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.Decentralization" Role="Decentralization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rolee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Decentralization">
+              <PropertyRef Name="roleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_dcc_id">
+          <End Type="electronicComponents1Model.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.DiscountCode" Role="DiscountCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DiscountCode">
+              <PropertyRef Name="employeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_dccd_id">
+          <End Type="electronicComponents1Model.DiscountCode" Role="DiscountCode" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.DiscountCodeDetail" Role="DiscountCodeDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiscountCode">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DiscountCodeDetail">
+              <PropertyRef Name="discountCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_mbdc_idd">
+          <End Type="electronicComponents1Model.DiscountCodeDetail" Role="DiscountCodeDetail" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.MemberDiscountCode" Role="MemberDiscountCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiscountCodeDetail">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MemberDiscountCode">
+              <PropertyRef Name="discountCodeDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_eml_id">
+          <End Type="electronicComponents1Model.EmployeeType" Role="EmployeeType" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeType">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="employeeTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ipc_ide">
+          <End Type="electronicComponents1Model.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.ImportCoupon" Role="ImportCoupon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ImportCoupon">
+              <PropertyRef Name="employeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_qa_ide">
+          <End Type="electronicComponents1Model.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.QA" Role="QA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="QA">
+              <PropertyRef Name="employeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_st_ide">
+          <End Type="electronicComponents1Model.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.Statistic" Role="Statistic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Statistic">
+              <PropertyRef Name="employeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ipc_ids">
+          <End Type="electronicComponents1Model.Supplier" Role="Supplier" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.ImportCoupon" Role="ImportCoupon" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ImportCoupon">
+              <PropertyRef Name="supplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ipcd_id">
+          <End Type="electronicComponents1Model.ImportCoupon" Role="ImportCoupon" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.ImportCouponDetail" Role="ImportCouponDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportCoupon">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ImportCouponDetail">
+              <PropertyRef Name="importCouponID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ipcd_idp">
+          <End Type="electronicComponents1Model.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.ImportCouponDetail" Role="ImportCouponDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ImportCouponDetail">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_mb_id">
+          <End Type="electronicComponents1Model.MemberCategory" Role="MemberCategory" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.Member" Role="Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MemberCategory">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Member">
+              <PropertyRef Name="memberCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_mbdc_idm">
+          <End Type="electronicComponents1Model.Member" Role="Member" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.MemberDiscountCode" Role="MemberDiscountCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="MemberDiscountCode">
+              <PropertyRef Name="memberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pv_idm">
+          <End Type="electronicComponents1Model.Member" Role="Member" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.ProductViewed" Role="ProductViewed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProductViewed">
+              <PropertyRef Name="memberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_qa_idm">
+          <End Type="electronicComponents1Model.Member" Role="Member" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.QA" Role="QA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="QA">
+              <PropertyRef Name="memberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_rt_idm">
+          <End Type="electronicComponents1Model.Member" Role="Member" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.Rating" Role="Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Member">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="memberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_odd_ido">
+          <End Type="electronicComponents1Model.OrderShip" Role="OrderShip" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrderShip">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="orderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_odd_idp">
+          <End Type="electronicComponents1Model.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.OrderDetail" Role="OrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="OrderDetail">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pd_id">
+          <End Type="electronicComponents1Model.ProductCategory" Role="ProductCategory" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="categoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pv_idp">
+          <End Type="electronicComponents1Model.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.ProductViewed" Role="ProductViewed" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProductViewed">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_qa_idp">
+          <End Type="electronicComponents1Model.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.QA" Role="QA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="QA">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_rt_idp">
+          <End Type="electronicComponents1Model.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.Rating" Role="Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Rating">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pc_id">
+          <End Type="electronicComponents1Model.ProductCategoryParent" Role="ProductCategoryParent" Multiplicity="0..1" />
+          <End Type="electronicComponents1Model.ProductCategory" Role="ProductCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategoryParent">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProductCategory">
+              <PropertyRef Name="parentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="electronicComponents1ModelStoreContainer" CdmEntityContainer="electronicComponents1Entities1">
+          <EntitySetMapping Name="AccessTimeCounts">
+            <EntityTypeMapping TypeName="electronicComponents1Model.AccessTimeCount">
+              <MappingFragment StoreEntitySet="AccessTimeCount">
+                <ScalarProperty Name="acessTime" ColumnName="acessTime" />
+                <ScalarProperty Name="datee" ColumnName="datee" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Carts">
+            <EntityTypeMapping TypeName="electronicComponents1Model.Cart">
+              <MappingFragment StoreEntitySet="Cart">
+                <ScalarProperty Name="imagee" ColumnName="imagee" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="memberID" ColumnName="memberID" />
+                <ScalarProperty Name="productID" ColumnName="productID" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="electronicComponents1Model.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="datee" ColumnName="datee" />
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="memberID" ColumnName="memberID" />
+                <ScalarProperty Name="productID" ColumnName="productID" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="electronicComponents1Model.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="memberCategoryID" ColumnName="memberCategoryID" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+                <ScalarProperty Name="addresss" ColumnName="addresss" />
+                <ScalarProperty Name="fullName" ColumnName="fullName" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Decentralizations">
+            <EntityTypeMapping TypeName="electronicComponents1Model.Decentralization">
+              <MappingFragment StoreEntitySet="Decentralization">
+                <ScalarProperty Name="employeeTypeID" ColumnName="employeeTypeID" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="roleID" ColumnName="roleID" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DiscountCodes">
+            <EntityTypeMapping TypeName="electronicComponents1Model.DiscountCode">
+              <MappingFragment StoreEntitySet="DiscountCode">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="employeeID" ColumnName="employeeID" />
+                <ScalarProperty Name="numberDiscount" ColumnName="numberDiscount" />
+                <ScalarProperty Name="expirationDate" ColumnName="expirationDate" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DiscountCodeDetails">
+            <EntityTypeMapping TypeName="electronicComponents1Model.DiscountCodeDetail">
+              <MappingFragment StoreEntitySet="DiscountCodeDetail">
+                <ScalarProperty Name="isUsed" ColumnName="isUsed" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="discountCodeID" ColumnName="discountCodeID" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="electronicComponents1Model.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="employeeTypeID" ColumnName="employeeTypeID" />
+                <ScalarProperty Name="imagee" ColumnName="imagee" />
+                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="addresss" ColumnName="addresss" />
+                <ScalarProperty Name="fullName" ColumnName="fullName" />
+                <ScalarProperty Name="passwordd" ColumnName="passwordd" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeTypes">
+            <EntityTypeMapping TypeName="electronicComponents1Model.EmployeeType">
+              <MappingFragment StoreEntitySet="EmployeeType">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ImportCoupons">
+            <EntityTypeMapping TypeName="electronicComponents1Model.ImportCoupon">
+              <MappingFragment StoreEntitySet="ImportCoupon">
+                <ScalarProperty Name="supplierID" ColumnName="supplierID" />
+                <ScalarProperty Name="employeeID" ColumnName="employeeID" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
+                <ScalarProperty Name="datee" ColumnName="datee" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ImportCouponDetails">
+            <EntityTypeMapping TypeName="electronicComponents1Model.ImportCouponDetail">
+              <MappingFragment StoreEntitySet="ImportCouponDetail">
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="productID" ColumnName="productID" />
+                <ScalarProperty Name="importCouponID" ColumnName="importCouponID" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Members">
+            <EntityTypeMapping TypeName="electronicComponents1Model.Member">
+              <MappingFragment StoreEntitySet="Member">
+                <ScalarProperty Name="amountPurchased" ColumnName="amountPurchased" />
+                <ScalarProperty Name="capcha" ColumnName="capcha" />
+                <ScalarProperty Name="emailConfirmed" ColumnName="emailConfirmed" />
+                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="addresss" ColumnName="addresss" />
+                <ScalarProperty Name="fullName" ColumnName="fullName" />
+                <ScalarProperty Name="passwordd" ColumnName="passwordd" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="memberCategoryID" ColumnName="memberCategoryID" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MemberCategories">
+            <EntityTypeMapping TypeName="electronicComponents1Model.MemberCategory">
+              <MappingFragment StoreEntitySet="MemberCategory">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MemberDiscountCodes">
+            <EntityTypeMapping TypeName="electronicComponents1Model.MemberDiscountCode">
+              <MappingFragment StoreEntitySet="MemberDiscountCode">
+                <ScalarProperty Name="discountCodeDetailID" ColumnName="discountCodeDetailID" />
+                <ScalarProperty Name="memberID" ColumnName="memberID" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="electronicComponents1Model.OrderDetail">
+              <MappingFragment StoreEntitySet="OrderDetail">
+                <ScalarProperty Name="isRating" ColumnName="isRating" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="productID" ColumnName="productID" />
+                <ScalarProperty Name="orderID" ColumnName="orderID" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderShips">
+            <EntityTypeMapping TypeName="electronicComponents1Model.OrderShip">
+              <MappingFragment StoreEntitySet="OrderShip">
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="isReceived" ColumnName="isReceived" />
+                <ScalarProperty Name="isApproved" ColumnName="isApproved" />
+                <ScalarProperty Name="isDelivere" ColumnName="isDelivere" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
+                <ScalarProperty Name="isCancel" ColumnName="isCancel" />
+                <ScalarProperty Name="isPaid" ColumnName="isPaid" />
+                <ScalarProperty Name="offer" ColumnName="offer" />
+                <ScalarProperty Name="dateShip" ColumnName="dateShip" />
+                <ScalarProperty Name="dateOrder" ColumnName="dateOrder" />
+                <ScalarProperty Name="customerID" ColumnName="customerID" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Producers">
+            <EntityTypeMapping TypeName="electronicComponents1Model.Producer">
+              <MappingFragment StoreEntitySet="Producer">
+                <ScalarProperty Name="lastUpdateDate" ColumnName="lastUpdateDate" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="logo" ColumnName="logo" />
+                <ScalarProperty Name="imformation" ColumnName="imformation" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="electronicComponents1Model.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="discount" ColumnName="discount" />
+                <ScalarProperty Name="lastUpdatedDate" ColumnName="lastUpdatedDate" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="isNew" ColumnName="isNew" />
+                <ScalarProperty Name="producerID" ColumnName="producerID" />
+                <ScalarProperty Name="supplierID" ColumnName="supplierID" />
+                <ScalarProperty Name="purchaseCount" ColumnName="purchaseCount" />
+                <ScalarProperty Name="commentCount" ColumnName="commentCount" />
+                <ScalarProperty Name="viewCount" ColumnName="viewCount" />
+                <ScalarProperty Name="hotFlag" ColumnName="hotFlag" />
+                <ScalarProperty Name="homeFlag" ColumnName="homeFlag" />
+                <ScalarProperty Name="descriptionn" ColumnName="descriptionn" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="promotionPrice" ColumnName="promotionPrice" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="clipReview" ColumnName="clipReview" />
+                <ScalarProperty Name="image3" ColumnName="image3" />
+                <ScalarProperty Name="image2" ColumnName="image2" />
+                <ScalarProperty Name="image1" ColumnName="image1" />
+                <ScalarProperty Name="categoryID" ColumnName="categoryID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductCategories">
+            <EntityTypeMapping TypeName="electronicComponents1Model.ProductCategory">
+              <MappingFragment StoreEntitySet="ProductCategory">
+                <ScalarProperty Name="parentID" ColumnName="parentID" />
+                <ScalarProperty Name="lastUpdatedDate" ColumnName="lastUpdatedDate" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="imagee" ColumnName="imagee" />
+                <ScalarProperty Name="descriptionn" ColumnName="descriptionn" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductCategoryParents">
+            <EntityTypeMapping TypeName="electronicComponents1Model.ProductCategoryParent">
+              <MappingFragment StoreEntitySet="ProductCategoryParent">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="isDelete" ColumnName="isDelete" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductVieweds">
+            <EntityTypeMapping TypeName="electronicComponents1Model.ProductViewed">
+              <MappingFragment StoreEntitySet="ProductViewed">
+                <ScalarProperty Name="datee" ColumnName="datee" />
+                <ScalarProperty Name="memberID" ColumnName="memberID" />
+                <ScalarProperty Name="productID" ColumnName="productID" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QAs">
+            <EntityTypeMapping TypeName="electronicComponents1Model.QA">
+              <MappingFragment StoreEntitySet="QA">
+                <ScalarProperty Name="employeeID" ColumnName="employeeID" />
+                <ScalarProperty Name="dateAnswer" ColumnName="dateAnswer" />
+                <ScalarProperty Name="dateQuestion" ColumnName="dateQuestion" />
+                <ScalarProperty Name="answer" ColumnName="answer" />
+                <ScalarProperty Name="question" ColumnName="question" />
+                <ScalarProperty Name="statuss" ColumnName="statuss" />
+                <ScalarProperty Name="memberID" ColumnName="memberID" />
+                <ScalarProperty Name="productID" ColumnName="productID" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ratings">
+            <EntityTypeMapping TypeName="electronicComponents1Model.Rating">
+              <MappingFragment StoreEntitySet="Rating">
+                <ScalarProperty Name="content" ColumnName="content" />
+                <ScalarProperty Name="star" ColumnName="star" />
+                <ScalarProperty Name="memberID" ColumnName="memberID" />
+                <ScalarProperty Name="productID" ColumnName="productID" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rolees">
+            <EntityTypeMapping TypeName="electronicComponents1Model.Rolee">
+              <MappingFragment StoreEntitySet="Rolee">
+                <ScalarProperty Name="namedDisplay" ColumnName="namedDisplay" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Statistics">
+            <EntityTypeMapping TypeName="electronicComponents1Model.Statistic">
+              <MappingFragment StoreEntitySet="Statistic">
+                <ScalarProperty Name="datee" ColumnName="datee" />
+                <ScalarProperty Name="employeeID" ColumnName="employeeID" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="electronicComponents1Model.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="lastUpdatedDate" ColumnName="lastUpdatedDate" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
+                <ScalarProperty Name="addresss" ColumnName="addresss" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="electronicComponents1Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

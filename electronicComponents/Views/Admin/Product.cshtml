@@ -1,0 +1,118 @@
+﻿@model List<electronicComponents.DAL.Product>
+@using electronicComponents.Models;
+@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Template CSS -->
+<link rel="stylesheet" href="~/AdminStyle/assets/css/style-starter.css">
+
+<!-- google fonts -->
+<link href="~/AdminStyle/fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap" rel="stylesheet">
+<div class="main-content">
+
+    <!-- content -->
+    <div class="container-fluid content-top-gap">
+
+        <!-- breadcrumbs -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb my-breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Quản lý</li>
+                <li class="breadcrumb-item active" aria-current="page">Sản phẩm</li>
+            </ol>
+        </nav>
+        <!-- //breadcrumbs -->
+        <!-- pricing -->
+        <section class="pricing">
+
+            <div class="card mb-3">
+                <div class="p-3 card card_border">
+                    <div class="pl-0 pt-0 card-header chart-grid__header">
+       
+                        <a href="../Admin/AddProduct" class="btn btn-style border-btn pull-right">Thêm mới </a>
+                    </div>
+                    @using (Html.BeginForm())
+                    {
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Stt</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Giá bán</th>
+                                            <th>Số lượng</th>
+                                            <th>Trạng thái</th>
+                                            <th>Ngày cập nhật cuối</th>
+                                            <th>Hình ảnh</th>
+                                            <th>Action</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Stt</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Giá bán</th>
+                                            <th>Số lượng</th>
+                                            <th>Trạng thái</th>
+                                            <th>Ngày cập nhật cuối</th>
+                                            <th>Hình ảnh</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            @Html.Hidden(item.id.ToString())
+                                        <tr>
+                                            <td>@(Model.IndexOf(item) + 1)</td>
+                                            <td>@item.name</td>
+
+                                            <td>@item.price đ</td>
+                                            <td>
+                                                @item.quantity
+                                            </td>
+                                            <td>
+                                                @if (item.isActive == true)
+                                                {
+                                                    <input type="checkbox" checked="checked" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" />
+                                                }
+                                            </td>
+
+                                           
+                                            <td>@item.lastUpdatedDate</td>
+                                            <td><img src="~/Content/images/@item.image1" width="100" height="100" /></td>
+                                            <td>
+
+                                                @Html.ActionLink("Edit", "EditProduct", new { prodID = item.id })
+
+                                            </td>
+
+                                        </tr>
+
+                                    }
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+            </div>
+
+
+        </section>
+
+
+    </div>
+</div>
+

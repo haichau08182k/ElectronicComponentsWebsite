@@ -1,0 +1,102 @@
+﻿@using electronicComponents.DAL
+@{
+    electronicComponents.DAL.Member member = Session["Member"] as Member;
+}
+<div class="banner-top container-fluid" id="home">
+    <!-- header -->
+    <div class="row">
+        <div class="col-md-3 top-info text-left mt-lg-4">
+            @if (member != null)
+            {
+                <h5>@member.fullName</h5>
+                <ul>
+                    <li></li>
+                    <li class="number-phone mt-3">@member.email</li>
+                </ul>
+            }
+        </div>
+        <div class="col-md-6 logo-w3layouts text-center">
+            <h1 class="logo-w3layouts">
+                <a class="navbar-brand" href="index.html">
+                    Store Accessories
+                </a>
+            </h1>
+        </div>
+
+        <div class="col-md-3 top-info-cart text-right mt-lg-4">
+            <ul class="cart-inner-info">
+                <li class="button-log">
+                    <a class="btn-open">
+                        <span class="fa fa-user" aria-hidden="true"></span>
+                    </a>
+                </li>
+                <li class="button-register">
+                    <a class="btn-open" href="/Home/Register">
+                        <span class="fa fa-user-plus" aria-hidden="true"></span>
+                    </a>
+                </li>
+               @Html.Action("CartPartial","Cart")
+            </ul>
+
+
+
+        </div>
+    </div>
+    <div class="search">
+        <div class="mobile-nav-button">
+            <button id="trigger-overlay" type="button">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+        <!-- open/close -->
+        <div class="overlay overlay-door">
+            <button type="button" class="overlay-close">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+            <form action="#" method="post" class="d-flex">
+                <input class="form-control" type="search" placeholder="Tìm kiếm..." required="" name="search">
+                <button type="submit" class="btn btn-primary submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+            @Html.Action("CartPartial","Cart")
+        </div>
+        <!-- open/close -->
+    </div>
+    <label class="top-log mx-auto"></label>
+    @Html.Action("MenuPartial", "Home")
+    <!-- //header -->
+
+</div>
+
+<div class="overlay-login text-left">
+    <button type="button" class="overlay-close1">
+        <i class="fa fa-times" aria-hidden="true"></i>
+    </button>
+    <div class="wrap">
+        <h5 class="text-center mb-4">Đăng nhập</h5>
+        <div class="login p-5 bg-dark mx-auto mw-100">
+            @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+            {
+                    <div class="form-group">
+                        <label class="mb-2">Tên đăng nhập</label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" name="userName" aria-describedby="emailHelp" placeholder="" required="">
+
+                    </div>
+                    <div class="form-group">
+                        <label class="mb-2">Mật khẩu</label>
+                        <input type="password" class="form-control" name="passwordd" id="exampleInputPassword1" placeholder="" required="">
+                    </div>
+                    <div class="form-check mb-2">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary submit mb-4">Đăng nhập</button>
+            }
+
+        </div>
+
+    </div>
+</div>
+

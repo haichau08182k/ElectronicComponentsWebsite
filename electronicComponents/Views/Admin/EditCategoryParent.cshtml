@@ -1,0 +1,75 @@
+﻿@model electronicComponents.DAL.ProductCategoryParent
+
+@{
+    ViewBag.Title = "EditCategoryParent";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Template CSS -->
+<link rel="stylesheet" href="~/AdminStyle/assets/css/style-starter.css">
+
+<!-- google fonts -->
+<link href="~/AdminStyle/fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap" rel="stylesheet">
+<div class="container-fluid content-top-gap">
+
+    <!-- breadcrumbs -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb my-breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Quản lý</li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="../Admin/CategoryParent">Danh mục sản phẩm</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Chỉnh sửa</li>
+        </ol>
+    </nav>
+    <!-- //breadcrumbs -->
+    <!-- forms -->
+    <section class="forms">
+        <!-- forms 1 -->
+        <div class="card card_border py-2 mb-4">
+            <div class="card-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                  
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.id)
+
+
+                    <div class="form-group">
+                        <h5 class="card-title">Tên danh mục</h5>
+
+                        @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control input-style" } })
+                        @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group">
+
+                        @Html.CheckBox("isDelete")
+                        @Html.ValidationMessageFor(model => model.isActive, "", new { @class = "text-danger" })
+
+                        <label class="input__label">Xóa</label>
+                    </div>
+
+                    <div class="form-group">
+
+                        @Html.CheckBox("isActive")
+                        @Html.ValidationMessageFor(model => model.isActive, "", new { @class = "text-danger" })
+
+                        <label class="input__label">Đang hoạt động</label>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Lưu" class="btn btn-style btn-primary mr-2" />
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </section>
+
+</div>

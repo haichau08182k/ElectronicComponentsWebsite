@@ -1,0 +1,227 @@
+﻿@model electronicComponents.DAL.Product
+
+@{
+    ViewBag.Title = "AddProduct";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Template CSS -->
+<link rel="stylesheet" href="~/AdminStyle/assets/css/style-starter.css">
+
+<!-- google fonts -->
+<link href="~/AdminStyle/fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap" rel="stylesheet">
+<div class="container-fluid content-top-gap">
+
+    <!-- breadcrumbs -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb my-breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Quản lý</li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="../Admin/Product">Sản phẩm</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Thêm mới</li>
+        </ol>
+    </nav>
+    <!-- //breadcrumbs -->
+    <!-- forms -->
+    <section class="forms">
+        <!-- forms 1 -->
+        <div class="card card_border py-2 mb-4">
+            <div class="card-body">
+
+                @using (Html.BeginForm("AddProduct", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <h5 class="card-title">Tên sản phẩm</h5>
+
+                        <input type="text" name="name" value="" class="form-control input-style" placeholder="Nhập tên sản phẩm" required />
+                        @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <h5 class="card-title">Giá bán</h5>
+                        <input type="number" name="price" value="" class="form-control input-style" placeholder="Nhập giá" />
+                        @Html.ValidationMessageFor(model => model.price, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group">
+                        <h5 class="card-title">Giá khuyến mãi</h5>
+                        <input type="number" name="promotionPrice" value="" class="form-control input-style" placeholder="Nhập giá khuyến mãi" />
+                        @Html.ValidationMessageFor(model => model.promotionPrice, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group">
+                        <h5 class="card-title">Số lượng</h5>
+                        <input type="number" name="quantity" value="" class="form-control input-style" placeholder="Nhập số lượng" />
+                        @Html.ValidationMessageFor(model => model.quantity, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group">
+                        <h5 class="card-title">Mô tả</h5>
+                        <input type="text" name="decription" value="" class="form-control input-style" placeholder="Nhập mô tả" />
+                        @Html.ValidationMessageFor(model => model.descriptionn, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="form-group">
+                        <h5 class="card-title">Giảm giá</h5>
+                        <input type="number" name="discount" value="" class="form-control input-style" />
+                        @Html.ValidationMessageFor(model => model.discount, "", new { @class = "text-danger" })
+
+                    </div>
+                    <div class="form-group">
+                        <h5 class="card-title">Clip Review</h5>
+                        <input type="text" name="clipReview" value="" class="form-control input-style" />
+                        @Html.ValidationMessageFor(model => model.clipReview, "", new { @class = "text-danger" })
+
+                    </div>
+
+
+                    <div class="form-group">
+                        <h5 class="card-title">Hình ảnh 1</h5>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="file" name="file" />
+                            <label class="custom-file-label" for="file">Choose file...</label>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.image1, "", new { @class = "text-danger" })
+
+
+                    </div>
+
+                    <div class="form-group">
+                        <h5 class="card-title">Hình ảnh 2</h5>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="file" name="file" />
+                            <label class="custom-file-label" for="file">Choose file...</label>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.image2, "", new { @class = "text-danger" })
+
+
+                    </div>
+
+                    <div class="form-group">
+                        <h5 class="card-title">Hình ảnh 3</h5>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="file" name="file" />
+                            <label class="custom-file-label" for="file">Choose file...</label>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.image3, "", new { @class = "text-danger" })
+
+
+                    </div>
+
+                    @{
+                        List<SelectListItem> data = ViewBag.CategoryList;
+                    }
+                    <div class="form-group">
+
+                        <h5 class="card-title">Loại sản phẩm</h5>
+
+                        @Html.DropDownListFor(model => model.categoryID, data, "Chọn loại sản phẩm", new { @class = "custom-select input-style" })
+                        @Html.ValidationMessageFor(model => model.categoryID, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    @{
+                        List<SelectListItem> dataSup = ViewBag.SupplierList;
+                    }
+                    <div class="form-group">
+
+                        <h5 class="card-title">Nhà cung cấp</h5>
+
+                        @Html.DropDownListFor(model => model.supplierID, dataSup, "Chọn nhà cung cấp", new { @class = "custom-select input-style" })
+                        @Html.ValidationMessageFor(model => model.supplierID, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    @{
+                        List<SelectListItem> dataPro = ViewBag.ProducerList;
+                    }
+                    <div class="form-group">
+
+                        <h5 class="card-title">Nhà sản xuất</h5>
+
+                        @Html.DropDownListFor(model => model.producerID, dataPro, "Chọn nhà sản xuất", new { @class = "custom-select input-style" })
+                        @Html.ValidationMessageFor(model => model.producerID, "", new { @class = "text-danger" })
+
+                    </div>
+
+
+
+
+                    <div class="form-group">
+
+                        @Html.CheckBox("homeFlag")
+                        @Html.ValidationMessageFor(model => model.homeFlag, "", new { @class = "text-danger" })
+
+                        <label class="input__label">Hiển thị trang chủ</label>
+                    </div>
+
+
+                    <div class="form-group">
+
+                        @Html.CheckBox("hotFlag")
+                        @Html.ValidationMessageFor(model => model.hotFlag, "", new { @class = "text-danger" })
+
+                        <label class="input__label">Sản phẩm hot</label>
+                    </div>
+
+
+                    <div class="form-group">
+                        <input type="hidden" name="viewCount" value="" class="form-control input-style" />
+                        @Html.ValidationMessageFor(model => model.viewCount, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group">
+                        <input type="hidden" name="commentCount" value="" class="form-control input-style" />
+                        @Html.ValidationMessageFor(model => model.commentCount, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group">
+                        <input type="hidden" name="purchaseCount" value="" class="form-control input-style" />
+                        @Html.ValidationMessageFor(model => model.purchaseCount, "", new { @class = "text-danger" })
+
+                    </div>
+
+                    <div class="form-group">
+
+                        @Html.CheckBox("isNew")
+                        @Html.ValidationMessageFor(model => model.isNew, "", new { @class = "text-danger" })
+
+                        <label class="input__label">Sản phẩm mới</label>
+                    </div>
+
+
+                    <div class="form-group">
+
+                        @Html.CheckBox("isActive")
+                        @Html.ValidationMessageFor(model => model.isActive, "", new { @class = "text-danger" })
+
+                        <label class="input__label">Kích hoạt</label>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Thêm" class="btn btn-style btn-primary mr-2" />
+                        </div>
+                    </div>
+                </div>
+                }
+
+            </div>
+        </div>
+    </section>
+
+</div>

@@ -1,0 +1,168 @@
+﻿
+@{
+    ViewBag.Title = "Checkout";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+@{
+    List<electronicComponents.DAL.Cart> cart = Session["Cart"] as List<electronicComponents.DAL.Cart>;
+}
+<!--checkout-->
+@if (cart != null)
+{
+    <section class="banner-bottom-wthreelayouts py-lg-5 py-3">
+        <div class="container">
+            <div class="inner-sec-shop px-lg-4 px-3">
+                <h3 class="tittle-w3layouts my-lg-4 mt-3">Giỏ Hàng </h3>
+                <div class="checkout-right">
+                    <h4>
+                        Giỏ hàng của bạn có:
+                        <span>@ViewBag.TotalQuantity sản phẩm</span>
+                    </h4>
+                    <table class="timetable_sub">
+                        <thead>
+                            <tr>
+                                <th>SL No.</th>
+                                <th>Sản phẩm</th>
+                                <th>Số lượng</th>
+                                <th>Tên Sản Phẩm</th>
+
+                                <th>Gía </th>
+                                <th>Xóa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                int counter = 1;
+                            }
+                            @foreach (var item in cart)
+                            {
+
+                                <tr class="rem1">
+                                    <td class="invert">@counter</td>
+                                    <td class="invert-image">
+                                        <a href="single.html">
+                                            <img src="@Url.Content("~/Content/images/" + item.imagee)" alt=" " class="img-responsive">
+                                        </a>
+                                    </td>
+                                    <td class="invert">
+                                        <div class="quantity">
+                                            <div class="quantity-select">
+                                                <div class="entry value-minus">&nbsp;</div>
+                                                <div class="entry value">
+                                                    <span>@item.quantity</span>
+                                                </div>
+                                                <div class="entry value-plus active">&nbsp;</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="invert">@item.name</td>
+
+                                    <td class="invert">@item.price.Value.ToString("#,##")</td>
+                                    <td class="invert">
+                                        <div class="rem">
+                                            @Html.ActionLink("x", "RemoveItemCart", new { ID = item.productID })
+                                        </div>
+
+                                    </td>
+                                </tr>
+                                @(counter++)
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="checkout-left row">
+                    <div class="col-md-4 checkout-left-basket">
+                        <h4>Continue to basket</h4>
+                        @*<ul>
+                                <li>
+                                    Sản phẩm1
+                                    <i>-</i>
+                                    <span>@item.price.Value.ToString("#,##") </span>
+                                </li>
+
+                                <li>
+                                    Sản phẩm2
+                                    <i>-</i>
+                                    <span>@item.price.Value.ToString("#,##") </span>
+                                </li>
+                                <li>
+                                    Sản phẩm3
+                                    <i>-</i>
+                                    <span>@item.price.Value.ToString("#,##") </span>
+                                </li>
+                                <li>
+                                    Total Service Charges
+                                    <i>-</i>
+                                    <span>@item.price.Value.ToString("#,##")</span>
+                                </li>
+                                <li>
+                                    Total
+                                    <i>-</i>
+                                    <span>@item.price.Value.ToString("#,##")</span>
+                                </li>
+                            </ul>*@
+                    </div>
+                    <div class="col-md-8 address_form">
+                        <h4>Add a new Details</h4>
+                        <form action="payment.html" method="post" class="creditly-card-form agileinfo_form">
+                            <section class="creditly-wrapper wrapper">
+                                <div class="information-wrapper">
+                                    <div class="first-row form-group">
+                                        <div class="controls">
+                                            <label class="control-label">Họ và Tên :</label>
+                                            <input class="billing-address-name form-control" type="text" name="name" placeholder="Full name">
+                                        </div>
+                                        <div class="card_number_grids">
+                                            <div class="card_number_grid_left">
+                                                <div class="controls">
+                                                    <label class="control-label">Số điện thoại:</label>
+                                                    <input class="form-control" type="text" placeholder="Mobile number">
+                                                </div>
+                                            </div>
+                                            <div class="card_number_grid_right">
+                                                <div class="controls">
+                                                    <label class="control-label">////: </label>
+                                                    <input class="form-control" type="text" placeholder="Landmark">
+                                                </div>
+                                            </div>
+                                            <div class="clear"> </div>
+                                        </div>
+                                        <div class="controls">
+                                            <label class="control-label">Tỉnh/Thành Phố: </label>
+                                            <input class="form-control" type="text" placeholder="Town/City">
+                                        </div>
+                                        <div class="controls">
+                                            <label class="control-label">Địa chỉ: </label>
+                                            <select class="form-control option-w3ls">
+                                                <option>Office</option>
+                                                <option>Home</option>
+                                                <option>Commercial</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <button class="submit check_out">Delivery to this Address</button>
+                                </div>
+                            </section>
+                        </form>
+                        <div class="checkout-right-basket">
+                            <a href="payment.html">Make a Payment </a>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"> </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+}
+else
+{
+    <p>Giỏ hàng hiện đang rỗng</p>
+}
+

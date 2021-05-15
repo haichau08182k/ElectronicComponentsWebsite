@@ -1,0 +1,104 @@
+﻿@model List<electronicComponents.DAL.ProductCategoryParent>
+@{
+    ViewBag.Title = "CategoryParent";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="main-content">
+
+    <!-- content -->
+    <div class="container-fluid content-top-gap">
+
+        <!-- breadcrumbs -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb my-breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Quản lý</li>
+                <li class="breadcrumb-item active" aria-current="page">Danh mục sản phẩm</li>
+            </ol>
+        </nav>
+        <!-- //breadcrumbs -->
+        <!-- pricing -->
+        <section class="pricing">
+
+            <div class="card mb-3">
+                <div class="p-3 card card_border">
+                    <div class="pl-0 pt-0 card-header chart-grid__header">
+                        <a href="../Admin/AddCategoryParent" class="btn btn-style border-btn pull-right">Thêm mới </a>
+                    </div>
+                    @using (Html.BeginForm())
+                    {
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Stt</th>
+                                            <th>Tên loại sản phẩm</th>
+                                            <th>Xóa</th>
+                                            <th>Kích hoạt</th>
+                                            <th>Action</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Stt</th>
+                                            <th>Tên loại sản phẩm</th>
+                                            <th>Xóa</th>
+                                            <th>Kích hoạt</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            @Html.Hidden(item.id.ToString())
+                                        <tr>
+                                            <td>@(Model.IndexOf(item) + 1)</td>
+                                            <td>@item.name</td>
+                                            <td>
+                                                @if (item.isDelete == true)
+                                                {
+                                                    <input type="checkbox" checked="checked" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" />
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (item.isActive == true)
+                                                {
+                                                    <input type="checkbox" checked="checked" />
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" />
+                                                }
+                                            </td>
+                                            <td>
+
+                                                @Html.ActionLink("Edit", "EditCategoryParent", new { catePr = item.id })
+                                            </td>
+
+                                        </tr>
+
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    }
+                    </div>
+                </div>
+
+
+</section>
+
+
+    </div>
+</div>
+
+
