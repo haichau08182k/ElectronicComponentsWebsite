@@ -35,7 +35,9 @@
                         <span class="fa fa-user-plus" aria-hidden="true"></span>
                     </a>
                 </li>
-               @Html.Action("CartPartial","Cart")
+                <div id="cart">
+                    @Html.Action("CartPartial", "Cart")
+                </div>
             </ul>
 
 
@@ -59,12 +61,12 @@
                     <i class="fas fa-search"></i>
                 </button>
             </form>
-            @Html.Action("CartPartial","Cart")
+          
         </div>
         <!-- open/close -->
     </div>
     <label class="top-log mx-auto"></label>
-    @Html.Action("MenuPartial", "Home")
+    @Html.Action("MenuPartial","Home")
     <!-- //header -->
 
 </div>

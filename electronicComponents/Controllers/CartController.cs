@@ -121,7 +121,7 @@ namespace electronicComponents.Controllers
                         itemCart.total = itemCart.quantity * itemCart.price;
                         ViewBag.TotalQuanity = GetTotalQuanity();
                         ViewBag.TotalPrice = GetTotalPrice().ToString("#,##");
-                        return PartialView("CartPartial");
+                        return RedirectToAction("CartPartial");
                     }
 
                     //Case 2: If product does not exist in the Session Cart

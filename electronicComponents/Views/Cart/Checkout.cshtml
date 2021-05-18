@@ -7,6 +7,26 @@
 @{
     List<electronicComponents.DAL.Cart> cart = Session["Cart"] as List<electronicComponents.DAL.Cart>;
 }
+<script>
+    addEventListener("load", function () {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    }
+</script>
+<link href="~/Content/css/bootstrap.css" rel='stylesheet' type='text/css' />
+<link href="~/Content/css/login_overlay.css" rel='stylesheet' type='text/css' />
+<link href="~/Content/css/style6.css" rel='stylesheet' type='text/css' />
+<link rel="stylesheet" href="~/Content/css/shop.css" type="text/css" />
+<link rel="stylesheet" href="~/Content/css/owl.carousel.css" type="text/css" media="all">
+<link rel="stylesheet" href="~/Content/css/owl.theme.css" type="text/css" media="all">
+<link href="~/Content/css/style.css" rel='stylesheet' type='text/css' />
+<link href="~/Content/css/fontawesome-all.css" rel="stylesheet">
+<link href="~/Content/fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
+<link href="~/Content/fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800" rel="stylesheet">
+
 <!--checkout-->
 @if (cart != null)
 {
@@ -27,7 +47,7 @@
                                 <th>Số lượng</th>
                                 <th>Tên Sản Phẩm</th>
 
-                                <th>Gía </th>
+                                <th>Giá </th>
                                 <th>Xóa</th>
                             </tr>
                         </thead>
@@ -75,34 +95,34 @@
                 <div class="checkout-left row">
                     <div class="col-md-4 checkout-left-basket">
                         <h4>Continue to basket</h4>
-                        @*<ul>
+                        <ul>
                                 <li>
                                     Sản phẩm1
                                     <i>-</i>
-                                    <span>@item.price.Value.ToString("#,##") </span>
+                                    <span>@*@item.price.Value.ToString("#,##")*@ </span>
                                 </li>
 
                                 <li>
                                     Sản phẩm2
                                     <i>-</i>
-                                    <span>@item.price.Value.ToString("#,##") </span>
+                                    <span>@*@item.price.Value.ToString("#,##"*@<!--)--> </span>
                                 </li>
                                 <li>
                                     Sản phẩm3
                                     <i>-</i>
-                                    <span>@item.price.Value.ToString("#,##") </span>
+                                    <span>@*@item.price.Value.ToString("#,##")*@ </span>
                                 </li>
                                 <li>
                                     Total Service Charges
                                     <i>-</i>
-                                    <span>@item.price.Value.ToString("#,##")</span>
+                                    <span>@*@item.price.Value.ToString("#,##")*@</span>
                                 </li>
                                 <li>
                                     Total
                                     <i>-</i>
-                                    <span>@item.price.Value.ToString("#,##")</span>
+                                    <span>@*@item.price.Value.ToString("#,##")*@</span>
                                 </li>
-                            </ul>*@
+                            </ul>
                     </div>
                     <div class="col-md-8 address_form">
                         <h4>Add a new Details</h4>
@@ -165,4 +185,95 @@ else
 {
     <p>Giỏ hàng hiện đang rỗng</p>
 }
+<!-- Count-down -->
+<script src="~/Content/js/simplyCountdown.js"></script>
+<link href="~/Content/css/simplyCountdown.css" rel='stylesheet' type='text/css' />
+<script>
+    var d = new Date();
+    simplyCountdown('simply-countdown-custom', {
+        year: d.getFullYear(),
+        month: d.getMonth() + 2,
+        day: 25
+    });
+</script>
+<!--// Count-down -->
+<script src="~/Content/js/owl.carousel.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.owl-carousel').owlCarousel({
+            loop: true,
+            margin: 10,
+            responsiveClass: true,
+            responsive: {
+                0: {
+                    items: 1,
+                    nav: true
+                },
+                600: {
+                    items: 2,
+                    nav: false
+                },
+                900: {
+                    items: 3,
+                    nav: false
+                },
+                1000: {
+                    items: 4,
+                    nav: true,
+                    loop: false,
+                    margin: 20
+                }
+            }
+        })
+    })
+</script>
 
+<!-- //end-smooth-scrolling -->
+<!-- dropdown nav -->
+<script>
+    $(document).ready(function () {
+        $(".dropdown").hover(
+            function () {
+                $('.dropdown-menu', this).stop(true, true).slideDown("fast");
+                $(this).toggleClass('open');
+            },
+            function () {
+                $('.dropdown-menu', this).stop(true, true).slideUp("fast");
+                $(this).toggleClass('open');
+            }
+        );
+    });
+</script>
+<!-- //dropdown nav -->
+<script src="~/Content/js/move-top.js"></script>
+<script src="~/Content/js/easing.js"></script>
+<script>
+    jQuery(document).ready(function ($) {
+        $(".scroll").click(function (event) {
+            event.preventDefault();
+            $('html,body').animate({
+                scrollTop: $(this.hash).offset().top
+            }, 900);
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        /*
+                                var defaults = {
+                                      containerID: 'toTop', // fading element id
+                                    containerHoverID: 'toTopHover', // fading element hover id
+                                    scrollSpeed: 1200,
+                                    easingType: 'linear'
+                                 };
+                                */
+
+        $().UItoTop({
+            easingType: 'easeOutQuart'
+        });
+
+    });
+</script>
+<!--// end-smoth-scrolling -->
+
+<script src="~/Content/js/bootstrap.js"></script>

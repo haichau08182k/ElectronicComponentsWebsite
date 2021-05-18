@@ -1,12 +1,7 @@
 ﻿<li class="galssescart galssescart2 cart cart box_1">
-    <form action="@Url.Action("CartPartial","Cart")" method="post" class="last">
-
-        <button class="top_googles_cart" type="submit" name="submit" value="">
-            @ViewBag.TotalQuanity
-            @ViewBag.TotalPrice
-            <i class="fas fa-cart-arrow-down"></i>
-        </button>
-
-    </form>
-    @Html.ActionLink("Xem Giở Hàng", "Checkout", "Cart")
+    <button class="top_googles_cart" type="submit" name="submit" value="">
+        @ViewBag.TotalPrice (@ViewBag.TotalQuanity)
+        <i class="fas fa-cart-arrow-down"></i><br />
+        @Html.ActionLink("Xem Giỏ Hàng", "Checkout", "Cart")
+    </button>
 </li>
