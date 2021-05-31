@@ -27,6 +27,7 @@ namespace electronicComponents.DAL
         public string email { get; set; }
         public Nullable<bool> isActive { get; set; }
         public Nullable<System.DateTime> lastUpdatedDate { get; set; }
+        public Nullable<decimal> totalAmount { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ImportCoupon> ImportCoupons { get; set; }

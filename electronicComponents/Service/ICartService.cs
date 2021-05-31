@@ -11,5 +11,6 @@ namespace electronicComponents.Service
         bool CheckProductInCart(int ProductID, int MemberID);
         void AddQuantityProductCartMember(int ProductID, int MemberID);
         void RemoveCart(int ProductID, int MemberID);
+        void UpdateQuantityCartMember(int Quantity, int ProductID, int MemberID);
     }
 }

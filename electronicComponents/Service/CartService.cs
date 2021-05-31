@@ -44,7 +44,12 @@ namespace electronicComponents.Service
             _unitOfWork.GetRepositoryInstance<Cart>().Remove(cart);
         }
 
-
-
+        public void UpdateQuantityCartMember(int Quantity, int ProductID, int MemberID)
+        {
+            Cart cartUpdate = _unitOfWork.GetRepositoryInstance<Cart>().GetAllRecords().Single(x => x.productID == ProductID && x.memberID == MemberID);
+            cartUpdate.quantity = Quantity;
+            cartUpdate.total = cartUpdate.quantity * cartUpdate.Product.promotionPrice;
+            _unitOfWork.GetRepositoryInstance<Cart>().Update(cartUpdate);
+        }
     }
 }

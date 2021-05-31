@@ -10,12 +10,15 @@ namespace electronicComponents.Service
         List<SelectListItem> GetCategory();
         List<SelectListItem> GetCategoryParent();
         IEnumerable<Product> GetListProduct();
-        IEnumerable<Product> GetListProductFeatured();
+
+        IEnumerable<Product> GetListSellingProduct();
         IEnumerable<Product> GetListProductNew();
         List<SelectListItem> GetProducer();
         IEnumerable<ProductCategory> GetProductCategoryList();
         IEnumerable<ProductCategoryParent> GetProductCategoryParentList();
-        IEnumerable<Product> GetProductInHome();
+       
         List<SelectListItem> GetSupplier();
+        void AddProductViewByMember(int productID, int memberID);
+        void DeleteProductViewed(int memberID);
     }
 }

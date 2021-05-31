@@ -67,7 +67,7 @@
                     </ul>
                 </li>
 
-                <li><a href="blocks.html"><i class="fa fa-pie-chart"></i> <span>Biểu đồ</span></a></li>
+                <li><a href="../Admin/Charts"><i class="fa fa-pie-chart"></i> <span>Biểu đồ</span></a></li>
                 <li><a href="forms.html"><i class="fa fa-envelope"></i> <span>Mail</span></a></li>
                 <li><a href="forms.html"><i class="fa fa-question-circle"></i> <span>Hỏi đáp</span></a></li>
                 <li class="menu-list">
@@ -219,13 +219,13 @@
                     <div class="profile_details">
                         <ul>
                             @{
-                                electronicComponents.DAL.Employee employee = Session["Employee"] as electronicComponents.DAL.Employee;
+                                //electronicComponents.DAL.Employee employee = Session["Employee"] as electronicComponents.DAL.Employee;
                             }
                             <li class="dropdown profile_details_drop">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu3" aria-haspopup="true"
                                    aria-expanded="false">
                                     <div class="profile_img">
-                                        <img src="@Url.Content("~/Content/images/"+employee.imagee)" class="rounded-circle" alt="" />
+                                        @*<img src="@Url.Content("~/Content/images/"+employee.imagee)" class="rounded-circle" alt="" />*@
                                         <div class="user-active">
                                             <span></span>
                                         </div>
@@ -234,8 +234,8 @@
 
                                 <ul class="dropdown-menu drp-mnu" aria-labelledby="dropdownMenu3">
                                     <li class="user-info">
-                                        <h5 class="user-name">@employee.fullName</h5>
-                                        <span class="status ml-2">@employee.EmployeeType.name</span>
+                                        @*<h5 class="user-name">@employee.fullName</h5>*@
+                                        @*<span class="status ml-2">@employee.EmployeeType.name</span>*@
                                     </li>
                                     <li> <a href="#"><i class="lnr lnr-user"></i>My Profile</a> </li>
                                     <li> <a href="#"><i class="lnr lnr-cog"></i>Setting</a> </li>

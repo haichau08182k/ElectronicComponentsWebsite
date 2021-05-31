@@ -1,0 +1,108 @@
+﻿
+@{
+    ViewBag.Title = "Charts";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="main-content">
+
+    <!-- content -->
+    <div class="container-fluid content-top-gap">
+
+        <!-- breadcrumbs -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb my-breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Charts</li>
+            </ol>
+        </nav>
+        <!-- //breadcrumbs -->
+        <!-- charts -->
+        <div class="chart">
+            <div class="row">
+                <div class="col-lg-12 chart-grid">
+                    <div class="card text-center card_border">
+                        <div class="card-header chart-grid__header">
+                            Bar Chart
+                        </div>
+                        <div class="card-body">
+                            <!-- bar chart -->
+                            <div id="container">
+                                <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                                <canvas id="barchart" style="display: block; height: 502px; width: 1004px;" width="903" height="451" class="chartjs-render-monitor"></canvas>
+                            </div>
+                            <!-- //bar chart -->
+                        </div>
+                        <div class="card-footer text-muted chart-grid__footer">
+                            Updated 2 hours ago
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 chart-grid">
+                    <div class="card text-center card_border">
+                        <div class="card-header chart-grid__header">
+                            Stacked Bar
+                        </div>
+                        <div class="card-body">
+                            <!-- stacked bar chart -->
+                            <div id="container">
+                                <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                                <canvas id="stackedbar" width="903" height="451" style="display: block; height: 502px; width: 1004px;" class="chartjs-render-monitor"></canvas>
+                            </div>
+                            <!-- //stacked bar chart -->
+                        </div>
+                        <div class="card-footer text-muted chart-grid__footer">
+                            Updated just now
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 chart-grid">
+                    <div class="card text-center card_border">
+                        <div class="card-header chart-grid__header">
+                            Line Chart
+                        </div>
+                        <div class="card-body">
+                            <!-- line chart -->
+                            <div id="container">
+                                <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                                <canvas id="linechart" width="903" height="451" style="display: block; height: 502px; width: 1004px;" class="chartjs-render-monitor"></canvas>
+                            </div>
+                            <!-- //line chart -->
+                        </div>
+                        <div class="card-footer text-muted chart-grid__footer">
+                            Updated just now
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 chart-grid">
+                    <div class="card text-center card_border">
+                        <div class="card-header chart-grid__header">
+                            Pie Chart
+                        </div>
+                        <div class="card-body">
+                            <!-- pie chart -->
+                            <div id="canvas-holder">
+                                <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                                <canvas id="piechart" width="903" height="451" style="display: block; height: 502px; width: 1004px;" class="chartjs-render-monitor"></canvas>
+                            </div>
+                            <!-- //pie chart -->
+                        </div>
+                        <div class="card-footer text-muted chart-grid__footer">
+                            Updated just now
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- //charts -->
+
+    </div>
+    <!-- //content -->
+</div>
+

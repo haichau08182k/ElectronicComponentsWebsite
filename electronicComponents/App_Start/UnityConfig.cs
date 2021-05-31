@@ -19,6 +19,25 @@ namespace electronicComponents
             container.RegisterType<ILoginService, LoginService>();
             container.RegisterType<IMemberService, MemberService>();
             container.RegisterType<ICartService, CartService>();
+            container.RegisterType<IDiscountCodeService, DiscountCodeService>();
+            container.RegisterType<IDiscountCodeDetailService, DiscountCodeDetailService>();
+            container.RegisterType<ICommentService, CommentService>();
+            container.RegisterType<IQAService, QAService>();
+            container.RegisterType<IEmployeeTypeService, EmloyeeTypeService>();
+            container.RegisterType<IEmployeeService, EmployeeService>();
+            //container.RegisterType<IAccessTimesCountService, AccessTimesCountService>();
+            container.RegisterType<ICartService, CartService>();
+            container.RegisterType<IImportCouponService, ImportCouponService>();
+            container.RegisterType<IImportCouponDetailService, ImportCouponDetailService>();
+           
+            //container.RegisterType<IRatingService, RatingService>();
+            container.RegisterType<IDecentralizationService, DecentralizationService>();
+            container.RegisterType<IDiscountCodeService, DiscountCodeService>();
+            container.RegisterType<IDiscountCodeDetailService, DiscountCodeDetailService>();
+            container.RegisterType<IRoleService, RoleService>();
+            container.RegisterType<ICustomerService, CustomerService>();
+            container.RegisterType<IOrderService, OrderService>();
+            container.RegisterType<IOrderDetailService, OrderDetailService>();
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }

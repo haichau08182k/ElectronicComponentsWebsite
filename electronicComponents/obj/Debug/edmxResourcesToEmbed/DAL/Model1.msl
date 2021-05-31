@@ -38,6 +38,7 @@
     <EntitySetMapping Name="Customers">
       <EntityTypeMapping TypeName="electronicComponents1Model.Customer">
         <MappingFragment StoreEntitySet="Customer">
+          <ScalarProperty Name="isMember" ColumnName="isMember" />
           <ScalarProperty Name="memberCategoryID" ColumnName="memberCategoryID" />
           <ScalarProperty Name="email" ColumnName="email" />
           <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
@@ -207,17 +208,13 @@
           <ScalarProperty Name="isActive" ColumnName="isActive" />
           <ScalarProperty Name="isNew" ColumnName="isNew" />
           <ScalarProperty Name="producerID" ColumnName="producerID" />
-          <ScalarProperty Name="supplierID" ColumnName="supplierID" />
           <ScalarProperty Name="purchaseCount" ColumnName="purchaseCount" />
           <ScalarProperty Name="commentCount" ColumnName="commentCount" />
           <ScalarProperty Name="viewCount" ColumnName="viewCount" />
-          <ScalarProperty Name="hotFlag" ColumnName="hotFlag" />
-          <ScalarProperty Name="homeFlag" ColumnName="homeFlag" />
           <ScalarProperty Name="descriptionn" ColumnName="descriptionn" />
           <ScalarProperty Name="quantity" ColumnName="quantity" />
           <ScalarProperty Name="promotionPrice" ColumnName="promotionPrice" />
           <ScalarProperty Name="price" ColumnName="price" />
-          <ScalarProperty Name="clipReview" ColumnName="clipReview" />
           <ScalarProperty Name="image3" ColumnName="image3" />
           <ScalarProperty Name="image2" ColumnName="image2" />
           <ScalarProperty Name="image1" ColumnName="image1" />
@@ -290,17 +287,7 @@
       <EntityTypeMapping TypeName="electronicComponents1Model.Rolee">
         <MappingFragment StoreEntitySet="Rolee">
           <ScalarProperty Name="namedDisplay" ColumnName="namedDisplay" />
-          <ScalarProperty Name="isActive" ColumnName="isActive" />
           <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Statistics">
-      <EntityTypeMapping TypeName="electronicComponents1Model.Statistic">
-        <MappingFragment StoreEntitySet="Statistic">
-          <ScalarProperty Name="datee" ColumnName="datee" />
-          <ScalarProperty Name="employeeID" ColumnName="employeeID" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -308,6 +295,7 @@
     <EntitySetMapping Name="Suppliers">
       <EntityTypeMapping TypeName="electronicComponents1Model.Supplier">
         <MappingFragment StoreEntitySet="Supplier">
+          <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
           <ScalarProperty Name="lastUpdatedDate" ColumnName="lastUpdatedDate" />
           <ScalarProperty Name="isActive" ColumnName="isActive" />
           <ScalarProperty Name="email" ColumnName="email" />

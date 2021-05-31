@@ -71,6 +71,11 @@ namespace electronicComponents.Service
 
         }
 
+        public IEnumerable<Product> GetListSellingProduct()
+        {
+            return this._unitOfWork.GetRepositoryInstance<Product>().GetAllRecords().Where(x => x.purchaseCount.Value > 0).OrderBy(x => x.purchaseCount.Value);
+        }
+
         public IEnumerable<Product> GetListProduct()
         {
             return this._unitOfWork.GetRepositoryInstance<Product>().GetListParameter(x => x.isActive == true);
@@ -82,17 +87,7 @@ namespace electronicComponents.Service
             IEnumerable<Product> listProduct = this._unitOfWork.GetRepositoryInstance<Product>().GetListParameter(x => x.isNew == true && x.isActive == true);
             return listProduct;
         }
-        public IEnumerable<Product> GetListProductFeatured()
-        {
-            IEnumerable<Product> listProduct = this._unitOfWork.GetRepositoryInstance<Product>().GetListParameter(x => x.isActive == true && x.hotFlag == true);
-            return listProduct;
-
-        }
-        public IEnumerable<Product> GetProductInHome()
-        {
-            IEnumerable<Product> products = this._unitOfWork.GetRepositoryInstance<Product>().GetAllRecords().Where(x => x.homeFlag == true).OrderByDescending(x => x.lastUpdatedDate).Take(10);
-            return products;
-        }
+      
 
         public IEnumerable<ProductCategoryParent> GetProductCategoryParentList()
         {
@@ -104,6 +99,39 @@ namespace electronicComponents.Service
         {
             IEnumerable<ProductCategory> listProductCategory = this._unitOfWork.GetRepositoryInstance<ProductCategory>().GetAllRecords().ToList();
             return listProductCategory;
+        }
+
+
+
+        //productviewed
+        public void AddProductViewByMember(int productID, int memberID)
+        {
+            try
+            {
+                ProductViewed productVieweds = _unitOfWork.GetRepositoryInstance<ProductViewed>().GetAllRecords().Single(x => x.productID == productID && x.memberID == memberID);
+                if (productVieweds != null)
+                {
+                    productVieweds.datee = DateTime.Now;
+                    _unitOfWork.GetRepositoryInstance<ProductViewed>().Update(productVieweds);
+                }
+            }
+            catch (Exception)
+            {
+                ProductViewed productViewed = new ProductViewed();
+                productViewed.productID = productID;
+                productViewed.memberID = memberID;
+                productViewed.datee = DateTime.Now;
+                _unitOfWork.GetRepositoryInstance<ProductViewed>().Add(productViewed);
+            }
+        }
+
+        public void DeleteProductViewed(int memberID)
+        {
+            IEnumerable<ProductViewed> productViewed = _unitOfWork.GetRepositoryInstance<ProductViewed>().GetAllRecords(x => x.memberID == memberID);
+            foreach (var item in productViewed)
+            {
+                _unitOfWork.GetRepositoryInstance<ProductViewed>().Remove(item);
+            }
         }
     }
 

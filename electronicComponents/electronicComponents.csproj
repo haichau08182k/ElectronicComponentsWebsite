@@ -164,6 +164,7 @@
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="Controllers\ManageOrderController.cs" />
     <Compile Include="Controllers\SweetController.cs" />
     <Compile Include="DAL\AccessTimeCount.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -252,9 +253,6 @@
     <Compile Include="DAL\Rolee.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\Statistic.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="DAL\Supplier.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -278,14 +276,39 @@
     <Compile Include="Repository\GenericUnitOfWork.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Service\CartService.cs" />
+    <Compile Include="Service\CommentService.cs" />
+    <Compile Include="Service\CustomerService.cs" />
+    <Compile Include="Service\Decentralization.cs" />
+    <Compile Include="Service\DiscountCodeDetailService.cs" />
     <Compile Include="Service\DiscoutCodeService.cs" />
+    <Compile Include="Service\EmployeeService.cs" />
+    <Compile Include="Service\EmployeeTypeService.cs" />
     <Compile Include="Service\ICartService.cs" />
+    <Compile Include="Service\ICommentService.cs" />
+    <Compile Include="Service\ICustomerService.cs" />
+    <Compile Include="Service\IDecentralizationService.cs" />
+    <Compile Include="Service\IDiscountCodeDetailService.cs" />
+    <Compile Include="Service\IDiscountCodeService.cs" />
+    <Compile Include="Service\IEmployeeService.cs" />
+    <Compile Include="Service\IEmployeeTypeService.cs" />
+    <Compile Include="Service\IImportCouponDetailService.cs" />
+    <Compile Include="Service\IImportCouponService.cs" />
     <Compile Include="Service\ILoginService.cs" />
     <Compile Include="Service\IMemberService.cs" />
+    <Compile Include="Service\ImportCouponDetailService.cs" />
+    <Compile Include="Service\ImportCouponService.cs" />
+    <Compile Include="Service\IOrderDetailService.cs" />
+    <Compile Include="Service\IOrderService.cs" />
     <Compile Include="Service\IProductService.cs" />
+    <Compile Include="Service\IQAService.cs" />
+    <Compile Include="Service\IRoleService.cs" />
     <Compile Include="Service\LoginService.cs" />
     <Compile Include="Service\MemberService.cs" />
+    <Compile Include="Service\OrderDetailService.cs" />
+    <Compile Include="Service\OrderService.cs" />
     <Compile Include="Service\ProductService.cs" />
+    <Compile Include="Service\QAService.cs" />
+    <Compile Include="Service\RoleService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdminStyle\css\style-starter.css" />
@@ -1846,6 +1869,8 @@
     <Content Include="Images\BannerE3.jpg" />
     <Content Include="Images\bannerE5.jpg" />
     <Content Include="Images\bannerE6.jpg" />
+    <Content Include="Scripts\bootbox.js" />
+    <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\images\Thumbs.db" />
@@ -2016,9 +2041,16 @@
     <Content Include="Views\Home\LoginPartial.cshtml" />
     <Content Include="Views\Cart\CartPartial.cshtml" />
     <Content Include="Views\Cart\Checkout.cshtml" />
+    <Content Include="Views\Shared\_CheckoutLayout.cshtml" />
+    <Content Include="Views\Shared\_ProductLayout.cshtml" />
+    <Content Include="Views\OrderManage\NotApproval.cshtml" />
+    <Content Include="Views\Shared\_AddAdminLayout.cshtml" />
+    <Content Include="Views\Admin\Charts.cshtml" />
+    <Content Include="Views\Cart\Message.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Order\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

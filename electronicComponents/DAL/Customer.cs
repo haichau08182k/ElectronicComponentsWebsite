@@ -26,6 +26,7 @@ namespace electronicComponents.DAL
         public string phoneNumber { get; set; }
         public string email { get; set; }
         public Nullable<int> memberCategoryID { get; set; }
+        public Nullable<bool> isMember { get; set; }
     
         public virtual MemberCategory MemberCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

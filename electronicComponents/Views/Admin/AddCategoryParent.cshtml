@@ -5,13 +5,12 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-
 <!-- Template CSS -->
 <link rel="stylesheet" href="~/AdminStyle/assets/css/style-starter.css">
 
 <!-- google fonts -->
 <link href="~/AdminStyle/fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap" rel="stylesheet">
-<link href="~/Content/sweetalert/sweet-alert.css" rel="stylesheet" />
+
 <div class="container-fluid content-top-gap">
 
     <!-- breadcrumbs -->
@@ -38,7 +37,7 @@
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="form-group">
                             <h5 class="card-title">Tên danh mục</h5>
-                            <input type="text" name="name" value="" class="form-control input-style"  placeholder="Nhập tên danh mục"/>
+                            <input type="text" name="name" value="" class="form-control input-style" placeholder="Nhập tên danh mục" />
                             @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
 
                         </div>

@@ -4,12 +4,12 @@
     ViewBag.Title = "AddProducer";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
 <!-- Template CSS -->
 <link rel="stylesheet" href="~/AdminStyle/assets/css/style-starter.css">
 
 <!-- google fonts -->
 <link href="~/AdminStyle/fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap" rel="stylesheet">
+
 <div class="container-fluid content-top-gap">
 
     <!-- breadcrumbs -->
@@ -29,37 +29,37 @@
             <div class="card-body">
                 @using (Html.BeginForm("AddProducer", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
-                                @Html.AntiForgeryToken()
+                    @Html.AntiForgeryToken()
 
-                                <div class="form-horizontal">
-                     
+                    <div class="form-horizontal">
+
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
-                        <h5 class="card-title">Tên nhà sản xuất</h5>
-                        <input type="text" name="name" value="" class="form-control input-style" placeholder="Nhập tên nhà sản xuất" required />
-                        @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <h5 class="card-title">Tên nhà sản xuất</h5>
+                            <input type="text" name="name" value="" class="form-control input-style" placeholder="Nhập tên nhà sản xuất" required />
+                            @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
 
 
                         </div>
 
-                    <div class="form-group">
-                        <h5 class="card-title">Thông tin</h5>
-                        <input type="text" name="imformation" value="" class="form-control input-style" placeholder="Nhập thông tin" />
-                        @Html.ValidationMessageFor(model => model.imformation, "", new { @class = "text-danger" })
-                    </div>
+                        <div class="form-group">
+                            <h5 class="card-title">Thông tin</h5>
+                            <input type="text" name="imformation" value="" class="form-control input-style" placeholder="Nhập thông tin" />
+                            @Html.ValidationMessageFor(model => model.imformation, "", new { @class = "text-danger" })
+                        </div>
 
-                    <div class="form-group">
-                        <h5 class="card-title">Logo</h5>
-                        <input type="text" name="logo" value="" class="form-control input-style" />
-                        @Html.ValidationMessageFor(model => model.logo, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <h5 class="card-title">Logo</h5>
+                            <input type="text" name="logo" value="" class="form-control input-style" />
+                            @Html.ValidationMessageFor(model => model.logo, "", new { @class = "text-danger" })
 
-                    </div>
+                        </div>
 
-                    <div class="form-group">
-                        @Html.CheckBox("isActive")
-                        @Html.ValidationMessageFor(model => model.isActive, "", new { @class = "text-danger" })
-                        <label class="input__label">Kích hoạt</label>
-                    </div>
+                        <div class="form-group">
+                            @Html.CheckBox("isActive")
+                            @Html.ValidationMessageFor(model => model.isActive, "", new { @class = "text-danger" })
+                            <label class="input__label">Kích hoạt</label>
+                        </div>
 
 
 

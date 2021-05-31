@@ -1,33 +1,128 @@
 ﻿
 @{
     ViewBag.Title = "Checkout";
-    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    Layout = "~/Views/Shared/_CheckoutLayout.cshtml";
 }
 
 @{
     List<electronicComponents.DAL.Cart> cart = Session["Cart"] as List<electronicComponents.DAL.Cart>;
 }
+@{
+
+    electronicComponents.DAL.Member Member = Session["Member"] as electronicComponents.DAL.Member;
+    List<electronicComponents.DAL.MemberDiscountCode> memberDiscountCodes = ViewBag.DiscountCodeDetailListByMemer as List<electronicComponents.DAL.MemberDiscountCode>;
+}
+<script src="~/Scripts/bootbox.js"></script>
+<link href="~/Content/css/font-awesome.css" rel="stylesheet" />
 <script>
-    addEventListener("load", function () {
-        setTimeout(hideURLbar, 0);
-    }, false);
-
-    function hideURLbar() {
-        window.scrollTo(0, 1);
-    }
+    $(document).ready(function (c) {
+        $(document).on('click', '.btnEdit', function () {
+            var id = $(this).val();
+            $('#modalUpdate').modal('show');
+            $.ajax({
+                url: '/Cart/EditCart',
+                data: {
+                    id: id
+                },
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        $('#btnSave').attr('data-id', response.ProductID);
+                        $('#Price').val(response.Price);
+                        $('#ProductID').val(response.ProductID);
+                        $('#Quantity').val(response.Quantity);
+                        $('#Image').attr('src', "/Content/images/" + response.Image);
+                    }
+                    else {
+                        bootbox.alert(response.message);
+                    }
+                },
+                error: function (err) {
+                    bootbox.alert("ds");
+                }
+            });
+        });
+        $(document).on('click', '.btnDelete', function () {
+            var id = $(this).val();
+            $.ajax({
+                url: '/Cart/RemoveItemCart',
+                type: 'GET',
+                data: {
+                    id: id
+                },
+                dataType: 'html',
+                success: function (result) {
+                    $('#DivCheckout').html(result);
+                    $.ajax({
+                        url: '/Cart/CartPartial',
+                        type: 'GET',
+                        dataType: 'html',
+                        success: function (result) {
+                            $('#DivCart').html(result);
+                        },
+                        error: function (err) {
+                            bootbox.alert("ds");
+                        }
+                    });
+                },
+                error: function (err) {
+                    bootbox.alert("ds");
+                }
+            });
+        });
+        $(document).on('click', '#btnChoose', function () {
+            $('#modalChoose').modal('show');
+        });
+        $('.save').click(function (e) {
+            var id = $(this).attr("data-id");
+            var quantity = $(this).children(".quantity").text();
+            $.ajax({
+                method: "POST",
+                url: "/Cart/CheckQuantityUpdate",
+                data: {
+                    ID: id,
+                    Quantity: quantity
+                },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        $.ajax({
+                            method: "POST",
+                            url: "/Cart/EditCart",
+                            data: {
+                                ID: id,
+                                Quantity: quantity
+                            },
+                            success: function (response) {
+                                swal({
+                                    title: "Thông báo",
+                                    text: "Cập nhật giỏ hàng thành công!",
+                                    icon: "success",
+                                    timer: 1500
+                                });
+                                window.setTimeout(function () {
+                                    window.location.reload();
+                                }, 500);
+                            }
+                        });
+                    }
+                    else {
+                        swal({
+                            title: "Thông báo",
+                            text: "Số lượng sản phẩm đã hết!",
+                            icon: "warning",
+                            timer: 1500
+                        });
+                    }
+                }
+            });
+        });
+    });
 </script>
-<link href="~/Content/css/bootstrap.css" rel='stylesheet' type='text/css' />
-<link href="~/Content/css/login_overlay.css" rel='stylesheet' type='text/css' />
-<link href="~/Content/css/style6.css" rel='stylesheet' type='text/css' />
-<link rel="stylesheet" href="~/Content/css/shop.css" type="text/css" />
-<link rel="stylesheet" href="~/Content/css/owl.carousel.css" type="text/css" media="all">
-<link rel="stylesheet" href="~/Content/css/owl.theme.css" type="text/css" media="all">
-<link href="~/Content/css/style.css" rel='stylesheet' type='text/css' />
-<link href="~/Content/css/fontawesome-all.css" rel="stylesheet">
-<link href="~/Content/fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
-<link href="~/Content/fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800" rel="stylesheet">
-
 <!--checkout-->
+<!--checkout-->
+<!--//checkout-->
 @if (cart != null)
 {
     <section class="banner-bottom-wthreelayouts py-lg-5 py-3">
@@ -46,8 +141,8 @@
                                 <th>Sản phẩm</th>
                                 <th>Số lượng</th>
                                 <th>Tên Sản Phẩm</th>
-
                                 <th>Giá </th>
+                                <th>Tổng tiền </th>
                                 <th>Xóa</th>
                             </tr>
                         </thead>
@@ -67,18 +162,20 @@
                                     </td>
                                     <td class="invert">
                                         <div class="quantity">
-                                            <div class="quantity-select">
+                                            <div class="quantity-select save" data-id="@item.productID">
                                                 <div class="entry value-minus">&nbsp;</div>
-                                                <div class="entry value">
-                                                    <span>@item.quantity</span>
+                                                <div class="entry value quantity">
+                                                    @item.quantity
                                                 </div>
-                                                <div class="entry value-plus active">&nbsp;</div>
+                                                <div class="entry value-plus active add">&nbsp;</div>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="invert">@item.name</td>
 
                                     <td class="invert">@item.price.Value.ToString("#,##")</td>
+                                    <td class="invert">@item.total.Value.ToString("#,##")</td>
+
                                     <td class="invert">
                                         <div class="rem">
                                             @Html.ActionLink("x", "RemoveItemCart", new { ID = item.productID })
@@ -94,82 +191,85 @@
                 </div>
                 <div class="checkout-left row">
                     <div class="col-md-4 checkout-left-basket">
-                        <h4>Continue to basket</h4>
+                        <h4>Tổng tiền</h4>
                         <ul>
-                                <li>
-                                    Sản phẩm1
-                                    <i>-</i>
-                                    <span>@*@item.price.Value.ToString("#,##")*@ </span>
-                                </li>
 
+                            @if (Session["num"] != null)
+                            {
+                                decimal total = @cart.Sum(x => x.total.Value) - (@cart.Sum(x => x.total.Value) / 100 * (int)@Session["num"]);
                                 <li>
-                                    Sản phẩm2
-                                    <i>-</i>
-                                    <span>@*@item.price.Value.ToString("#,##"*@<!--)--> </span>
+                                    <label class="control-label">Tổng tiền: <del>@cart.Sum(x => x.total).Value.ToString("#,##")₫</del> @total.ToString("#,##")₫</label>
+                                  
+
                                 </li>
                                 <li>
-                                    Sản phẩm3
-                                    <i>-</i>
-                                    <span>@*@item.price.Value.ToString("#,##")*@ </span>
+                                    <div class="controls">
+                                        <label class="control-label">Mã giảm giá: @Session["Code"] (-@Session["num"]%) </label>
+                                        @*<input type="text" name="NumberDiscount" class="form-control col-md-5" value="@Session["Code"] (-@Session["num"]%)" readonly>*@
+                                        <input type="text" name="NumberDiscountPass" hidden="hidden" value="@Session["num"]">
+                                        <input type="text" name="CodePass" hidden="hidden" value="@Session["Code"]">
+                                        <input type="button" class="form-control" value="Chọn mã Code khác" id="btnChoose" />
+                                        @Html.ActionLink("Bỏ chọn mã giảm giá", "CancelDiscount")<br />
+                                    </div>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <label class="control-label">Tổng tiền:</label>
+                                    
+                                    @cart.Sum(x => x.total).Value.ToString("#,##")
+
                                 </li>
                                 <li>
-                                    Total Service Charges
-                                    <i>-</i>
-                                    <span>@*@item.price.Value.ToString("#,##")*@</span>
+                                    <div class="controls">
+                                        <label class="control-label">Chọn mã giảm giá:</label>
+                                        <button id="btnChoose" class="form-control">Chọn</button>
+                                    </div>
+                                    
                                 </li>
-                                <li>
-                                    Total
-                                    <i>-</i>
-                                    <span>@*@item.price.Value.ToString("#,##")*@</span>
-                                </li>
-                            </ul>
+                            }
+
+                        </ul>
                     </div>
                     <div class="col-md-8 address_form">
                         <h4>Add a new Details</h4>
-                        <form action="payment.html" method="post" class="creditly-card-form agileinfo_form">
+                        <form action="/Cart/AddOrder" method="post" class="creditly-card-form agileinfo_form">
                             <section class="creditly-wrapper wrapper">
                                 <div class="information-wrapper">
                                     <div class="first-row form-group">
                                         <div class="controls">
                                             <label class="control-label">Họ và Tên :</label>
-                                            <input class="billing-address-name form-control" type="text" name="name" placeholder="Full name">
+                                            <input class="billing-address-name form-control" type="text" name="fullName" placeholder="Full name" value="@Member.fullName" readonly>
                                         </div>
                                         <div class="card_number_grids">
                                             <div class="card_number_grid_left">
                                                 <div class="controls">
                                                     <label class="control-label">Số điện thoại:</label>
-                                                    <input class="form-control" type="text" placeholder="Mobile number">
+                                                    <input class="form-control" type="text" placeholder="Mobile number" value="@Member.phoneNumber" readonly>
                                                 </div>
                                             </div>
                                             <div class="card_number_grid_right">
                                                 <div class="controls">
-                                                    <label class="control-label">////: </label>
-                                                    <input class="form-control" type="text" placeholder="Landmark">
+                                                    <label class="control-label">Địa chỉ: </label>
+                                                    <input class="form-control" type="text" placeholder="Landmark" name="address" value="@Member.addresss" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="card_number_grid_right">
+                                                <div class="controls">
+                                                    <label class="control-label">Email: </label>
+                                                    <input class="form-control" type="text" placeholder="Landmark" name="email" value="@Member.email" readonly>
                                                 </div>
                                             </div>
                                             <div class="clear"> </div>
                                         </div>
-                                        <div class="controls">
-                                            <label class="control-label">Tỉnh/Thành Phố: </label>
-                                            <input class="form-control" type="text" placeholder="Town/City">
-                                        </div>
-                                        <div class="controls">
-                                            <label class="control-label">Địa chỉ: </label>
-                                            <select class="form-control option-w3ls">
-                                                <option>Office</option>
-                                                <option>Home</option>
-                                                <option>Commercial</option>
-
-                                            </select>
-                                        </div>
                                     </div>
-                                    <button class="submit check_out">Delivery to this Address</button>
+                                    <div class="checkout-right-basket">
+                                        <button href="payment.html">Make a Payment </button>
+                                    </div>
                                 </div>
                             </section>
                         </form>
-                        <div class="checkout-right-basket">
-                            <a href="payment.html">Make a Payment </a>
-                        </div>
                     </div>
 
                     <div class="clearfix"> </div>
@@ -185,95 +285,42 @@ else
 {
     <p>Giỏ hàng hiện đang rỗng</p>
 }
-<!-- Count-down -->
-<script src="~/Content/js/simplyCountdown.js"></script>
-<link href="~/Content/css/simplyCountdown.css" rel='stylesheet' type='text/css' />
-<script>
-    var d = new Date();
-    simplyCountdown('simply-countdown-custom', {
-        year: d.getFullYear(),
-        month: d.getMonth() + 2,
-        day: 25
-    });
-</script>
-<!--// Count-down -->
-<script src="~/Content/js/owl.carousel.js"></script>
-<script>
-    $(document).ready(function () {
-        $('.owl-carousel').owlCarousel({
-            loop: true,
-            margin: 10,
-            responsiveClass: true,
-            responsive: {
-                0: {
-                    items: 1,
-                    nav: true
-                },
-                600: {
-                    items: 2,
-                    nav: false
-                },
-                900: {
-                    items: 3,
-                    nav: false
-                },
-                1000: {
-                    items: 4,
-                    nav: true,
-                    loop: false,
-                    margin: 20
+<div class="modal fade" id="modalChoose" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Chọn mã giảm giá</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Choose", "Cart", FormMethod.Post))
+                {
+                    if (memberDiscountCodes != null)
+                    {
+                        <div class="form-group">
+                            <label>Mã giảm giá của bạn:</label>
+                            <select class="form-control" name="Code">
+                                <option value="0">Chọn mã giảm giá</option>
+                                @foreach (var item in memberDiscountCodes)
+                                {
+                                    <option value="@item.DiscountCodeDetail.code">Mã: @item.DiscountCodeDetail.code (Giảm @item.DiscountCodeDetail.DiscountCode.numberDiscount% - Ngày hết hạn: @item.DiscountCodeDetail.DiscountCode.expirationDate.Value.ToShortDateString())</option>
+                                }
+                            </select>
+                        </div>
+                    }
+                    <div class="form-group">
+                        <label for="Name">Nhập mã tại đây:</label>
+                        <input type="number" class="form-control" name="CodeInput" id="Code">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="btnSave">Chọn</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    </div>
                 }
-            }
-        })
-    })
-</script>
-
-<!-- //end-smooth-scrolling -->
-<!-- dropdown nav -->
-<script>
-    $(document).ready(function () {
-        $(".dropdown").hover(
-            function () {
-                $('.dropdown-menu', this).stop(true, true).slideDown("fast");
-                $(this).toggleClass('open');
-            },
-            function () {
-                $('.dropdown-menu', this).stop(true, true).slideUp("fast");
-                $(this).toggleClass('open');
-            }
-        );
-    });
-</script>
-<!-- //dropdown nav -->
-<script src="~/Content/js/move-top.js"></script>
-<script src="~/Content/js/easing.js"></script>
-<script>
-    jQuery(document).ready(function ($) {
-        $(".scroll").click(function (event) {
-            event.preventDefault();
-            $('html,body').animate({
-                scrollTop: $(this.hash).offset().top
-            }, 900);
-        });
-    });
-</script>
-<script>
-    $(document).ready(function () {
-        /*
-                                var defaults = {
-                                      containerID: 'toTop', // fading element id
-                                    containerHoverID: 'toTopHover', // fading element hover id
-                                    scrollSpeed: 1200,
-                                    easingType: 'linear'
-                                 };
-                                */
-
-        $().UItoTop({
-            easingType: 'easeOutQuart'
-        });
-
-    });
-</script>
-<!--// end-smoth-scrolling -->
-
-<script src="~/Content/js/bootstrap.js"></script>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Count-down -->

@@ -4,7 +4,6 @@
     ViewBag.Title = "AddSupplier";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
 <!-- Template CSS -->
 <link rel="stylesheet" href="~/AdminStyle/assets/css/style-starter.css">
 
@@ -27,7 +26,7 @@
         <!-- forms 1 -->
         <div class="card card_border py-2 mb-4">
             <div class="card-body">
-                @using (Html.BeginForm("AddSupplier","Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("AddSupplier", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken()
 
@@ -35,7 +34,7 @@
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="form-group">
                             <h5 class="card-title">Tên nhà cung cấp</h5>
-                            <input type="text" name="name" value="" class="form-control input-style" placeholder="Nhập tên nhà cung cấp"/>
+                            <input type="text" name="name" value="" class="form-control input-style" placeholder="Nhập tên nhà cung cấp" />
                             @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
                         </div>
 
@@ -47,7 +46,7 @@
 
                         <div class="form-group">
                             <h5 class="card-title">Số điện thoại</h5>
-                            <input type="number" name="phoneNumber" value="" class="form-control input-style" placeholder="Nhập số điện thoại"/>
+                            <input type="number" name="phoneNumber" value="" class="form-control input-style" placeholder="Nhập số điện thoại" />
                             @Html.ValidationMessageFor(model => model.phoneNumber, "", new { @class = "text-danger" })
                         </div>
 
@@ -64,7 +63,7 @@
 
                         </div>
 
-                    
+
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
                                 <input type="submit" value="Lưu" class="btn btn-style btn-primary mr-2" />

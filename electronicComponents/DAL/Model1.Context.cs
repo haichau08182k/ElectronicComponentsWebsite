@@ -49,7 +49,6 @@ namespace electronicComponents.DAL
         public virtual DbSet<QA> QAs { get; set; }
         public virtual DbSet<Rating> Ratings { get; set; }
         public virtual DbSet<Rolee> Rolees { get; set; }
-        public virtual DbSet<Statistic> Statistics { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     }

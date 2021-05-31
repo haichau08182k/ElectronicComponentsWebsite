@@ -459,5 +459,10 @@ namespace electronicComponents.Controllers
             return RedirectToAction("Producer");
 
         }
+
+        public ActionResult Charts()
+        {
+            return View();
+        }
     }
 }

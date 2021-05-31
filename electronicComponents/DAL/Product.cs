@@ -32,17 +32,13 @@ namespace electronicComponents.DAL
         public string image1 { get; set; }
         public string image2 { get; set; }
         public string image3 { get; set; }
-        public string clipReview { get; set; }
         public Nullable<decimal> price { get; set; }
         public Nullable<int> promotionPrice { get; set; }
         public Nullable<int> quantity { get; set; }
         public string descriptionn { get; set; }
-        public Nullable<bool> homeFlag { get; set; }
-        public Nullable<bool> hotFlag { get; set; }
         public Nullable<int> viewCount { get; set; }
         public Nullable<int> commentCount { get; set; }
         public Nullable<int> purchaseCount { get; set; }
-        public Nullable<int> supplierID { get; set; }
         public Nullable<int> producerID { get; set; }
         public Nullable<bool> isNew { get; set; }
         public Nullable<bool> isActive { get; set; }

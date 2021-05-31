@@ -20,7 +20,6 @@ namespace electronicComponents.DAL
             this.DiscountCodes = new HashSet<DiscountCode>();
             this.ImportCoupons = new HashSet<ImportCoupon>();
             this.QAs = new HashSet<QA>();
-            this.Statistics = new HashSet<Statistic>();
         }
     
         public int id { get; set; }
@@ -40,7 +39,5 @@ namespace electronicComponents.DAL
         public virtual ICollection<ImportCoupon> ImportCoupons { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<QA> QAs { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Statistic> Statistics { get; set; }
     }
 }

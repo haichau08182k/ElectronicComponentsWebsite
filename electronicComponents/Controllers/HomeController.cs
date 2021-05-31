@@ -13,18 +13,19 @@ namespace electronicComponents.Controllers
     {
         private IMemberService _memberService;
         private IProductService _productService;
-        public HomeController(IMemberService memberService, IProductService productService)
+        private ICartService _cartService;
+        public HomeController(IMemberService memberService, IProductService productService, ICartService cartService)
         {
             _memberService = memberService;
             _productService = productService;
+            _cartService = cartService;
         }
         public ActionResult Index()
         {
 
             var listProductNew = _productService.GetListProductNew();
             ViewBag.listProductNew = listProductNew;
-            var listProductInHome = _productService.GetProductInHome();
-            ViewBag.listProductInHome = listProductInHome;
+            
 
             return View();
         }
@@ -47,20 +48,20 @@ namespace electronicComponents.Controllers
                     }
                     else
                     {
-                        //if (_cartService.CheckCartMember(memberCheck.id))
-                        //{
-                        //    List<Cart> carts = _cartService.GetCart(memberCheck.id);
-                        //    Session["Cart"] = carts;
-                        //    return RedirectToAction("Index");
-                        //}
-                        //if (Session["Cart"] != null)
-                        //{
-                        //    List<Cart> listCart = Session["Cart"] as List<Cart>;
-                        //    foreach (var item in listCart)
-                        //    {
-                        //        _cartService.AddCartIntoMember(item, memberCheck.ID);
-                        //    }
-                        //}
+                        if (_cartService.CheckCartMember(memberCheck.id))
+                        {
+                            List<Cart> carts = _cartService.GetCart(memberCheck.id);
+                            Session["Cart"] = carts;
+                            return RedirectToAction("Index");
+                        }
+                        if (Session["Cart"] != null)
+                        {
+                            List<Cart> listCart = Session["Cart"] as List<Cart>;
+                            foreach (var item in listCart)
+                            {
+                                _cartService.AddCartIntoMember(item, memberCheck.id);
+                            }
+                        }
                     }
                 }
                 else
@@ -120,8 +121,8 @@ namespace electronicComponents.Controllers
         }
         public ActionResult FeaturedProductPartial()
         {
-            var listProductFeatured = _productService.GetListProductFeatured();
-            ViewBag.listFeatured = listProductFeatured;
+            var listProductSelling = _productService.GetListSellingProduct();
+            ViewBag.listFeatured = listProductSelling;
             return PartialView();
         }
         

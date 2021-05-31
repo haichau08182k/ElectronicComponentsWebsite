@@ -1,0 +1,324 @@
+﻿<!--
+    Author: W3layouts
+    Author URL: http://w3layouts.com
+    License: Creative Commons Attribution 3.0 Unported
+    License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <title>Website Linh kiện điện tử | Xem giỏ hàng</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Goggles a Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+    <script>
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+    <link href="~/Content/css/bootstrap.css" rel='stylesheet' type='text/css' />
+    <link href="~/Content/css/login_overlay.css" rel='stylesheet' type='text/css' />
+    <link href="~/Content/css/style6.css" rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="~/Content/css/shop.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/css/checkout.css">
+    <link href="~/Content/css/easy-responsive-tabs.css" rel='stylesheet' type='text/css' />
+    <link href="~/Content/css/style.css" rel='stylesheet' type='text/css' />
+    <link href="~/Content/css/fontawesome-all.css" rel="stylesheet">
+    <link href="~/Content/fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
+    <link href="~/Content/fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800"
+          rel="stylesheet">
+    <script src="~/Content/js/jquery-2.2.3.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link href="~/Content/sweetalert/sweet-alert.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <div class="banner-top container-fluid" id="home">
+        <!-- header -->
+        @Html.Partial("~/Views/Home/HeaderPartial.cshtml")
+
+        <!-- banner -->
+        <div class="banner_inner">
+            <div class="services-breadcrumb">
+                <div class="inner_breadcrumb">
+
+                    <ul class="short">
+                        <li>
+                            <a href="index.html">Trang chủ</a>
+                            <i>|</i>
+                        </li>
+                        <li>Xem giỏ hàng</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <!--//banner -->
+    </div>
+    <!--// header_top -->
+    <!--checkout-->
+    @RenderBody()
+    <!--//checkout-->
+    <!--footer -->
+    <footer class="py-lg-5 py-3">
+        <div class="container-fluid px-lg-5 px-3">
+            <div class="row footer-top-w3layouts">
+                <div class="col-lg-3 footer-grid-w3ls">
+                    <div class="footer-title">
+                        <h3>Về chúng tôi</h3>
+                    </div>
+                    <div class="footer-text">
+                        <p>
+                            Cần Thơ
+                        </p>
+                        <ul class="footer-social text-left mt-lg-4 mt-3">
+
+                            <li class="mx-2">
+                                <a href="#">
+                                    <span class="fab fa-facebook-f"></span>
+                                </a>
+                            </li>
+                            <li class="mx-2">
+                                <a href="#">
+                                    <span class="fab fa-twitter"></span>
+                                </a>
+                            </li>
+                            <li class="mx-2">
+                                <a href="#">
+                                    <span class="fab fa-google-plus-g"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 footer-grid-w3ls">
+                    <div class="footer-title">
+                        <h3>Get in touch</h3>
+                    </div>
+                    <div class="contact-info">
+                        <h4>Location :</h4>
+                        <p>ĐH Kỹ thuật công nghệ Cần Thơ</p>
+                        <div class="phone">
+                            <h4>Liên hệ :</h4>
+                            <p>Phone : +84 8907 9987</p>
+                            <p>
+                                Email :
+                                <a href="mailto:info@example.com">info@example.com</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 footer-grid-w3ls">
+                    <div class="footer-title">
+                        <h3>Links</h3>
+                    </div>
+                    <ul class="links">
+                        <li>
+                            <a href="index.html">Home</a>
+                        </li>
+                        <li>
+                            <a href="about.html">About</a>
+                        </li>
+                        <li>
+                            <a href="404.html">Error</a>
+                        </li>
+                        <li>
+                            <a href="shop.html">Shop</a>
+                        </li>
+                        <li>
+                            <a href="contact.html">Contact Us</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 footer-grid-w3ls">
+                    <div class="footer-title">
+                        <h3>Đăng kí nhận ưu đãi</h3>
+                    </div>
+                    <div class="footer-text">
+                        <p>Đăng kí tài khoản bạn sẽ nhận được thông báo từ chúng tôi</p>
+                        <form action="#" method="post">
+                            <input class="form-control" type="email" name="Email" placeholder="Nhập Email..." required="">
+                            <button class="btn1">
+                                <i class="far fa-envelope" aria-hidden="true"></i>
+                            </button>
+                            <div class="clearfix"> </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright-w3layouts mt-4">
+                <p class="copy-right text-center ">
+                    &copy; 2021 Store Linh Kiện Điện Tử. All Rights Reserved | Design by
+                    <a href="http://w3layouts.com/"> W3layouts </a>| Develop by <a href="#">HLG Team</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- //footer -->
+    <!--jQuery-->
+    <script src="~/Content/js/jquery-2.2.3.min.js"></script>
+    <!-- newsletter modal -->
+    <!--search jQuery-->
+    <script src="~/Content/js/modernizr-2.6.2.min.js"></script>
+    <script src="~/Content/js/classie-search.js"></script>
+    <script src="~/Content/js/demo1-search.js"></script>
+    <!--//search jQuery-->
+    <!-- cart-js -->
+    <script src="js/minicart.js"></script>
+    <script>
+        googles.render();
+
+        googles.cart.on('googles_checkout', function (evt) {
+            var items, len, i;
+
+            if (this.subtotal() > 0) {
+                items = this.items();
+
+                for (i = 0, len = items.length; i < len; i++) { }
+            }
+        });
+    </script>
+    <!-- //cart-js -->
+    <script>
+        $(document).ready(function () {
+            $(".button-log a").click(function () {
+                $(".overlay-login").fadeToggle(200);
+                $(this).toggleClass('btn-open').toggleClass('btn-close');
+            });
+        });
+        $('.overlay-close1').on('click', function () {
+            $(".overlay-login").fadeToggle(200);
+            $(".button-log a").toggleClass('btn-open').toggleClass('btn-close');
+            open = false;
+        });
+    </script>
+    <!-- carousel -->
+    <!-- easy-responsive-tabs -->
+    <script src="~/Content/js/easy-responsive-tabs.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#horizontalTab').easyResponsiveTabs({
+                type: 'default', //Types: default, vertical, accordion
+                width: 'auto', //auto or any width like 600px
+                fit: true, // 100% fit in a container
+                closed: 'accordion', // Start closed if in accordion view
+                activate: function (event) { // Callback function if tab is switched
+                    var $tab = $(this);
+                    var $info = $('#tabInfo');
+                    var $name = $('span', $info);
+                    $name.text($tab.text());
+                    $info.show();
+                }
+            });
+            $('#verticalTab').easyResponsiveTabs({
+                type: 'vertical',
+                width: 'auto',
+                fit: true
+            });
+        });
+    </script>
+    <!--quantity-->
+    <script>
+        $('.value-plus').on('click', function () {
+            var divUpd = $(this).parent().find('.value'),
+                newVal = parseInt(divUpd.text(), 10) + 1;
+            divUpd.text(newVal);
+        });
+
+        $('.value-minus').on('click', function () {
+            var divUpd = $(this).parent().find('.value'),
+                newVal = parseInt(divUpd.text(), 10) - 1;
+            if (newVal >= 1) divUpd.text(newVal);
+        });
+    </script>
+    <!--quantity-->
+    <!--close-->
+    <script>
+        $(document).ready(function (c) {
+            $('.close1').on('click', function (c) {
+                $('.rem1').fadeOut('slow', function (c) {
+                    $('.rem1').remove();
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function (c) {
+            $('.close2').on('click', function (c) {
+                $('.rem2').fadeOut('slow', function (c) {
+                    $('.rem2').remove();
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function (c) {
+            $('.close3').on('click', function (c) {
+                $('.rem3').fadeOut('slow', function (c) {
+                    $('.rem3').remove();
+                });
+            });
+        });
+    </script>
+    <!--//close-->
+    <!-- dropdown nav -->
+    <script>
+        $(document).ready(function () {
+            $(".dropdown").hover(
+                function () {
+                    $('.dropdown-menu', this).stop(true, true).slideDown("fast");
+                    $(this).toggleClass('open');
+                },
+                function () {
+                    $('.dropdown-menu', this).stop(true, true).slideUp("fast");
+                    $(this).toggleClass('open');
+                }
+            );
+        });
+    </script>
+    <!-- //dropdown nav -->
+    <script src="~/Content/js/move-top.js"></script>
+    <script src="~/Content/js/easing.js"></script>
+    <script>
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+                $('html,body').animate({
+                    scrollTop: $(this.hash).offset().top
+                }, 900);
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            /*
+                                    var defaults = {
+                                          containerID: 'toTop', // fading element id
+                                        containerHoverID: 'toTopHover', // fading element hover id
+                                        scrollSpeed: 1200,
+                                        easingType: 'linear'
+                                     };
+                                    */
+
+            $().UItoTop({
+                easingType: 'easeOutQuart'
+            });
+
+        });
+    </script>
+    <!--// end-smoth-scrolling -->
+
+
+    <script src="~/Content/js/bootstrap.js"></script>
+    <!-- js file -->
+</body>
+
+</html>

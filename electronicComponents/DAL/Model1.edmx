@@ -46,6 +46,7 @@
           <Property Name="phoneNumber" Type="nchar" MaxLength="20" />
           <Property Name="email" Type="nchar" MaxLength="50" />
           <Property Name="memberCategoryID" Type="int" />
+          <Property Name="isMember" Type="bit" />
         </EntityType>
         <EntityType Name="Decentralization">
           <Key>
@@ -196,17 +197,13 @@
           <Property Name="image1" Type="varchar(max)" />
           <Property Name="image2" Type="varchar(max)" />
           <Property Name="image3" Type="varchar(max)" />
-          <Property Name="clipReview" Type="varchar(max)" />
           <Property Name="price" Type="decimal" Precision="18" Scale="0" />
           <Property Name="promotionPrice" Type="int" />
           <Property Name="quantity" Type="int" />
           <Property Name="descriptionn" Type="nvarchar(max)" />
-          <Property Name="homeFlag" Type="bit" />
-          <Property Name="hotFlag" Type="bit" />
           <Property Name="viewCount" Type="int" />
           <Property Name="commentCount" Type="int" />
           <Property Name="purchaseCount" Type="int" />
-          <Property Name="supplierID" Type="int" />
           <Property Name="producerID" Type="int" />
           <Property Name="isNew" Type="bit" />
           <Property Name="isActive" Type="bit" />
@@ -273,16 +270,7 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="nvarchar(max)" />
-          <Property Name="isActive" Type="bit" />
           <Property Name="namedDisplay" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="Statistic">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="employeeID" Type="int" />
-          <Property Name="datee" Type="datetime" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -295,6 +283,7 @@
           <Property Name="email" Type="nchar" MaxLength="50" />
           <Property Name="isActive" Type="bit" />
           <Property Name="lastUpdatedDate" Type="datetime" />
+          <Property Name="totalAmount" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -654,18 +643,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_st_ide">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
-          <End Role="Statistic" Type="Self.Statistic" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Statistic">
-              <PropertyRef Name="employeeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="electronicComponents1ModelStoreContainer">
           <EntitySet Name="AccessTimeCount" EntityType="Self.AccessTimeCount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
@@ -691,7 +668,6 @@
           <EntitySet Name="QA" EntityType="Self.QA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rating" EntityType="Self.Rating" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rolee" EntityType="Self.Rolee" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Statistic" EntityType="Self.Statistic" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="fk_c_idm" Association="Self.fk_c_idm">
@@ -810,10 +786,6 @@
             <End Role="Product" EntitySet="Product" />
             <End Role="Rating" EntitySet="Rating" />
           </AssociationSet>
-          <AssociationSet Name="fk_st_ide" Association="Self.fk_st_ide">
-            <End Role="Employee" EntitySet="Employee" />
-            <End Role="Statistic" EntitySet="Statistic" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -844,7 +816,6 @@
           <EntitySet Name="QAs" EntityType="electronicComponents1Model.QA" />
           <EntitySet Name="Ratings" EntityType="electronicComponents1Model.Rating" />
           <EntitySet Name="Rolees" EntityType="electronicComponents1Model.Rolee" />
-          <EntitySet Name="Statistics" EntityType="electronicComponents1Model.Statistic" />
           <EntitySet Name="Suppliers" EntityType="electronicComponents1Model.Supplier" />
           <EntitySet Name="sysdiagrams" EntityType="electronicComponents1Model.sysdiagram" />
           <AssociationSet Name="fk_c_idm" Association="electronicComponents1Model.fk_c_idm">
@@ -902,10 +873,6 @@
           <AssociationSet Name="fk_qa_ide" Association="electronicComponents1Model.fk_qa_ide">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="QA" EntitySet="QAs" />
-          </AssociationSet>
-          <AssociationSet Name="fk_st_ide" Association="electronicComponents1Model.fk_st_ide">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="Statistic" EntitySet="Statistics" />
           </AssociationSet>
           <AssociationSet Name="fk_ipc_ids" Association="electronicComponents1Model.fk_ipc_ids">
             <End Role="Supplier" EntitySet="Suppliers" />
@@ -1013,6 +980,7 @@
           <Property Name="phoneNumber" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
           <Property Name="email" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="memberCategoryID" Type="Int32" />
+          <Property Name="isMember" Type="Boolean" />
           <NavigationProperty Name="MemberCategory" Relationship="electronicComponents1Model.fk_ctm_id" FromRole="Customer" ToRole="MemberCategory" />
           <NavigationProperty Name="OrderShips" Relationship="electronicComponents1Model.fk_od_id" FromRole="Customer" ToRole="OrderShip" />
         </EntityType>
@@ -1067,7 +1035,6 @@
           <NavigationProperty Name="EmployeeType" Relationship="electronicComponents1Model.fk_eml_id" FromRole="Employee" ToRole="EmployeeType" />
           <NavigationProperty Name="ImportCoupons" Relationship="electronicComponents1Model.fk_ipc_ide" FromRole="Employee" ToRole="ImportCoupon" />
           <NavigationProperty Name="QAs" Relationship="electronicComponents1Model.fk_qa_ide" FromRole="Employee" ToRole="QA" />
-          <NavigationProperty Name="Statistics" Relationship="electronicComponents1Model.fk_st_ide" FromRole="Employee" ToRole="Statistic" />
         </EntityType>
         <EntityType Name="EmployeeType">
           <Key>
@@ -1198,17 +1165,13 @@
           <Property Name="image1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="image2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="image3" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="clipReview" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="price" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="promotionPrice" Type="Int32" />
           <Property Name="quantity" Type="Int32" />
           <Property Name="descriptionn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="homeFlag" Type="Boolean" />
-          <Property Name="hotFlag" Type="Boolean" />
           <Property Name="viewCount" Type="Int32" />
           <Property Name="commentCount" Type="Int32" />
           <Property Name="purchaseCount" Type="Int32" />
-          <Property Name="supplierID" Type="Int32" />
           <Property Name="producerID" Type="Int32" />
           <Property Name="isNew" Type="Boolean" />
           <Property Name="isActive" Type="Boolean" />
@@ -1293,18 +1256,8 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="isActive" Type="Boolean" />
           <Property Name="namedDisplay" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Decentralizations" Relationship="electronicComponents1Model.fk_dtl_idr" FromRole="Rolee" ToRole="Decentralization" />
-        </EntityType>
-        <EntityType Name="Statistic">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="employeeID" Type="Int32" />
-          <Property Name="datee" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Employee" Relationship="electronicComponents1Model.fk_st_ide" FromRole="Statistic" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -1317,6 +1270,7 @@
           <Property Name="email" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="isActive" Type="Boolean" />
           <Property Name="lastUpdatedDate" Type="DateTime" Precision="3" />
+          <Property Name="totalAmount" Type="Decimal" Precision="18" Scale="0" />
           <NavigationProperty Name="ImportCoupons" Relationship="electronicComponents1Model.fk_ipc_ids" FromRole="Supplier" ToRole="ImportCoupon" />
         </EntityType>
         <EntityType Name="sysdiagram">
@@ -1493,18 +1447,6 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="QA">
-              <PropertyRef Name="employeeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="fk_st_ide">
-          <End Type="electronicComponents1Model.Employee" Role="Employee" Multiplicity="0..1" />
-          <End Type="electronicComponents1Model.Statistic" Role="Statistic" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="Statistic">
               <PropertyRef Name="employeeID" />
             </Dependent>
           </ReferentialConstraint>
@@ -1732,6 +1674,7 @@
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="electronicComponents1Model.Customer">
               <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="isMember" ColumnName="isMember" />
                 <ScalarProperty Name="memberCategoryID" ColumnName="memberCategoryID" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
@@ -1901,17 +1844,13 @@
                 <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="isNew" ColumnName="isNew" />
                 <ScalarProperty Name="producerID" ColumnName="producerID" />
-                <ScalarProperty Name="supplierID" ColumnName="supplierID" />
                 <ScalarProperty Name="purchaseCount" ColumnName="purchaseCount" />
                 <ScalarProperty Name="commentCount" ColumnName="commentCount" />
                 <ScalarProperty Name="viewCount" ColumnName="viewCount" />
-                <ScalarProperty Name="hotFlag" ColumnName="hotFlag" />
-                <ScalarProperty Name="homeFlag" ColumnName="homeFlag" />
                 <ScalarProperty Name="descriptionn" ColumnName="descriptionn" />
                 <ScalarProperty Name="quantity" ColumnName="quantity" />
                 <ScalarProperty Name="promotionPrice" ColumnName="promotionPrice" />
                 <ScalarProperty Name="price" ColumnName="price" />
-                <ScalarProperty Name="clipReview" ColumnName="clipReview" />
                 <ScalarProperty Name="image3" ColumnName="image3" />
                 <ScalarProperty Name="image2" ColumnName="image2" />
                 <ScalarProperty Name="image1" ColumnName="image1" />
@@ -1984,17 +1923,7 @@
             <EntityTypeMapping TypeName="electronicComponents1Model.Rolee">
               <MappingFragment StoreEntitySet="Rolee">
                 <ScalarProperty Name="namedDisplay" ColumnName="namedDisplay" />
-                <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Statistics">
-            <EntityTypeMapping TypeName="electronicComponents1Model.Statistic">
-              <MappingFragment StoreEntitySet="Statistic">
-                <ScalarProperty Name="datee" ColumnName="datee" />
-                <ScalarProperty Name="employeeID" ColumnName="employeeID" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2002,6 +1931,7 @@
           <EntitySetMapping Name="Suppliers">
             <EntityTypeMapping TypeName="electronicComponents1Model.Supplier">
               <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
                 <ScalarProperty Name="lastUpdatedDate" ColumnName="lastUpdatedDate" />
                 <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="email" ColumnName="email" />
