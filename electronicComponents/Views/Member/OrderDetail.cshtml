@@ -1,0 +1,154 @@
+﻿@model IEnumerable<electronicComponents.DAL.OrderDetail>
+
+@{
+    ViewBag.Title = "OrderDetail";
+    Layout = "~/Views/Shared/_CheckoutLayout.cshtml";
+}
+<script src="~/Scripts/bootbox.js"></script>
+<script>
+    $(document).ready(function (c) {
+        $(document).on('click', '.btnRating', function () {
+            var id = $(this).attr('title');
+            var orderDetailID = $(this).attr('id');
+            $('#modalRating').modal('show');
+            $.ajax({
+                url: '/Member/GetDataProduct',
+                data: {
+                    ID: id,
+                },
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        $('#ID').val(response.ID);
+                        $('#OrderDetailID').val(orderDetailID);
+                        $('#Name').val(response.Name);
+                        $('#Image').attr('src', "/Content/images/" + response.Image);
+                    }
+                    else {
+                        bootbox.alert(response.message);
+                    }
+                },
+                error: function (err) {
+                    bootbox.alert(err.fail);
+                }
+            });
+        });
+    });
+</script>
+<section class="banner-bottom-wthreelayouts py-lg-5 py-3">
+    <div class="container">
+        <div class="inner-sec-shop px-lg-4 px-3">
+            <h3 class="tittle-w3layouts my-lg-4 mt-3">Giỏ Hàng </h3>
+            <div class="checkout-right">
+                @if (Model != null)
+                {
+                    <table class="timetable_sub">
+                        <thead>
+                            <tr>
+                                <th>Mã ĐH</th>
+                                <th>Sản phẩm</th>
+                                <th>Đơn giá</th>
+                                <th>Số lượng</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr class="rem1">
+                                    <td class="invert">@item.id</td>
+                                    <td class="invert">@item.Product.name</td>
+                                    <td class="invert">@item.price</td>
+                                    <td class="invert">@item.quantity</td>
+                                    @if (ViewBag.Received == "Received")
+                                    {
+                                        if (item.isRating != true)
+                                        {
+                                            <td>
+                                                <input type="button" class="btnRating" value="Đánh Giá" id="@item.id" title="@item.productID">
+                                            </td>
+                                        }
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    {
+                        decimal total = ViewBag.Total;
+                        decimal total2 = Model.Sum(x => x.price * x.quantity).Value;
+                        if (total == total2)
+                        {
+                            <p style="text-align:right">
+                                Tổng: @ViewBag.Total.ToString("#,##")₫
+                            </p>
+                        }
+                        else
+                        {
+                            <p style="text-align:right">Tổng: @ViewBag.Total.ToString("#,##")₫ (<del>@Model.Sum(x => x.price * x.quantity).Value.ToString("#,##")₫</del>)</p>
+                        }
+                    }
+                    if (ViewBag.Received != "Received" && ViewBag.Delivere == "Delivere")
+                    {
+                        <div style="text-align:right">
+                            <a href="@Url.Action("Received", new { OrderID = ViewBag.OrderID })" class="btn btn-default">Đã nhận được hàng</a>
+                        </div>
+                    }
+                }
+            </div>
+
+
+        </div>
+
+    </div>
+</section>
+<div class="modal fade" id="modalRating" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Đánh Giá</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Rating", "Home", FormMethod.Post))
+                {
+                    <input type="text" name="ProductID" id="ID" hidden="hidden" />
+                    <input type="text" name="OrderDetailID" id="OrderDetailID" hidden="hidden" />
+                    <div class="form-group">
+                        <label for="Name">tên sản phẩm:</label>
+                        <input type="text" class="form-control" name="Name" id="Name" readonly="readonly">
+                    </div>
+                    <div class="form-group">
+                        <label>Hình ảnh:</label>
+                        <img name="Image" id="Image" style="height:200px;width:200px" />
+                    </div>
+                    <div class="single-rating">
+                        <label>Số sao:</label>
+                        <span class="starRating">
+                            <input id="rating5" type="radio" name="Star" value="5" checked>
+                            <label for="rating5">5</label>
+                            <input id="rating4" type="radio" name="Star" value="4">
+                            <label for="rating4">4</label>
+                            <input id="rating3" type="radio" name="Star" value="3">
+                            <label for="rating3">3</label>
+                            <input id="rating2" type="radio" name="Star" value="2">
+                            <label for="rating2">2</label>
+                            <input id="rating1" type="radio" name="Star" value="1">
+                            <label for="rating1">1</label>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Nội dung:</label>
+                        <input type="text" class="form-control" name="Content" id="Content">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -14,11 +14,20 @@ namespace electronicComponents.DAL
     
     public partial class Producer
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Producer()
+        {
+            this.Products = new HashSet<Product>();
+        }
+    
         public int id { get; set; }
         public string name { get; set; }
         public string imformation { get; set; }
         public string logo { get; set; }
         public Nullable<bool> isActive { get; set; }
         public Nullable<System.DateTime> lastUpdateDate { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Product> Products { get; set; }
     }
 }

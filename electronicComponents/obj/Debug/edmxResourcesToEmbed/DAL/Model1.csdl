@@ -123,6 +123,10 @@
       <End Role="Product" EntitySet="Products" />
       <End Role="OrderDetail" EntitySet="OrderDetails" />
     </AssociationSet>
+    <AssociationSet Name="FK_Product_Producer" Association="electronicComponents1Model.FK_Product_Producer">
+      <End Role="Producer" EntitySet="Producers" />
+      <End Role="Product" EntitySet="Products" />
+    </AssociationSet>
     <AssociationSet Name="fk_pd_id" Association="electronicComponents1Model.fk_pd_id">
       <End Role="ProductCategory" EntitySet="ProductCategories" />
       <End Role="Product" EntitySet="Products" />
@@ -363,6 +367,7 @@
     <Property Name="logo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="isActive" Type="Boolean" />
     <Property Name="lastUpdateDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Products" Relationship="electronicComponents1Model.FK_Product_Producer" FromRole="Producer" ToRole="Product" />
   </EntityType>
   <EntityType Name="Product">
     <Key>
@@ -390,6 +395,7 @@
     <NavigationProperty Name="Comments" Relationship="electronicComponents1Model.fk_cm_idp" FromRole="Product" ToRole="Comment" />
     <NavigationProperty Name="ImportCouponDetails" Relationship="electronicComponents1Model.fk_ipcd_idp" FromRole="Product" ToRole="ImportCouponDetail" />
     <NavigationProperty Name="OrderDetails" Relationship="electronicComponents1Model.fk_odd_idp" FromRole="Product" ToRole="OrderDetail" />
+    <NavigationProperty Name="Producer" Relationship="electronicComponents1Model.FK_Product_Producer" FromRole="Product" ToRole="Producer" />
     <NavigationProperty Name="ProductCategory" Relationship="electronicComponents1Model.fk_pd_id" FromRole="Product" ToRole="ProductCategory" />
     <NavigationProperty Name="ProductVieweds" Relationship="electronicComponents1Model.fk_pv_idp" FromRole="Product" ToRole="ProductViewed" />
     <NavigationProperty Name="QAs" Relationship="electronicComponents1Model.fk_qa_idp" FromRole="Product" ToRole="QA" />
@@ -777,6 +783,18 @@
       </Principal>
       <Dependent Role="OrderDetail">
         <PropertyRef Name="productID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Product_Producer">
+    <End Type="electronicComponents1Model.Producer" Role="Producer" Multiplicity="0..1" />
+    <End Type="electronicComponents1Model.Product" Role="Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Producer">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="producerID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

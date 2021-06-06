@@ -12,7 +12,31 @@ namespace electronicComponents.Controllers
 {
     public class MemberController : Controller
     {
-        public MemberService _memberService=new MemberService();
+
+        private ICartService _cartService;
+        private IProductService _productService;
+        private IDiscountCodeDetailService _discountCodeDetailService;
+        private IDiscountCodeService _discountCodeService;
+        private ICustomerService _customerService;
+        private IOrderService _orderService;
+        private IOrderDetailService _orderDetailService;
+        private IMemberService _memberService;
+        private IRatingService _ratingService;
+
+
+        public MemberController(IRatingService ratingService,ICartService cartService, IProductService productService, IDiscountCodeDetailService discountCodeDetailService, IDiscountCodeService discountCodeService, ICustomerService customerService, IOrderService orderService, IOrderDetailService orderDetailService, IMemberService memberService)
+        {
+
+            _cartService = cartService;
+            _productService = productService;
+            _discountCodeDetailService = discountCodeDetailService;
+            _discountCodeService = discountCodeService;
+            _customerService = customerService;
+            _orderService = orderService;
+            _orderDetailService = orderDetailService;
+            _memberService = memberService;
+            _ratingService = ratingService;
+        }
         [HttpGet]
         public ActionResult ConfirmEmail(int ID)
         {
@@ -68,6 +92,85 @@ namespace electronicComponents.Controllers
             smtp.Credentials = new NetworkCredential(FromEmail, Password);
             smtp.EnableSsl = true;
             smtp.Send(mail);
+        }
+
+        public ActionResult CheckoutOrder(int ID)
+        {
+            string Name = _memberService.GetByID(ID).fullName;
+            Customer customer = _customerService.GetAll().FirstOrDefault(x => x.fullName.Contains(Name));
+            if (customer != null)
+            {
+                var orders = _orderService.GetByCustomerID(customer.id);
+                Member member = Session["Member"] as Member;
+                ViewBag.ProductRating = _ratingService.GetListAllRating().Where(x => x.memberID == member.id);
+                return View(orders);
+            }
+            return View();
+        }
+        public ActionResult OrderDetail(int ID)
+        {
+            if (Session["Member"] == null)
+            {
+                return View();
+            }
+            if (ID == null)
+            {
+                return null;
+            }
+            OrderShip order = _orderService.GetByID(ID);
+            IEnumerable<OrderDetail> orderDetails = _orderDetailService.GetByOrderID(ID);
+            if (orderDetails == null)
+            {
+                return null;
+            }
+            ViewBag.OrderID = ID;
+            if (order.isApproved.Value)
+            {
+                ViewBag.Approved = "Approved";
+            }
+            if (order.isDelivere.Value)
+            {
+                ViewBag.Delivere = "Delivere";
+            }
+            if (order.isReceived.Value)
+            {
+                ViewBag.Received = "Received";
+            }
+            ViewBag.Total = order.total;
+            return View(orderDetails);
+        }
+        public JsonResult Cancel(int ID)
+        {
+            OrderShip order = _orderService.GetByID(ID);
+            order.isCancel = true;
+            _orderService.Update(order);
+            return Json(new
+            {
+                status = true
+            }, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Received(int OrderID)
+        {
+            _orderService.Received(OrderID);
+
+            Member member = Session["Member"] as Member;
+            //Update AmountPurchased for member
+            if (member != null)
+            {
+                _memberService.UpdateAmountPurchased(member.id, _orderService.GetByID(OrderID).total.Value);
+            }
+            return RedirectToAction("OrderDetail", new { ID = OrderID });
+        }
+        public ActionResult GetDataProduct(int ID)
+        {
+            Product product = _productService.GetProductID(ID);
+            return Json(new
+            {
+                ID = product.id,
+                Name = product.name,
+                Image = product.image1,
+                status = true
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }

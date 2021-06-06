@@ -1,0 +1,429 @@
+﻿@using electronicComponents.DAL
+@model Product
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_ProductDetailLayout.cshtml";
+}
+
+@{
+    IEnumerable<Product> products = ViewBag.ListProduct as IEnumerable<Product>;
+    IEnumerable<QA> qAs = ViewBag.CommentQA as IEnumerable<QA>;
+    IEnumerable<Rating> ratings = ViewBag.ListRating as IEnumerable<Rating>;
+    Member member = Session["Member"] as Member;
+}
+
+<script>
+    $(document).ready(function () {
+        $('#Textarea1').change(function () {
+            $('#content').val($(this).val());
+        });
+        $('#Textarea2').change(function () {
+            $('#content2').val($(this).val());
+        });
+        $(".btnPost").on("click", function () {
+            $("#Textarea1").val("");
+            $("#Textarea2").val("");
+        });
+        $('.item_add').on('click', function () {
+            swal({
+                title: "Thông báo",
+                text: "Thêm vào giỏ hàng thành công!",
+                icon: "success",
+                timer: 1500
+            });
+        });
+        $('.AddItemInCart').click(function (e) {
+            var id = $(this).attr("data-id");
+            $.ajax({
+                method: "POST",
+                url: "/Cart/CheckQuantityAdd",
+                data: {
+                    id: id
+                },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        $.ajax({
+                            method: "POST",
+                            url: "/Cart/AddItemInCart",
+                            data: {
+                                id: id
+                            },
+                            dataType: 'html',
+                            success: function (response) {
+                                swal({
+                                    title: "Thông báo",
+                                    text: "Đã thêm sản phẩm vào giỏ hàng!",
+                                    icon: "success",
+                                    timer: 1500
+                                });
+                                $("#DivCart").html(response);
+                            }
+                        });
+                    }
+                    else {
+                        swal({
+                            title: "Thông báo",
+                            text: "Số lượng sản phẩm đã hết!",
+                            icon: "warning",
+                            timer: 1500
+                        });
+                    }
+                }
+            });
+        });
+    });
+</script>
+<div class="banner_inner">
+    <div class="services-breadcrumb">
+        <div class="inner_breadcrumb">
+
+            <ul class="short">
+                <li>
+                    <a href="index.html">Trang chủ</a>
+                    <i>|</i>
+                </li>
+                <li>Chi tiết</li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+<section class="banner-bottom-wthreelayouts py-lg-5 py-3">
+    <div class="container">
+        <div class="inner-sec-shop pt-lg-4 pt-3">
+            <div class="row">
+                <div class="col-lg-4 single-right-left ">
+                    <div class="grid images_3_of_2">
+                        <div class="flexslider1">
+                            <ul class="slides">
+                                <li data-thumb="@Url.Content("~/Content/images/" + Model.image1)">
+                                    <div class="thumb-image"> <img src="@Url.Content("~/Content/images/" + Model.image1)" data-imagezoom="true" class="img-fluid" alt=" "> </div>
+                                </li>
+                                @if (Model.image2 != null)
+                                {
+                                    <li data-thumb="@Url.Content("~/Content/images/" + Model.image2)">
+                                        <div class="thumb-image"> <img src=@Url.Content("~/Content/images/" + Model.image2) data-imagezoom="true" class="img-fluid" alt=" "> </div>
+                                    </li>
+                                }
+                                @if (Model.image3 != null)
+                                {
+                                    <li data-thumb="@Url.Content("~/Content/images/" + Model.image3)">
+                                        <div class="thumb-image"> <img src="@Url.Content("~/Content/images/" + Model.image3)" data-imagezoom="true" class="img-fluid" alt=" "> </div>
+                                    </li>
+                                }
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 single-right-left simpleCart_shelfItem">
+                    <h3>@Model.name</h3>
+                    <p>
+                        <span class="item_price">@Model.promotionPrice.Value.ToString("#,##")₫</span>
+                        <del>@Model.price.Value.ToString("#,##")₫</del>
+                    </p>
+                    <div class="rating1">
+                        <ul class="stars">
+                            @{
+                                if (ViewBag.Rating == 5)
+                                {
+                                    <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+                                }
+                                else if (ViewBag.Rating == 4)
+                                {
+
+                                }
+                                else if (ViewBag.Rating == 3)
+                                {
+
+                                }
+                                else if (ViewBag.Rating == 2)
+                                {
+
+                                }
+                                else if (ViewBag.Rating == 1)
+                                {
+
+                                }
+                                else
+                                {
+
+                                }
+
+
+                            }
+                        </ul>
+                    </div>
+
+                    @*Infor Product*@
+                    <div class="occasional">
+                        <h5>Lượt xem: @Model.viewCount</h5>
+                        <h5>Thương hiệu: @Model.Producer.name</h5>
+                        <h5>Kho: @Model.quantity</h5>
+                        <h5>Đã bán: @Model.purchaseCount</h5>
+                        <div class="clearfix"> </div>
+                    </div>
+
+                    @*Add Cart*@
+                    <div class="occasion-cart">
+                        <div class="googles single-item singlepage">
+
+                            <button class="googles-cart pgoogles-cart AddItemInCart" data-id="@Model.id">
+                                Add to Cart
+                            </button>
+
+                        </div>
+                    </div>
+                    <ul class="footer-social text-left mt-lg-4 mt-3">
+                        <li>Share On : </li>
+                        <li class="mx-2">
+                            <a href="#">
+                                <span class="fab fa-facebook-f"></span>
+                            </a>
+                        </li>
+                        <li class="mx-2">
+                            <a href="#">
+                                <span class="fab fa-twitter"></span>
+                            </a>
+                        </li>
+                        <li class="mx-2">
+                            <a href="#">
+                                <span class="fab fa-google-plus-g"></span>
+                            </a>
+                        </li>
+                        <li class="mx-2">
+                            <a href="#">
+                                <span class="fab fa-linkedin-in"></span>
+                            </a>
+                        </li>
+                        <li class="mx-2">
+                            <a href="#">
+                                <span class="fas fa-rss"></span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+                <div class="clearfix"> </div>
+                <!--/tabs-->
+                <div class="responsive_tabs">
+                    <div id="horizontalTab">
+                        <ul class="resp-tabs-list">
+                            <li>Mô tả</li>
+                            <li>Đánh giá</li>
+                            <li>Hỏi đáp</li>
+                        </ul>
+                        <div class="resp-tabs-container">
+                            <!--/tab_one-->
+                            <div class="tab1">
+
+                                <div class="single_page">
+                                    <h6>@Model.name</h6>
+                                    <p>
+                                        @Model.descriptionn
+                                    </p>
+                                </div>
+                            </div>
+                            <!--//tab_one-->
+                            <div class="tab2">
+
+                                <div class="single_page">
+                                    <div class="bootstrap-tab-text-grids">
+                                        <div class="bootstrap-tab-text-grid">
+                                            <div class="bootstrap-tab-text-grid-left">
+                                                @if (ratings.Count() > 0)
+                                                {
+                                                    foreach (var item in ratings)
+                                                    {
+                                                        <a href="#">@item.Member.fullName (@ViewBag.Rating/5)</a>
+                                                        <div style="background-color:lightgray">
+                                                            <p style="color:black">@item.content</p>
+                                                        </div>
+                                                        <hr />
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <p>Chưa có đánh giá</p>
+                                                }
+                                            </div>
+                                            <div class="clearfix"> </div>
+                                        </div>
+                                        <div class="add-review">
+                                            <h4>add a review</h4>
+                                            <form action="#" method="post">
+                                                <input class="form-control" type="text" name="Name" placeholder="Enter your email..." required="">
+                                                <input class="form-control" type="email" name="Email" placeholder="Enter your email..." required="">
+                                                <textarea name="Message" required=""></textarea>
+                                                <input type="submit" value="SEND">
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="tab3">
+                                <div class="single_page">
+                                    <div class="bootstrap-tab-text-grid">
+                                        <div class="bootstrap-tab-text-grid-left">
+                                        <div id="qaContainer">
+                                            <hr />
+                                            @if (qAs.Count() > 0)
+                                            {
+                                                foreach (var item in qAs)
+                                                {
+                                                    <p><label style="color:black">@item.Member.fullName:</label>  @item.dateQuestion</p>
+                                                    <p style="color:black">@item.question</p>
+                                                    if (item.answer != null)
+                                                    {
+                                                        <div style="background-color:lightgray">
+                                                            <p><label style="color:brown">@item.Employee.fullName  <span class="label label-warning">Quản trị viên</span> </label>  @item.dateAnswer</p>
+                                                            <p style="color:black">@item.answer</p>
+                                                        </div>
+                                                    }
+                                                    <hr />
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <p>Chưa có câu hỏi nào</p>
+                                            }
+
+                                        </div>
+                                        </div>
+                                        <div class="clearfix"> </div>
+                                    </div>
+                                    <div class="single_page">
+                                        <div class="add-review">
+                                            @if (Session["Member"] != null)
+                                            {
+                                                <h4>Thêm câu hỏi</h4>
+                                                using (Ajax.BeginForm("AddQuestion", "Product", new AjaxOptions
+                                                {
+                                                    InsertionMode = InsertionMode.Replace,
+                                                    HttpMethod = "GET",
+                                                    LoadingElementId = "ajax-loader",
+                                                    UpdateTargetId = "qaContainer",
+
+                                                }))
+                                                {
+                                                    <input value="@member.id" hidden="hidden" name="memberID" />
+                                                    <input value="@Model.id" hidden="hidden" name="productID" />
+                                                    <input type="text" name="Question" id="content2" hidden="hidden" />
+                                                    <textarea name="Message" required="" id="Textarea2" placeholder="Nội dung câu hỏi..."></textarea>
+                                                    <input type="submit" value="Đăng" class="btnPost">
+
+                                                }
+                                                <div class="ajax-loader"></div>
+                                            }
+                                            else
+                                            {
+                                                <a class="btn btn-info" href="@Url.Action("Login","Home")">Đăng nhập để đăng câu hỏi</a>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <!--//tabs-->
+
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <!--/slide-->
+        <div class="slider-img mid-sec mt-lg-5 mt-2 px-lg-5 px-3">
+            <!--//banner-sec-->
+            <h3 class="tittle-w3layouts text-left my-lg-4 my-3">Featured Products</h3>
+            <div class="mid-slider">
+                <div class="owl-carousel owl-theme row">
+                    <div class="item">
+                        <div class="gd-box-info text-center">
+                            <div class="product-men women_two bot-gd">
+                                <div class="product-googles-info slide-img googles">
+                                    <div class="men-pro-item">
+                                        <div class="men-thumb-item">
+                                            <img src="images/s5.jpg" class="img-fluid" alt="">
+                                            <div class="men-cart-pro">
+                                                <div class="inner-men-cart-pro">
+                                                    <a href="single.html" class="link-product-add-cart">Quick View</a>
+                                                </div>
+                                            </div>
+                                            <span class="product-new-top">New</span>
+                                        </div>
+                                        <div class="item-info-product">
+
+                                            <div class="info-product-price">
+                                                <div class="grid_meta">
+                                                    <div class="product_price">
+                                                        <h4>
+                                                            <a href="single.html">Fastrack Aviator </a>
+                                                        </h4>
+                                                        <div class="grid-price mt-2">
+                                                            <span class="money ">$325.00</span>
+                                                        </div>
+                                                    </div>
+                                                    <ul class="stars">
+                                                        <li>
+                                                            <a href="#">
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#">
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#">
+                                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#">
+                                                                <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#">
+                                                                <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="googles single-item hvr-outline-out">
+                                                    <form action="#" method="post">
+                                                        <input type="hidden" name="cmd" value="_cart">
+                                                        <input type="hidden" name="add" value="1">
+                                                        <input type="hidden" name="googles_item" value="Fastrack Aviator">
+                                                        <input type="hidden" name="amount" value="325.00">
+                                                        <button type="submit" class="googles-cart pgoogles-cart">
+                                                            <i class="fas fa-cart-plus"></i>
+                                                        </button>
+                                                    </form>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--//slider-->
+    </div>
+</section>
+
+

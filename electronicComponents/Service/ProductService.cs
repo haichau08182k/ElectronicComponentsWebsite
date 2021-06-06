@@ -133,6 +133,13 @@ namespace electronicComponents.Service
                 _unitOfWork.GetRepositoryInstance<ProductViewed>().Remove(item);
             }
         }
+
+        public void AddViewCount(int ID)
+        {
+            Product product = _unitOfWork.GetRepositoryInstance<Product>().GetFirstorDefault(ID);
+            product.viewCount += 1;
+            _unitOfWork.GetRepositoryInstance<Product>().Update(product);
+        }
     }
 
 }

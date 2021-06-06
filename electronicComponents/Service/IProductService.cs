@@ -20,5 +20,6 @@ namespace electronicComponents.Service
         List<SelectListItem> GetSupplier();
         void AddProductViewByMember(int productID, int memberID);
         void DeleteProductViewed(int memberID);
+        void AddViewCount(int ID);
     }
 }

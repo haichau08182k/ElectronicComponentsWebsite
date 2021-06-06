@@ -1,0 +1,79 @@
+﻿@model IEnumerable<electronicComponents.DAL.OrderShip>
+@{
+    ViewBag.Title = "NotApproval";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="main-content">
+
+    <!-- content -->
+    <div class="container-fluid content-top-gap">
+
+        <!-- breadcrumbs -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb my-breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Quản lý</li>
+                <li class="breadcrumb-item active" aria-current="page">Loại sản phẩm</li>
+            </ol>
+        </nav>
+        <!-- //breadcrumbs -->
+        <!-- pricing -->
+        <section class="pricing">
+
+            <div class="card mb-3">
+                <div class="p-3 card card_border">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>MĐĐH</th>
+                                        <th>Tên khách hàng</th>
+                                        <th>Ngày đặt</th>
+                                        <th>Ngày giao</th>
+                                        <th>Ưu đãi</th>
+                                        <th>Action</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>MĐĐH</th>
+                                        <th>Tên khách hàng</th>
+                                        <th>Ngày đặt</th>
+                                        <th>Ngày giao</th>
+                                        <th>Ưu đãi</th>
+                                        <th>Action</th>
+
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.id</td>
+                                            <td>@item.Customer.fullName</td>
+                                            <td>@item.dateOrder</td>
+                                            <td>@item.dateShip</td>
+                                            <td>@item.offer</td>
+                                            <td>  @Html.ActionLink("Chi tiết", "Detail", new { ID = item.id }, null)</td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </section>
+
+
+    </div>
+</div>

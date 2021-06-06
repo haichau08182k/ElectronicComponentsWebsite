@@ -14,11 +14,17 @@ namespace electronicComponents.Controllers
         private IMemberService _memberService;
         private IProductService _productService;
         private ICartService _cartService;
-        public HomeController(IMemberService memberService, IProductService productService, ICartService cartService)
+        private IOrderDetailService _orderDetailService;
+
+        private IRatingService _ratingService;
+
+        public HomeController(IMemberService memberService, IProductService productService, ICartService cartService, IOrderDetailService orderDetailService, IRatingService ratingService)
         {
             _memberService = memberService;
             _productService = productService;
             _cartService = cartService;
+            _orderDetailService = orderDetailService;
+            _ratingService = ratingService;
         }
         public ActionResult Index()
         {
@@ -125,6 +131,15 @@ namespace electronicComponents.Controllers
             ViewBag.listFeatured = listProductSelling;
             return PartialView();
         }
-        
+        [HttpPost]
+        public ActionResult Rating(Rating rating, int OrderDetailID)
+        {
+            Member member = Session["Member"] as Member;
+            rating.memberID = member.id;
+            _ratingService.AddRating(rating);
+            _orderDetailService.SetIsRating(OrderDetailID);
+            string urlBase = Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~");
+            return Redirect(urlBase);
+        }
     }
 }

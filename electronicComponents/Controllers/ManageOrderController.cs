@@ -11,13 +11,13 @@ using System.Web.Mvc;
 
 namespace electronicComponents.Controllers
 {
-    public class OrderManageController : Controller
+    public class ManageOrderController : Controller
     {
         private IOrderService _orderService;
         private ICustomerService _customerService;
         private IOrderDetailService _orderDetailService;
         private IProductService _productService;
-        public OrderManageController(IOrderService orderService, ICustomerService customerService, IOrderDetailService orderDetailService, IProductService productService)
+        public ManageOrderController(IOrderService orderService, ICustomerService customerService, IOrderDetailService orderDetailService, IProductService productService)
         {
             _orderService = orderService;
             _customerService = customerService;
@@ -36,7 +36,7 @@ namespace electronicComponents.Controllers
 
             IEnumerable<Customer> customerList = _customerService.GetAll();
             ViewBag.CustomerList = customerList;
-            return View();
+            return View(orderList);
         }
         public ActionResult NotDelivery(int page = 1)
         {
@@ -89,7 +89,7 @@ namespace electronicComponents.Controllers
 
             IEnumerable<Customer> customerList = _customerService.GetAll();
             ViewBag.CustomerList = customerList;
-            return View(orderListPaging);
+            return View(orderList);
         }
         [HttpGet]
         public ActionResult OrderApproval(int ID)
@@ -97,7 +97,7 @@ namespace electronicComponents.Controllers
             OrderShip order = _orderService.Approved(ID);
             //Get email customer
             string Email = _customerService.GetEmailByID(order.customerID.Value);
-            SentMail("Đơn hàng của bạn đã được duyệt", Email, "cthai1800461@student.ctuet.edu.vn", "il0vey0u", "Vào đơn hàng của bạn để xem thông tin chi tiết");
+            SentMail("Đơn hàng của bạn đã được duyệt", Email, "haichau0818@gmail.com", "id0ntkn0w", "Vào đơn hàng của bạn để xem thông tin chi tiết");
             return RedirectToAction("ApprovedAndNotDelivery");
         }
         [HttpGet]
@@ -107,7 +107,7 @@ namespace electronicComponents.Controllers
             //Get email customer
             string Email = _customerService.GetEmailByID(order.customerID.Value);
             string urlBase = Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~");
-            SentMail("Đơn hàng của bạn đã được giao cho đối tác vận chuyển", Email, "cthai1800461@student.ctuet.edu.vn", "il0vey0u", "Vào đơn hàng của bạn để xem thông tin chi tiết. Sau khi nhận được đơn hàng, bạn vui lòng click vào link sau để xác nhận đã nhận được đơn hàng từ đơn vị vận chuyển: " + urlBase + "/OrderManage/Received/" + ID + "");
+            SentMail("Đơn hàng của bạn đã được giao cho đối tác vận chuyển", Email, "haichau0818@gmail.com", "id0ntkn0w", "Vào đơn hàng của bạn để xem thông tin chi tiết. Sau khi nhận được đơn hàng, bạn vui lòng click vào link sau để xác nhận đã nhận được đơn hàng từ đơn vị vận chuyển: " + urlBase + "/OrderManage/Received/" + ID + "");
             return RedirectToAction("DeliveredList");
         }
         [HttpGet]

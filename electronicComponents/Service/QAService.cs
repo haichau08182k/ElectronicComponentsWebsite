@@ -10,9 +10,9 @@ namespace electronicComponents.Service
     public class QAService : IQAService
     {
         private readonly GenericUnitOfWork _unitOfWork;
-        public QAService(GenericUnitOfWork repositoryContext)
+        public QAService(GenericUnitOfWork repository_unitOfWork)
         {
-            this._unitOfWork = repositoryContext;
+            this._unitOfWork = repository_unitOfWork;
         }
         public QA AddQA(QA qA)
         {

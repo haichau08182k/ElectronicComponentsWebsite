@@ -1,4 +1,5 @@
 ﻿using electronicComponents.DAL;
+using System.Collections.Generic;
 
 namespace electronicComponents.Service
 {
@@ -10,5 +11,7 @@ namespace electronicComponents.Service
         Member GetByID(int ID);
         void UpdateCapcha(int ID, string capcha);
         void UpdateMember(Member member);
-    }
+        void UpdateAmountPurchased(int ID, decimal AmountPurchased);
+        IEnumerable<Member> GetMemberList();
+       }
 }

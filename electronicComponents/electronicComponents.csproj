@@ -165,6 +165,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\ManageOrderController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SweetController.cs" />
     <Compile Include="DAL\AccessTimeCount.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -301,6 +302,7 @@
     <Compile Include="Service\IOrderService.cs" />
     <Compile Include="Service\IProductService.cs" />
     <Compile Include="Service\IQAService.cs" />
+    <Compile Include="Service\IRatingService.cs" />
     <Compile Include="Service\IRoleService.cs" />
     <Compile Include="Service\LoginService.cs" />
     <Compile Include="Service\MemberService.cs" />
@@ -308,6 +310,7 @@
     <Compile Include="Service\OrderService.cs" />
     <Compile Include="Service\ProductService.cs" />
     <Compile Include="Service\QAService.cs" />
+    <Compile Include="Service\RatingService.cs" />
     <Compile Include="Service\RoleService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1824,6 +1827,7 @@
     <Content Include="Content\images\team3.jpg" />
     <Content Include="Content\images\team4.jpg" />
     <Content Include="Content\images\up_arrow.png" />
+    <Content Include="Content\images\user.png" />
     <Content Include="Content\js\bootstrap.js" />
     <Content Include="Content\js\classie-search.js" />
     <Content Include="Content\js\creditly.js" />
@@ -2038,15 +2042,22 @@
     <Content Include="Views\Home\Product.cshtml" />
     <Content Include="Views\Home\NewProductPartial.cshtml" />
     <Content Include="Views\Home\FeaturedProductPartial.cshtml" />
-    <Content Include="Views\Home\LoginPartial.cshtml" />
     <Content Include="Views\Cart\CartPartial.cshtml" />
     <Content Include="Views\Cart\Checkout.cshtml" />
     <Content Include="Views\Shared\_CheckoutLayout.cshtml" />
     <Content Include="Views\Shared\_ProductLayout.cshtml" />
-    <Content Include="Views\OrderManage\NotApproval.cshtml" />
-    <Content Include="Views\Shared\_AddAdminLayout.cshtml" />
+    <Content Include="Views\ManageOrder\NotApproval.cshtml" />
     <Content Include="Views\Admin\Charts.cshtml" />
     <Content Include="Views\Cart\Message.cshtml" />
+    <Content Include="Views\ManageOrder\Detail.cshtml" />
+    <Content Include="Views\ManageOrder\ApprovedAndNotDelivery.cshtml" />
+    <Content Include="Views\ManageOrder\DeliveredAndPaid.cshtml" />
+    <Content Include="Views\ManageOrder\DeliveredList.cshtml" />
+    <Content Include="Views\Member\OrderDetail.cshtml" />
+    <Content Include="Views\Member\CheckoutOrder.cshtml" />
+    <Content Include="Views\Shared\_ProductDetailLayout.cshtml" />
+    <Content Include="Views\Product\Details.cshtml" />
+    <Content Include="Views\Product\_QAPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -554,6 +554,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Product_Producer">
+    <End Role="Producer" Type="Self.Producer" Multiplicity="0..1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Producer">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="producerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fk_pv_idm">
     <End Role="Member" Type="Self.Member" Multiplicity="0..1" />
     <End Role="ProductViewed" Type="Self.ProductViewed" Multiplicity="*" />
@@ -751,6 +763,10 @@
     </AssociationSet>
     <AssociationSet Name="fk_pd_id" Association="Self.fk_pd_id">
       <End Role="ProductCategory" EntitySet="ProductCategory" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Product_Producer" Association="Self.FK_Product_Producer">
+      <End Role="Producer" EntitySet="Producer" />
       <End Role="Product" EntitySet="Product" />
     </AssociationSet>
     <AssociationSet Name="fk_pv_idm" Association="Self.fk_pv_idm">

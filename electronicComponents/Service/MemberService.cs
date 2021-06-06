@@ -58,5 +58,17 @@ namespace electronicComponents.Service
             member.capcha = capcha;
             UpdateMember(member);
         }
+        public void UpdateAmountPurchased(int ID, decimal AmountPurchased)
+        {
+            Member member = _unitOfWork.GetRepositoryInstance<Member>().GetFirstorDefault(ID);
+            member.amountPurchased += AmountPurchased;
+            _unitOfWork.GetRepositoryInstance<Member>().Update(member);
+        }
+        public IEnumerable<Member> GetMemberList()
+        {
+            IEnumerable<Member> listMember = this._unitOfWork.GetRepositoryInstance<Member>().GetAllRecords();
+            return listMember;
+        }
+
     }
 }
