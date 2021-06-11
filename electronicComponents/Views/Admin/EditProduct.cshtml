@@ -76,12 +76,7 @@
                             </div>
 
 
-                            <div class="form-group">
-                                <h5 class="card-title">Clip Review</h5>
-                                @Html.EditorFor(model => model.clipReview, new { htmlAttributes = new { @class = "form-control input-style" } })
-                                @Html.ValidationMessageFor(model => model.clipReview, "", new { @class = "text-danger" })
-
-                            </div>
+                           
                             <div class="form-group">
                                 <h5 class="card-title">Hình ảnh 1</h5>
                                 <div class="custom-file">
@@ -130,15 +125,7 @@
                             @{
                                 List<SelectListItem> dataSup = ViewBag.SupplierList;
                             }
-                            <div class="form-group">
-
-                                <h5 class="card-title">Nhà cung cấp</h5>
-
-                                @Html.DropDownListFor(model => model.supplierID, dataSup, new { @class = "custom-select input-style" })
-                                @Html.ValidationMessageFor(model => model.supplierID, "", new { @class = "text-danger" })
-
-                            </div>
-
+                        
                             @{
                                 List<SelectListItem> dataPro = ViewBag.ProducerList;
                             }
@@ -155,22 +142,22 @@
 
 
 
-                            <div class="form-group">
+                            @*<div class="form-group">
 
                                 @Html.CheckBox("homeFlag")
                                 @Html.ValidationMessageFor(model => model.homeFlag, "", new { @class = "text-danger" })
 
                                 <label class="input__label">Hiển thị trang chủ</label>
-                            </div>
+                            </div>*@
 
 
-                            <div class="form-group">
+                            @*<div class="form-group">
 
                                 @Html.CheckBox("hotFlag")
                                 @Html.ValidationMessageFor(model => model.hotFlag, "", new { @class = "text-danger" })
 
                                 <label class="input__label">Sản phẩm hot</label>
-                            </div>
+                            </div>*@
 
 
 

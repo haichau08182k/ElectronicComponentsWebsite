@@ -30,6 +30,15 @@ namespace electronicComponents.Service
 
         }
 
+        public ProductCategory GetProductCateID(int ID)
+        {
+            return this._unitOfWork.GetRepositoryInstance<ProductCategory>().GetFirstorDefault(ID);
+        }
+        public IEnumerable<Product> GetProductListByCategory(int ProductCategoryID)
+        {
+            IEnumerable<Product> listProduct = this._unitOfWork.GetRepositoryInstance<Product>().GetAllRecords(x => x.categoryID == ProductCategoryID && x.isActive == true);
+            return listProduct;
+        }
 
         public List<SelectListItem> GetCategory()
         {
@@ -87,7 +96,8 @@ namespace electronicComponents.Service
             IEnumerable<Product> listProduct = this._unitOfWork.GetRepositoryInstance<Product>().GetListParameter(x => x.isNew == true && x.isActive == true);
             return listProduct;
         }
-      
+
+       
 
         public IEnumerable<ProductCategoryParent> GetProductCategoryParentList()
         {
@@ -139,6 +149,23 @@ namespace electronicComponents.Service
             Product product = _unitOfWork.GetRepositoryInstance<Product>().GetFirstorDefault(ID);
             product.viewCount += 1;
             _unitOfWork.GetRepositoryInstance<Product>().Update(product);
+        }
+
+
+        public List<string> GetProductListName(string keyword)
+        {
+            IEnumerable<Product> listProductName = this._unitOfWork.GetRepositoryInstance<Product>().GetAllRecords(x => x.name.Contains(keyword) && x.isActive == true);
+            List<string> names = new List<string>();
+            foreach (var item in listProductName)
+            {
+                names.Add(item.name);
+            }
+            return names;
+        }
+        public IEnumerable<Product> GetProductList(string keyWord)
+        {
+            IEnumerable<Product> listProduct = this._unitOfWork.GetRepositoryInstance<Product>().GetAllRecords(x => x.name.Contains(keyWord) && x.isActive == true);
+            return listProduct;
         }
     }
 

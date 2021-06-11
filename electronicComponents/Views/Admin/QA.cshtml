@@ -1,0 +1,298 @@
+﻿@model IEnumerable<electronicComponents.DAL.QA>
+@{
+    ViewBag.Title = "QA";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using electronicComponents.DAL
+@{
+    Employee employee = Session["Employee"] as Employee;
+}
+<!-- Template CSS -->
+<link rel="stylesheet" href="~/AdminStyle/assets/css/style-starter.css">
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="~/Scripts/bootbox.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script>
+    $(document).ready(function () {
+        //$('#btnAddNew').off('click').on('click', function () {
+        //    $('#modalAdd').modal('show');
+        //});
+        $('.btnEdit').off('click').on('click', function () {
+            var id = $(this).attr("data-id");
+            $('#modalAdd').modal('show');
+            $.ajax({
+                url: '/Admin/Edit',
+                data: {
+                    id: id
+                },
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        $('#ID').val(response.ID);
+                        $('#MemberID').val(response.MemberID);
+                        $('#ProductID').val(response.ProductID);
+                        $('#Question').val(response.Question);
+                        $('#Answer').val(response.Answer);
+                        var newFormattedDate = $.datepicker.formatDate('dd/mm/yy', new Date(Date(response.DateQuestion)));
+                        $('#DateQuestion').val(newFormattedDate);
+                    }
+                    else {
+                        bootbox.alert(response.message);
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+        $('.btnAnswer').off('click').on('click', function () {
+            var id = $(this).attr("data-id");
+            $('#modalAdd').modal('show');
+            $.ajax({
+                url: '/Admin/Edit',
+                data: {
+                    id: id
+                },
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        $('#ID').val(response.ID);
+                        $('#MemberID').val(response.MemberID);
+                        $('#ProductID').val(response.ProductID);
+                        $('#Question').val(response.Question);
+                        var newFormattedDate = $.datepicker.formatDate('mm/dd/yy', new Date(Date(response.DateQuestion)));
+                        $('#DateQuestion').val(newFormattedDate);
+                    }
+                    else {
+                        bootbox.alert(response.message);
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+    });
+</script>
+
+
+<!-- google fonts -->
+<link href="~/AdminStyle/fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap" rel="stylesheet">
+<div class="main-content">
+
+
+    <!-- content -->
+    <div class="container-fluid content-top-gap">
+
+        <!-- breadcrumbs -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb my-breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Quản lý</li>
+                <li class="breadcrumb-item active" aria-current="page">Loại sản phẩm</li>
+            </ol>
+        </nav>
+        <!-- //breadcrumbs -->
+        <!-- pricing -->
+        <section class="pricing">
+
+            <div class="card mb-3">
+                <div class="p-3 card card_border">
+                    <div class="pl-0 pt-0 card-header chart-grid__header">
+                        <a href="../Admin/AddCategories" class="btn btn-style border-btn pull-right">Thêm mới </a>
+                    </div>
+                    @using (Html.BeginForm())
+                    {
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Tên TV
+                                            </th>
+                                            <th>
+                                                Tên SP
+                                            </th>
+                                            <th>
+                                                Ảnh
+                                            </th>
+                                            <th>
+                                                Câu hỏi
+                                            </th>
+                                            <th>
+                                                Câu trả lời
+                                            </th>
+                                            <th>
+                                                Ngày hỏi
+                                            </th>
+                                            <th>
+                                                Ngày trả lời
+                                            </th>
+                                            <th>
+                                                Nhân viên
+                                            </th>
+                                            <th>
+                                                Trạng thái
+                                            </th>
+                                            <th></th>
+
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>
+                                                Tên TV
+                                            </th>
+                                            <th>
+                                                Tên SP
+                                            </th>
+                                            <th>
+                                                Ảnh
+                                            </th>
+                                            <th>
+                                                Câu hỏi
+                                            </th>
+                                            <th>
+                                                Câu trả lời
+                                            </th>
+                                            <th>
+                                                Ngày hỏi
+                                            </th>
+                                            <th>
+                                                Ngày trả lời
+                                            </th>
+                                            <th>
+                                                Nhân viên
+                                            </th>
+                                            <th>
+                                                Trạng thái
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+
+                                    @{
+                                        int counter1 = 0;
+                                    }
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            @Html.Hidden(item.id.ToString())
+                                            <tr>
+                                                <td style="color:brown">
+                                                    <b>@Html.DisplayFor(modelItem => item.Member.fullName)</b>
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Product.name)
+                                                </td>
+                                                <td>
+                                                    <img src="@Url.Content("~/Content/images/" + item.Product.image1)" width="50" height="50" />
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.question)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.answer)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.dateQuestion)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.dateAnswer)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Employee.fullName)
+                                                </td>
+                                                <td>
+                                                    <div id="DivActive@(counter1)">
+                                                        @if (item.statuss == true)
+                                                        {
+                                                            <span class="label label-success">Đã trả lời</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="label label-danger">Chưa trả lời</span>
+                                                        }
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    @if (item.statuss == true)
+                                                    {
+
+                                                        if (item.employeeID == employee.id)
+                                                        {
+                                                            <a class="btn btn-primary btnEdit" data-id="@item.id">Sửa</a>
+                                                        }
+                                                        else
+                                                        {
+
+                                                            <a class="btn btn-primary btnEdit" data-id="@item.id" disabled="disabled">Sửa</a>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <a class="btn btn-primary btnAnswer" data-id="@item.id">T.lời</a>
+                                                    }
+                                                </td>
+                                            </tr>
+                                            @(counter1++)
+                                        }
+                                        @(counter1 = 0)
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+            </div>
+
+
+        </section>
+
+
+    </div>
+</div>
+
+<div class="modal fade" id="modalAdd" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Chỉnh sửa</h4>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Answer", "Admin", FormMethod.Post))
+                {
+                    <input type="text" name="ID" id="ID" hidden="hidden" />
+                    <input type="text" name="MemberID" id="MemberID" hidden="hidden" />
+                    <input type="text" name="ProductID" id="ProductID" hidden="hidden" />
+                    <input type="text" name="DateQuestion" id="DateQuestion" hidden="hidden" />
+                    <div class="form-group">
+                        <label for="Name">Câu hỏi:</label>
+                        <input type="text" class="form-control" name="Question" id="Question" readonly="readonly">
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Câu trả lời:</label>
+                        <textarea class="form-control" name="Answer" id="Answer" style="resize:vertical"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

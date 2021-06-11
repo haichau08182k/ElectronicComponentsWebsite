@@ -10,11 +10,24 @@ using Newtonsoft.Json;
 using electronicComponents.Service;
 using System.IO;
 using System.Web.Security;
+using System.Net;
 
 namespace electronicComponents.Controllers
 {
     public class AdminController : Controller
     {
+        private IQAService _qAService;
+        private IProductService _productService;
+        private IMemberService _memberService;
+        private IEmployeeService _emloyeeService;
+
+        public AdminController(IQAService qAService, IProductService productService, IMemberService memberService, IEmployeeService emloyeeService)
+        {
+            _qAService = qAService;
+            _productService = productService;
+            _memberService = memberService;
+            _emloyeeService = emloyeeService;
+        }
 
         public GenericUnitOfWork _unitOfWork = new GenericUnitOfWork();
         // GET: Admin
@@ -463,6 +476,74 @@ namespace electronicComponents.Controllers
         public ActionResult Charts()
         {
             return View();
+        }
+
+        public ActionResult QA()
+        {
+
+
+            //if (Session["Emloyee"] == null)
+            //{
+            //    return RedirectToAction("Login", "Admin");
+            //}
+            //int pageSize = 5;
+            //Get qAs list
+            IEnumerable<QA> qAs = _qAService.GetQAList().OrderBy(x => x.dateQuestion);
+            //Check null
+            if (qAs != null)
+            {
+                //Return view
+                return View(qAs);
+            }
+            else
+            {
+                //return 404
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            if (id == null)
+            {
+                return null;
+            }
+            //Get product catetgory
+            var qAs = _qAService.GetQAByID(id);
+            if (qAs == null)
+            {
+                return null;
+            }
+            return Json(new
+            {
+                ID = qAs.id,
+                MemberID = qAs.memberID,
+                ProductID = qAs.productID,
+                Question = qAs.question,
+                Answer = qAs.answer,
+                status = true,
+                DateQuestion=qAs.dateQuestion
+            }, JsonRequestBehavior.AllowGet);;
+        }
+        [HttpPost]
+        public ActionResult Edit(QA qA, string DateQuestion)
+        {
+            qA.dateQuestion = DateTime.Now;
+            Employee emloyee = Session["Employee"] as Employee;
+            qA.employeeID = emloyee.id;
+            _qAService.UpdateQA(qA);
+            return RedirectToAction("QA");
+        }
+        [HttpPost]
+        public ActionResult Answer(QA qA, string DateQuestion)
+        {
+            qA.dateQuestion = DateTime.Now;
+            Employee emloyee = Session["Employee"] as Employee;
+            qA.employeeID = emloyee.id;
+            _qAService.UpdateQA(qA);
+            return RedirectToAction("QA");
         }
     }
 }

@@ -14,7 +14,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav nav-mega mx-auto">
             <li class="nav-item active">
-                <a class="nav-link ml-lg-0" href="../Home/index">
+                <a class="nav-link ml-lg-0" href="/Home/index">
                     Trang chủ
                     <span class="sr-only">(current)</span>
                 </a>
@@ -40,7 +40,7 @@
                                         {
                                             <ul>
                                                 <li class="media-mini mt-3">
-                                                    <a href="shop.html">@item1.name</a>
+                                                    <a href="@Url.Action("ProductCategory","Product",new { ID=item1.id})">@item1.name</a>
                                                 </li>
 
                                             </ul>
@@ -51,19 +51,20 @@
                                 }
                                 else if (couter == 2)
                                 {
-                                        <div class="col-md-4 media-list span4 text-left">
-                                            <h5 class="tittle-w3layouts-sub"> @item.name </h5>
-                                            @foreach (var item1 in productCategories)
-                                            {
-                                                <ul>
-                                                    <li class="media-mini mt-3">
-                                                        <a href="shop.html">@item1.name</a>
-                                                    </li>
+                                    <div class="col-md-4 media-list span4 text-left">
+                                        <h5 class="tittle-w3layouts-sub"> @item.name </h5>
+                                        @foreach (var item1 in productCategories)
+                                        {
+                                            <ul>
 
-                                                </ul>
-                                            }
+                                                <li class="media-mini mt-3">
+                                                    <a href="@Url.Action("ProductCategory","Product",new { ID=item1.id})">@item1.name</a>
+                                                </li>
 
-                                        </div>
+                                            </ul>
+                                        }
+
+                                    </div>
                                     couter++;
                                 }
                                 else if (couter == 3)
@@ -74,7 +75,7 @@
                                         {
                                             <ul>
                                                 <li class="media-mini mt-3">
-                                                    <a href="shop.html">@item1.name</a>
+                                                    <a href="@Url.Action("ProductCategory","Product",new { ID=item1.id})">@item1.name</a>
                                                 </li>
 
                                             </ul>
@@ -91,7 +92,7 @@
                                         {
                                             <ul>
                                                 <li class="media-mini mt-3">
-                                                    <a href="shop.html">@item1.name</a>
+                                                    <a href="@Url.Action("ProductCategory","Product",new { ID=item1.id})">@item1.name</a>
                                                 </li>
 
                                             </ul>
@@ -108,12 +109,12 @@
                     </li>
                 </ul>
             </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link" href="../Home/Product">Shop</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Liên hệ</a>
-                        </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link" href="../Home/Product">Shop</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="contact.html">Liên hệ</a>
+            </li>
         </ul>
 
     </div>

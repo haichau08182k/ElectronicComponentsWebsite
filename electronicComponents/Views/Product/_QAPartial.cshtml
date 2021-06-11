@@ -1,17 +1,28 @@
-﻿
+﻿@using electronicComponents.DAL
+@model Product
 @{
-    Layout = null;
+    IEnumerable<QA> qAs = ViewBag.QAList as IEnumerable<QA>;
+    IEnumerable<Member> members = ViewBag.MemberList as IEnumerable<Member>;
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>_QAPartial</title>
-</head>
-<body>
-    <div> 
-    </div>
-</body>
-</html>
+<hr />
+@if (qAs.Count() > 0)
+{
+    foreach (var item in qAs)
+    {
+        <p><label style="color:black">@item.Member.fullName:</label>  @item.dateQuestion.Value</p>
+        <p style="color:black">@item.question</p>
+        if (item.answer != null)
+        {
+            <div style="background-color:lightgray">
+                <p><label style="color:brown">@item.Employee.fullName  <span class="label label-warning">Quản trị viên</span> </label>  @item.dateAnswer.Value</p>
+                <p style="color:black">@item.answer</p>
+            </div>
+        }
+        <hr />
+    }
+}
+else
+{
+    <p>Chưa có câu hỏi nào</p>
+}

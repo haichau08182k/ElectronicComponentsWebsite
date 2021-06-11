@@ -1,5 +1,6 @@
 ﻿using electronicComponents.DAL;
 using electronicComponents.Service;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,30 +14,22 @@ namespace electronicComponents.Controllers
         private IProductService _productService;
         //private IProducerService _producerService;
         //private ISupplierService _supplierService;
-        //private IProductCategoryService _productCategoryService;
-     
-        //private IProductCategoryParentService _productCategoryParentService;
-   
+
+
         private IMemberService _memberService;
         private IQAService _qaService;
         private IEmployeeService _emloyeeService;
-        //private IProductViewedService _productViewedService;
         private IRatingService _ratingService;
         private IOrderDetailService _orderDetailService;
 
-        public ProductController(IProductService productService, /*IProducerService producerService*/ IMemberService memberService, IQAService qAService, IRatingService ratingService, IOrderDetailService orderDetailService,IEmployeeService emloyeeService)
+        public ProductController(IProductService productService, /*IProducerService producerService*/ IMemberService memberService, IQAService qAService, IRatingService ratingService, IOrderDetailService orderDetailService, IEmployeeService emloyeeService)
         {
             _productService = productService;
-           // _producerService = producerService;
+            // _producerService = producerService;
             //_supplierService = supplierService;
-            //_productCategoryService = productCategoryService;
-            //_ageService = ageService;
-            //_productCategoryParentService = productCategoryParentService;
-            //_genderService = genderService;
             _memberService = memberService;
             _qaService = qAService;
             _emloyeeService = emloyeeService;
-            //_productViewedService = productViewedService;
             _ratingService = ratingService;
             _orderDetailService = orderDetailService;
         }
@@ -88,7 +81,7 @@ namespace electronicComponents.Controllers
             ViewBag.ListRating = _ratingService.GetListRating(ID);
             return View(product);
         }
-        [HttpGet]
+        [HttpPost]
         public ActionResult AddQuestion(int productID, int memberID, string Question)
         {
             QA qa = new QA();
@@ -98,6 +91,7 @@ namespace electronicComponents.Controllers
             qa.dateQuestion = DateTime.Now;
             qa.dateAnswer = DateTime.Now;
             qa.employeeID = 1;
+            qa.statuss = false;
             _qaService.AddQA(qa);
 
             IEnumerable<QA> listQA = _qaService.GetQAByProductID(productID).OrderByDescending(x => x.dateQuestion);
@@ -105,6 +99,101 @@ namespace electronicComponents.Controllers
             IEnumerable<Member> listMember = _memberService.GetMemberList();
             ViewBag.MemberList = listMember;
             return PartialView("_QAPartial");
+
+        }
+
+        public ActionResult ProductPartial(Product product)
+        {
+
+            ViewBag.Rating = _ratingService.GetRating(product.id);
+            return PartialView(product);
+        }
+        public ActionResult ProductFeaturePartial(Product product)
+        {
+            ViewBag.Rating = _ratingService.GetRating(product.id);
+            var products = _productService.GetListSellingProduct();
+            ViewBag.ProSelling = products;
+            return PartialView(product);
+        }
+
+
+
+        public ActionResult NewProduct(int page = 1)
+        {
+            var listProduct = _productService.GetListProduct().OrderByDescending(x => x.viewCount).Take(5);
+            ViewBag.ListProduct = listProduct;
+            var ProSelling = _productService.GetListSellingProduct();
+            ViewBag.ListProSelling = ProSelling;
+
+            PagedList<Product> listProductPaging;
+            IEnumerable<Product> products = _productService.GetListProductNew();
+            listProductPaging = new PagedList<Product>(products, page, 12);
+
+            var product = _productService.GetListProductNew();
+            ViewBag.ProductNew = products;
+            
+
+            return View(listProductPaging);
+        }
+
+        public ActionResult ProductCategory(int ID, int page =1)
+        {
+            var listProduct = _productService.GetListProduct().OrderByDescending(x => x.viewCount).Take(5);
+            ViewBag.ListProduct = listProduct;
+
+            ViewBag.productCategoryID = ID;
+            ProductCategory productCategory = _productService.GetProductCateID(ID);
+            ViewBag.Name = "Danh mục " + productCategory.name;
+
+            PagedList<Product> listProductPaging;
+            IEnumerable<Product> products = _productService.GetProductListByCategory(ID);
+            listProductPaging = new PagedList<Product>(products, page, 9);
+            return View(listProductPaging);
+        }
+
+        public ActionResult Search(string keyword, int page = 1)
+        {
+            var listProduct = _productService.GetProductList(keyword);
+            ViewBag.ListProduct = listProduct;
+            if (keyword == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            var ProSelling = _productService.GetListSellingProduct();
+            ViewBag.ListProSelling = ProSelling;
+
+            ViewBag.Keyword = keyword;
+            var products = _productService.GetProductList(keyword);
+            PagedList<Product> listProductSearch = new PagedList<Product>(products, page, 12);
+            return View(listProductSearch);
+        }
+
+        public PartialViewResult FilterProductList(string type, int ID, int min = 0, int max = 0, int discount = 0, int page = 1)
+        {
+            PagedList<Product> listProductPaging = null;
+            if (type == "Ages")
+            {
+                //    //ViewBag.Name = "Độ tuổi " + _ageService.GetAgeByID(ID).Name;
+                //    IEnumerable<Product> products = _productService.GetProductFilterByAges(ID, min, max, discount);
+                //    listProductPaging = new PagedList<Product>(products, page, 2);
+            }
+
+        ViewBag.Min = min;
+            ViewBag.Max = max;
+            ViewBag.Type = type;
+            ViewBag.ID = ID;
+            //Check null
+            if (listProductPaging != null)
+            {
+                //Return view
+                return PartialView("ProductContainerPartial", listProductPaging);
+            }
+            else
+            {
+                //return 404
+                return null;
+            }
         }
     }
 }

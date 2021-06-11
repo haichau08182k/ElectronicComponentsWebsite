@@ -79,6 +79,12 @@ namespace electronicComponents.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult SignOut()
+        {
+            Session["Member"] = null;
+            Session["Cart"] = null;
+            return RedirectToAction("Index");
+        }
         public ActionResult Register()
         {
             return View();
@@ -115,10 +121,7 @@ namespace electronicComponents.Controllers
             return PartialView();
         }
 
-        public ActionResult Product()
-        {
-            return View();
-        }
+       
         public ActionResult NewProductPartial()
         {
             var listProductNew = _productService.GetListProductNew();

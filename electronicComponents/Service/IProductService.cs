@@ -7,10 +7,13 @@ namespace electronicComponents.Service
     public interface IProductService
     {
         Product GetProductID(int ID);
+        ProductCategory GetProductCateID(int ID);
         List<SelectListItem> GetCategory();
         List<SelectListItem> GetCategoryParent();
+        IEnumerable<Product> GetProductListByCategory(int ProductCategoryID);
         IEnumerable<Product> GetListProduct();
-
+        List<string> GetProductListName(string keyword);
+        IEnumerable<Product> GetProductList(string keyWord);
         IEnumerable<Product> GetListSellingProduct();
         IEnumerable<Product> GetListProductNew();
         List<SelectListItem> GetProducer();

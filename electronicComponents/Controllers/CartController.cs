@@ -361,7 +361,7 @@ namespace electronicComponents.Controllers
                 orderDetail.price = item.price;
                 _orderDetailService.AddOrderDetail(orderDetail);
                 sumtotal += orderDetail.quantity.Value * orderDetail.price.Value;
-                if (Session["member"] != null)
+                if (Session["Member"] != null)
                 {
                     //Remove Cart
                     _cartService.RemoveCart(item.productID.Value, item.memberID.Value);

@@ -276,6 +276,7 @@
     <Compile Include="Repository\GenericRepository.cs" />
     <Compile Include="Repository\GenericUnitOfWork.cs" />
     <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Service\AccessTimeService.cs" />
     <Compile Include="Service\CartService.cs" />
     <Compile Include="Service\CommentService.cs" />
     <Compile Include="Service\CustomerService.cs" />
@@ -2039,7 +2040,6 @@
     <Content Include="Views\Member\ConfirmEmail.cshtml" />
     <Content Include="Views\Home\MenuPartial.cshtml" />
     <Content Include="Views\Home\HeaderPartial.cshtml" />
-    <Content Include="Views\Home\Product.cshtml" />
     <Content Include="Views\Home\NewProductPartial.cshtml" />
     <Content Include="Views\Home\FeaturedProductPartial.cshtml" />
     <Content Include="Views\Cart\CartPartial.cshtml" />
@@ -2058,6 +2058,12 @@
     <Content Include="Views\Shared\_ProductDetailLayout.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Views\Product\_QAPartial.cshtml" />
+    <Content Include="Views\Product\NewProduct.cshtml" />
+    <Content Include="Views\Admin\QA.cshtml" />
+    <Content Include="Views\Product\ProductPartial.cshtml" />
+    <Content Include="Views\Product\ProductCategory.cshtml" />
+    <Content Include="Views\Product\ProductFeaturePartial.cshtml" />
+    <Content Include="Views\Product\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

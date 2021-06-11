@@ -9,71 +9,73 @@
 
 <!-- google fonts -->
 <link href="~/AdminStyle/fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap" rel="stylesheet">
+<div class="main-content">
 
-<div class="container-fluid content-top-gap">
+    <div class="container-fluid content-top-gap">
 
-    <!-- breadcrumbs -->
-    <nav aria-label="breadcrumb" class="mb-4">
-        <ol class="breadcrumb my-breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Quản lý</li>
-            <li class="breadcrumb-item active" aria-current="page"><a href="../Admin/Producer">Nhà sản xuất</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Thêm mới</li>
-        </ol>
-    </nav>
-    <!-- //breadcrumbs -->
-    <!-- forms -->
-    <section class="forms">
-        <!-- forms 1 -->
-        <div class="card card_border py-2 mb-4">
-            <div class="card-body">
-                @using (Html.BeginForm("AddProducer", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    @Html.AntiForgeryToken()
+        <!-- breadcrumbs -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb my-breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Quản lý</li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="../Admin/Producer">Nhà sản xuất</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Thêm mới</li>
+            </ol>
+        </nav>
+        <!-- //breadcrumbs -->
+        <!-- forms -->
+        <section class="forms">
+            <!-- forms 1 -->
+            <div class="card card_border py-2 mb-4">
+                <div class="card-body">
+                    @using (Html.BeginForm("AddProducer", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
 
-                    <div class="form-horizontal">
+                        <div class="form-horizontal">
 
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="form-group">
-                            <h5 class="card-title">Tên nhà sản xuất</h5>
-                            <input type="text" name="name" value="" class="form-control input-style" placeholder="Nhập tên nhà sản xuất" required />
-                            @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
-
-
-                        </div>
-
-                        <div class="form-group">
-                            <h5 class="card-title">Thông tin</h5>
-                            <input type="text" name="imformation" value="" class="form-control input-style" placeholder="Nhập thông tin" />
-                            @Html.ValidationMessageFor(model => model.imformation, "", new { @class = "text-danger" })
-                        </div>
-
-                        <div class="form-group">
-                            <h5 class="card-title">Logo</h5>
-                            <input type="text" name="logo" value="" class="form-control input-style" />
-                            @Html.ValidationMessageFor(model => model.logo, "", new { @class = "text-danger" })
-
-                        </div>
-
-                        <div class="form-group">
-                            @Html.CheckBox("isActive")
-                            @Html.ValidationMessageFor(model => model.isActive, "", new { @class = "text-danger" })
-                            <label class="input__label">Kích hoạt</label>
-                        </div>
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                <h5 class="card-title">Tên nhà sản xuất</h5>
+                                <input type="text" name="name" value="" class="form-control input-style" placeholder="Nhập tên nhà sản xuất" required />
+                                @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
 
 
+                            </div>
+
+                            <div class="form-group">
+                                <h5 class="card-title">Thông tin</h5>
+                                <input type="text" name="imformation" value="" class="form-control input-style" placeholder="Nhập thông tin" />
+                                @Html.ValidationMessageFor(model => model.imformation, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                <h5 class="card-title">Logo</h5>
+                                <input type="text" name="logo" value="" class="form-control input-style" />
+                                @Html.ValidationMessageFor(model => model.logo, "", new { @class = "text-danger" })
+
+                            </div>
+
+                            <div class="form-group">
+                                @Html.CheckBox("isActive")
+                                @Html.ValidationMessageFor(model => model.isActive, "", new { @class = "text-danger" })
+                                <label class="input__label">Kích hoạt</label>
+                            </div>
 
 
-                        <div class="form-group">
-                            <div class="col-md-offset-2 col-md-10">
-                                <input type="submit" value="Thêm" class="btn btn-style btn-primary mr-2" />
+
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Thêm" class="btn btn-style btn-primary mr-2" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                }
+                    }
 
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
+    </div>
 </div>
