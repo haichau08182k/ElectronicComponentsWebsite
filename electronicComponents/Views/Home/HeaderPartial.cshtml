@@ -6,12 +6,22 @@
 <div class="banner-top container-fluid" id="home">
     <!-- header -->
     <div class="row">
+
+
         <div class="col-md-3 top-info text-left mt-lg-4">
+
+            <ul>
+                <li>
+                    &nbsp;
+                    <i class="fas fa-map-marker"></i>
+                </li>
+                <li class="mt-3">Liên hệ</li>
+            </ul>
 
         </div>
         <div class="col-md-6 logo-w3layouts text-center">
             <h1 class="logo-w3layouts">
-                <a class="navbar-brand" href="../Home/Index">
+                <a class="navbar-brand" href="@Url.Action("Index","Home")">
                     Linh kiện store
                 </a>
             </h1>
@@ -22,55 +32,53 @@
                 <ul class="cart-inner-info">
                     <li class="button-log">
                         <a class="btn-open">
-                            <span class="fa fa-user" aria-hidden="true"></span>
+                            <span class="fa fa-user" aria-hidden="true"><span style="color:#FF4E00">&nbsp;Đăng nhập</span></span>
                         </a>
                     </li>
-                    <li class="button-register">
-                        <a class="btn-open" href="/Home/Register">
-                            <span class="fa fa-user-plus" aria-hidden="true"></span>
-                        </a>
+
+                    <li class="galssescart galssescart2 cart cart box_1">
+                        <div id="cart" class="last">
+                            @Html.Action("CartPartial", "Cart")
+                        </div>
                     </li>
 
                 </ul>
-                <div id="cart">
-                    @Html.Action("CartPartial", "Cart")
-                </div>
-
 
             </div>
         }
         else
-        {
-            <div class="profile_details pull-right">
-                <ul>
-                    <li class="dropdown profile_details_drop">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu3" aria-haspopup="true"
-                           aria-expanded="false">
-                            <div class="profile_img pull-right">
-                                <img src="~/Content/images/user.png" class="rounded-circle" alt="" />
-                                @*<div class="user-active">
-                                        <span></span>
-                                    </div>*@
-                            </div>
-                        </a>
-                        <ul class="dropdown-menu drp-mnu" aria-labelledby="dropdownMenu3">
-                            <li class="user-info">
-                                <h5 class="user-name">@member.fullName</h5>
-                                <span class="status">@member.email</span>
-                            </li>
-                            <li> <a href="#"><i class="lnr lnr-user"></i>My Profile</a> </li>
-                            <li> <a href="@Url.Action("CheckoutOrder","Member",new { ID=member.id})"><i class="fa fa-calendar-check"></i>Đơn hàng</a> </li>
-                            <li> <a href="#"><i class="lnr lnr-cog"></i>Setting</a> </li>
-                            <li class="logout"> <a href="@Url.Action("SignOut","Home")"><i class="fa fa-power-off"></i> Logout</a> </li>
-                        </ul>
-                    </li>
-                </ul>
-                <br />
-                <div id="cart" class="pull-right">
-                    @Html.Action("CartPartial", "Cart")
+        { 
+            <div class="col-md-3 top-info-cart text-right mt-lg-4">
+                <div class="profile_details">
+                    <ul>
+                        <li class="dropdown profile_details_drop">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu3" aria-haspopup="true"
+                               aria-expanded="false">
+                                <div class="profile_img pull-right">
+                                    <img src="~/Content/images/user.png" class="rounded-circle" alt="" />
+                                    @*<div class="user-active">
+                                            <span></span>
+                                        </div>*@
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu drp-mnu" aria-labelledby="dropdownMenu3">
+                                <li class="user-info">
+                                    <h5 class="user-name">@member.fullName</h5>
+                                    <span class="status">@member.email</span>
+                                </li>
+                                <li> <a href="#"><i class="lnr lnr-user"></i>My Profile</a> </li>
+                                <li> <a href="@Url.Action("CheckoutOrder","Member",new { ID=member.id})"><i class="fa fa-calendar-check"></i>Đơn hàng</a> </li>
+                                <li> <a href="#"><i class="lnr lnr-cog"></i>Setting</a> </li>
+                                <li class="logout"> <a href="@Url.Action("SignOut","Home")"><i class="fa fa-power-off"></i> Logout</a> </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <br/>
+                    <div id="cart" class="pull-right">
+                        @Html.Action("CartPartial", "Cart")
+                    </div>
                 </div>
             </div>
-
 
         }
 
@@ -120,12 +128,18 @@
                     <label class="mb-2">Mật khẩu</label>
                     <input type="password" class="form-control" name="passwordd" id="exampleInputPassword1" placeholder="" required="" value="khachhang1">
                 </div>
+                <small id="emailHelp" class="form-text text-muted">@ViewBag.Message</small>
                 <div class="form-check mb-2">
+
                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                    <label class="form-check-label" for="exampleCheck1">Ghi nhớ</label>
+                    <a style="color:orangered" href="#">Quên mật khẩu</a>
+
                 </div>
 
                 <button type="submit" class="btn btn-primary submit mb-4">Đăng nhập</button>
+                <br />
+                <label>Chưa có tài khoản?<a style="color:orangered" href="/Home/Register"> Đăng kí</a></label>
             }
 
         </div>

@@ -15,25 +15,31 @@ namespace electronicComponents.Controllers
         private IProductService _productService;
         private ICartService _cartService;
         private IOrderDetailService _orderDetailService;
-
+        private ICustomerService _customerService;
         private IRatingService _ratingService;
+        private ICommentService _commentService;
 
-        public HomeController(IMemberService memberService, IProductService productService, ICartService cartService, IOrderDetailService orderDetailService, IRatingService ratingService)
+        public HomeController(ICommentService commentService, ICustomerService customerService,IMemberService memberService, IProductService productService, ICartService cartService, IOrderDetailService orderDetailService, IRatingService ratingService)
         {
             _memberService = memberService;
             _productService = productService;
             _cartService = cartService;
             _orderDetailService = orderDetailService;
             _ratingService = ratingService;
+            _customerService = customerService;
+            _commentService = commentService;
         }
-        public ActionResult Index()
+        public ActionResult Index(Member member)
         {
 
-            var listProductNew = _productService.GetListProductNew();
-            ViewBag.listProductNew = listProductNew;
-            
+            var ProSelling = _productService.GetListFeaturedProduct();
+            ViewBag.ListProSelling = ProSelling;
+            IEnumerable<Product> product = _productService.GetListProductNew();
 
-            return View();
+            //var listComment = _commentService.GetCommentByMember(member.id = 1);
+
+            //ViewBag.listComment = listComment;
+            return View(product);
         }
         [HttpPost]
         public ActionResult Login( Member member)
@@ -106,13 +112,14 @@ namespace electronicComponents.Controllers
             }
             return null;
         }
-        [AcceptVerbs(HttpVerbs.Get)]
         public ActionResult MenuPartial()
         {
             var listParent = _productService.GetProductCategoryParentList();
             ViewBag.listParent = listParent;
             var listCategories = _productService.GetProductCategoryList();
             ViewBag.listCategories = listCategories;
+
+           
             return PartialView();
         }
 
@@ -121,19 +128,6 @@ namespace electronicComponents.Controllers
             return PartialView();
         }
 
-       
-        public ActionResult NewProductPartial()
-        {
-            var listProductNew = _productService.GetListProductNew();
-            ViewBag.listProductNew = listProductNew;
-            return PartialView();
-        }
-        public ActionResult FeaturedProductPartial()
-        {
-            var listProductSelling = _productService.GetListSellingProduct();
-            ViewBag.listFeatured = listProductSelling;
-            return PartialView();
-        }
         [HttpPost]
         public ActionResult Rating(Rating rating, int OrderDetailID)
         {

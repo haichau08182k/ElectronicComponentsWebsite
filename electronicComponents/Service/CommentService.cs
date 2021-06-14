@@ -24,5 +24,10 @@ namespace electronicComponents.Service
             IEnumerable<Comment> listComment = this._unitOfWork.GetRepositoryInstance<Comment>().GetAllRecords(x => x.productID == ID);
             return listComment;
         }
+        public IEnumerable<Comment> GetCommentByMember(int ID)
+        {
+            IEnumerable<Comment> listComment = this._unitOfWork.GetRepositoryInstance<Comment>().GetAllRecords(x => x.memberID == ID);
+            return listComment;
+        }
     }
 }

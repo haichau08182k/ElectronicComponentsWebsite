@@ -1,0 +1,114 @@
+﻿@model electronicComponents.DAL.Employee
+@{
+    ViewBag.Title = "AddEmployee";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Template CSS -->
+<link rel="stylesheet" href="~/AdminStyle/assets/css/style-starter.css">
+
+<!-- google fonts -->
+<link href="~/AdminStyle/fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap" rel="stylesheet">
+<div class="main-content">
+
+    <div class="container-fluid content-top-gap">
+
+        <!-- breadcrumbs -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb my-breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Quản lý người dùng</li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="../Admin/Categories">Nhân viên</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Thêm mới</li>
+            </ol>
+        </nav>
+        <!-- //breadcrumbs -->
+        <!-- forms -->
+        <section class="forms">
+            <!-- forms 1 -->
+            <div class="card card_border py-2 mb-4">
+                <div class="card-body">
+                    @using (Html.BeginForm("AddEmployee", "Admin", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-horizontal">
+
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                <h5 class="card-title">Tên nhân viên</h5>
+                                <input type="text" name="fullName" value="" class="form-control input-style" placeholder="Nhập tên nhân viên" />
+                                @Html.ValidationMessageFor(model => model.fullName, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group">
+                                <h5 class="card-title">Tên tài khoản</h5>
+                                <input type="text" name="userName" value="" class="form-control input-style" placeholder="Nhập tên tài khoản" />
+                                @Html.ValidationMessageFor(model => model.userName, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group">
+                                <h5 class="card-title">Mật khẩu</h5>
+                                <input type="password" name="passwordd" value="" class="form-control input-style" placeholder="password" />
+                                @Html.ValidationMessageFor(model => model.passwordd, "", new { @class = "text-danger" })
+
+                            </div>
+                            @{
+                                List<SelectListItem> data = ViewBag.ListTypeEmployee;
+                            }
+
+                            <div class="form-group">
+
+                                <h5 class="card-title">Loại nhân viên</h5>
+
+                                @Html.DropDownListFor(model => model.employeeTypeID, data, "Chọn loại nhân viên", new { @class = "custom-select input-style" })
+                                @Html.ValidationMessageFor(model => model.employeeTypeID, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                <h5 class="card-title">Hình ảnh</h5>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="file" name="ImageUpload">
+                                    <label class="custom-file-label" for="file">Choose file...</label>
+                                </div>
+                                @Html.ValidationMessageFor(model => model.imagee, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <h5 class="card-title">Email:</h5>
+                            <input type="email" name="email" value="" class="form-control input-style" placeholder="email" />
+                            @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="form-group">
+                            <h5 class="card-title">Số điện thoại</h5>
+                            <input type="text" name="phoneNumber" value="" class="form-control input-style" placeholder="Nhập số điện thoại" />
+                            @Html.ValidationMessageFor(model => model.phoneNumber, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="form-group">
+                            <h5 class="card-title">Địa chỉ</h5>
+                            <input type="text" name="addresss" value="" class="form-control input-style" placeholder="Nhập địa chỉ" />
+                            @Html.ValidationMessageFor(model => model.addresss, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+
+                            @Html.CheckBox("isActive")
+                            @Html.ValidationMessageFor(model => model.isActive, "", new { @class = "text-danger" })
+
+                            <label class="input__label">Active</label>
+                        </div>
+
+                        <br />
+                        <div class="form-group">
+                            <input type="submit" value="Thêm" class="btn btn-style btn-primary mr-2" />
+                        </div>
+
+                    }
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+

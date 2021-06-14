@@ -1,0 +1,81 @@
+﻿@using electronicComponents.DAL
+@model ImportCoupon
+@{
+    ViewBag.Title = "Nhập Hàng";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<script src="~/Scripts/bootbox.js"></script>
+@{
+    IEnumerable<Supplier> lstSupplier = ViewBag.listSupplier as IEnumerable<Supplier>;
+}
+<script>
+    $(document).ready(function () {
+        $('#btnSupplier').off('click').on('click', function () {
+            $('#modalSupplier').modal('show');
+        });
+    });
+    $(window).load(function () {
+        $('#modalSupplier').modal('show');
+    });
+</script>
+@{
+    if (TempData["ImportProduct"] != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                swal({
+                    title: "Thông báo",
+                    text: "Nhập hàng     thành công!",
+                    icon: "success",
+                    timer: 1500
+                });
+            };
+
+        </script>
+    }
+}
+<div class="main-content">
+
+    <div class="container-fluid content-top-gap">
+
+        <!-- breadcrumbs -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb my-breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Quản lý</li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="../Admin/ImportProduct">Chọn nhà cung cấp</a></li>
+            </ol>
+        </nav>
+
+    </div>
+</div>
+<div class="modal fade" id="modalSupplier" role="dialog">
+    <div class="modal-dialog">
+
+        <!--Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Chọn Nhà Cung Cấp</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("ImportProductBySupplierID", "Admin", FormMethod.Get))
+                {
+                    <div class="form-group">
+                        <label>Nhà Cung Cấp:</label>
+                        <select name="ID">
+                            @foreach (var item in lstSupplier)
+                            {
+                                <option value="@item.id">@item.name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="btnSave">Chọn</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

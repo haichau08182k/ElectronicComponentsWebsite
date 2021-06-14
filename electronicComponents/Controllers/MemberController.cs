@@ -2,6 +2,7 @@
 using electronicComponents.Service;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -23,7 +24,7 @@ namespace electronicComponents.Controllers
         private IMemberService _memberService;
         private IRatingService _ratingService;
 
-
+       
         public MemberController(IRatingService ratingService,ICartService cartService, IProductService productService, IDiscountCodeDetailService discountCodeDetailService, IDiscountCodeService discountCodeService, ICustomerService customerService, IOrderService orderService, IOrderDetailService orderDetailService, IMemberService memberService)
         {
 
@@ -36,6 +37,102 @@ namespace electronicComponents.Controllers
             _orderDetailService = orderDetailService;
             _memberService = memberService;
             _ratingService = ratingService;
+        }
+
+        [HttpGet]
+        public ActionResult EditName(int id)
+        {
+            var member = _memberService.GetByID(id);
+            //Check null
+            if (member != null)
+            {
+                //Return view
+                return Json(new
+                {
+                    ID = member.id,
+                    FullName = member.fullName,
+                    status = true
+                }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                //Return 404
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+        }
+        [HttpPost]
+        public ActionResult EditName(int ID, string FullName)
+        {
+            Member member = _memberService.GetByID(ID);
+            member.fullName = FullName;
+            _memberService.UpdateMember(member);
+            IEnumerable<Customer> customers = _customerService.GetAll();
+            foreach (Customer item in customers)
+            {
+                if (item.phoneNumber == member.phoneNumber)
+                {
+                    item.fullName = member.fullName;
+                    _customerService.Update(item);
+                }
+            }
+            Session["Member"] = member;
+            TempData["EditName"] = "Sucess";
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
+        public ActionResult EditAddress(int id)
+        {
+            var member = _memberService.GetByID(id);
+            //Check null
+            if (member != null)
+            {
+                //Return view
+                return Json(new
+                {
+                    ID = member.id,
+                    Address = member.addresss,
+                    status = true
+                }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                //Return 404
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+        }
+        [HttpPost]
+        public ActionResult EditAddress(int ID, string Address)
+        {
+            Member member = _memberService.GetByID(ID);
+            member.addresss = Address;
+            _memberService.UpdateMember(member);
+            Session["Member"] = member;
+            TempData["EditAddress"] = "Sucess";
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public ActionResult EditAvatar(HttpPostedFileBase Avatar)
+        {
+            if (Avatar != null)
+            {
+                //Get file name
+                var fileName = Path.GetFileName(Avatar.FileName);
+                //Get path
+                var path = Path.Combine(Server.MapPath("~/Content/images"), fileName);
+                //Check exitst
+                if (!System.IO.File.Exists(path))
+                {
+                    //Add image into folder
+                    Avatar.SaveAs(path);
+                }
+                Member member = Session["Member"] as Member;
+                Member memberupdate = _memberService.GetByID(member.id);
+                memberupdate.avatar = Avatar.FileName;
+                _memberService.UpdateMember(memberupdate);
+                Session["Member"] = memberupdate;
+                TempData["EditAvatar"] = "Sucess";
+            }
+            return RedirectToAction("Index");
         }
         [HttpGet]
         public ActionResult ConfirmEmail(int ID)
@@ -70,6 +167,7 @@ namespace electronicComponents.Controllers
             Member member = _memberService.CheckCapcha(ID, capcha);
             if (member != null)
             {
+                _memberService.GiftForNewMember(member.id);
                 ViewBag.Message = "emailConfirmed";
                 return View();
             }

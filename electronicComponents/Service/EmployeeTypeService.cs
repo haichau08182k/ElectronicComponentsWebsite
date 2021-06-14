@@ -7,6 +7,12 @@ using System.Web;
 
 namespace electronicComponents.Service
 {
+
+    public interface IEmployeeTypeService
+    {
+        EmployeeType GetEmployeeTypeByID(int ID);
+        IEnumerable<EmployeeType> GetListEmployeeType();
+    }
     public class EmloyeeTypeService : IEmployeeTypeService
     {
         private readonly GenericUnitOfWork _unitOfWork;

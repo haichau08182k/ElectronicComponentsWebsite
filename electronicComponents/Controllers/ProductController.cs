@@ -40,6 +40,9 @@ namespace electronicComponents.Controllers
         }
         public ActionResult Details(int ID)
         {
+
+            var ProSelling = _productService.GetListFeaturedProduct();
+            ViewBag.ListProSelling = ProSelling;
             var product = _productService.GetProductID(ID);
             //var listProduct = _productService.GetProductListByCategory(product.CategoryID);
             //ViewBag.ListProduct = listProduct;
@@ -111,7 +114,7 @@ namespace electronicComponents.Controllers
         public ActionResult ProductFeaturePartial(Product product)
         {
             ViewBag.Rating = _ratingService.GetRating(product.id);
-            var products = _productService.GetListSellingProduct();
+            var products = _productService.GetListFeaturedProduct();
             ViewBag.ProSelling = products;
             return PartialView(product);
         }
@@ -122,16 +125,39 @@ namespace electronicComponents.Controllers
         {
             var listProduct = _productService.GetListProduct().OrderByDescending(x => x.viewCount).Take(5);
             ViewBag.ListProduct = listProduct;
-            var ProSelling = _productService.GetListSellingProduct();
+            var ProSelling = _productService.GetListFeaturedProduct();
             ViewBag.ListProSelling = ProSelling;
 
             PagedList<Product> listProductPaging;
             IEnumerable<Product> products = _productService.GetListProductNew();
             listProductPaging = new PagedList<Product>(products, page, 12);
 
-            var product = _productService.GetListProductNew();
-            ViewBag.ProductNew = products;
             
+
+            return View(listProductPaging);
+        }
+
+        public ActionResult ProFeatured(int page = 1)
+        {
+
+            var ProNew = _productService.GetListProductNew();
+            ViewBag.ListNew = ProNew;
+
+            PagedList<Product> listProductPaging;
+            IEnumerable<Product> products = _productService.GetListFeaturedProduct();
+            listProductPaging = new PagedList<Product>(products, page, 12);
+
+            return View(listProductPaging);
+        }
+        public ActionResult ProSelling(int page = 1)
+        {
+           
+            var ProFeatured = _productService.GetListFeaturedProduct();
+            ViewBag.ProFeatured = ProFeatured;
+
+            PagedList<Product> listProductPaging;
+            IEnumerable<Product> products = _productService.GetListSellingProduct();
+            listProductPaging = new PagedList<Product>(products, page, 12);
 
             return View(listProductPaging);
         }
@@ -140,6 +166,9 @@ namespace electronicComponents.Controllers
         {
             var listProduct = _productService.GetListProduct().OrderByDescending(x => x.viewCount).Take(5);
             ViewBag.ListProduct = listProduct;
+
+            var ProSelling = _productService.GetListFeaturedProduct();
+            ViewBag.ListProSelling = ProSelling;
 
             ViewBag.productCategoryID = ID;
             ProductCategory productCategory = _productService.GetProductCateID(ID);
@@ -160,7 +189,7 @@ namespace electronicComponents.Controllers
                 Response.StatusCode = 404;
                 return null;
             }
-            var ProSelling = _productService.GetListSellingProduct();
+            var ProSelling = _productService.GetListFeaturedProduct();
             ViewBag.ListProSelling = ProSelling;
 
             ViewBag.Keyword = keyword;

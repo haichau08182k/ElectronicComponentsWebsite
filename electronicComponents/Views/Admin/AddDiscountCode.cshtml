@@ -1,0 +1,71 @@
+﻿@model electronicComponents.DAL.DiscountCode
+
+@{
+    ViewBag.Title = "AddDiscountCode";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@if (TempData["create"] != null)
+{
+    <script>
+    swal({
+        title: "Thông báo",
+        text: "Thêm mã giảm giá thành công!",
+        icon: "success",
+        timer: 1500
+    });
+    </script>
+    @(TempData["create"] = null)}
+<!-- Template CSS -->
+<link rel="stylesheet" href="~/AdminStyle/assets/css/style-starter.css">
+
+<!-- google fonts -->
+<link href="~/AdminStyle/fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap" rel="stylesheet">
+<div class="main-content">
+
+    <div class="container-fluid content-top-gap">
+
+        <!-- breadcrumbs -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb my-breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Quản lý</li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="../Admin/DiscountCode">Mã giảm giá</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Thêm mới</li>
+            </ol>
+        </nav>
+        <!-- //breadcrumbs -->
+        <!-- forms -->
+        <section class="forms">
+            <!-- forms 1 -->
+            <div class="card card_border py-2 mb-4">
+                <div class="card-body">
+                    @using (Html.BeginForm("AddDiscountCode", "Admin", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="form-horizontal">
+
+                            <div class="form-group">
+                                <label>Khuyến mãi(%):</label>
+                                <input type="number" class="form-control" name="NumberDiscount" id="NumberDiscount" required min="1" max="99">
+                            </div>
+                            <div class="form-group">
+                                <label>Số lượng:</label>
+                                <input type="number" class="form-control" name="Quantity" id="Quantity" required min="1">
+                            </div>
+                            <div class="form-group">
+                                <label>Ngày hết hạn:</label>
+                                <input type="date" class="form-control" name="ExpirationDate" id="ExpirationDate" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary" id="btnSave">Thêm</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>

@@ -13,5 +13,7 @@ namespace electronicComponents.Service
         void UpdateMember(Member member);
         void UpdateAmountPurchased(int ID, decimal AmountPurchased);
         IEnumerable<Member> GetMemberList();
+        int GetTotalMember();
+        void GiftForNewMember(int MemberID);
        }
 }

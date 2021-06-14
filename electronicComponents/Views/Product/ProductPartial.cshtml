@@ -3,7 +3,7 @@
     <div class="product-googles-info googles">
         <div class="men-pro-item">
             <div class="men-thumb-item">
-                <img src="@Url.Content("~/Content/images/" + Model.image1)" style="height:250px;width:300px" class="img-fluid" alt="">
+                <img src="@Url.Content("~/Content/images/" + Model.image1)"  class="img-fluid" alt="">
                 <div class="men-cart-pro">
                     <div class="inner-men-cart-pro">
                         <a href="@Url.Action("Details","Product",new { ID=Model.id})" class="link-product-add-cart">Quick View</a>
@@ -21,13 +21,13 @@
                             <div class="grid-price mt-2">
                                 @if (Model.discount > 0)
                                 {
-                                    <p><span class="money">@Model.promotionPrice.Value.ToString("#,##")₫</span></p>
-                                    <p class="pric1"><del>@Model.price.Value.ToString("#,##")₫</del></p>
+                                    <p><span class="money">@Model.promotionPrice.Value.ToString("#,##")₫</span><del>@Model.price.Value.ToString("#,##")₫</del></p>
+
                                 }
                                 else
                                 {
                                     <p><span class="money">@Model.price.Value.ToString("#,##")₫</span></p>
-                                    <p class="pric1">.</p>
+                                   
                                 }
                             </div>
                         </div>

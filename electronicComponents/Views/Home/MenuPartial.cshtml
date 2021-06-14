@@ -8,13 +8,13 @@
     <button class="navbar-toggler mx-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
             aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon">
-
+           
         </span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav nav-mega mx-auto">
             <li class="nav-item active">
-                <a class="nav-link ml-lg-0" href="/Home/index">
+                <a class="nav-link ml-lg-0" href="@Url.Action("Index","Home")">
                     Trang chủ
                     <span class="sr-only">(current)</span>
                 </a>
@@ -36,7 +36,7 @@
                                 {
                                     <div class="col-md-4 media-list span4 text-left">
                                         <h5 class="tittle-w3layouts-sub"> @item.name </h5>
-                                        @foreach (var item1 in productCategories)
+                                        @foreach (var item1 in productCategories.Where(x => x.parentID == item.id))
                                         {
                                             <ul>
                                                 <li class="media-mini mt-3">
@@ -53,7 +53,7 @@
                                 {
                                     <div class="col-md-4 media-list span4 text-left">
                                         <h5 class="tittle-w3layouts-sub"> @item.name </h5>
-                                        @foreach (var item1 in productCategories)
+                                        @foreach (var item1 in productCategories.Where(x => x.parentID == item.id))
                                         {
                                             <ul>
 
@@ -71,7 +71,7 @@
                                 {
                                     <div class="col-md-4 media-list span4 text-left">
                                         <h5 class="tittle-w3layouts-sub"> @item.name </h5>
-                                        @foreach (var item1 in productCategories)
+                                        @foreach (var item1 in productCategories.Where(x => x.parentID == item.id))
                                         {
                                             <ul>
                                                 <li class="media-mini mt-3">
@@ -88,7 +88,7 @@
                                 {
                                     <div class="col-md-4 media-list span4 text-left">
                                         <h5 class="tittle-w3layouts-sub"> @item.name </h5>
-                                        @foreach (var item1 in productCategories)
+                                        @foreach (var item1 in productCategories.Where(x => x.parentID == item.id))
                                         {
                                             <ul>
                                                 <li class="media-mini mt-3">
@@ -109,9 +109,17 @@
                     </li>
                 </ul>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link" href="../Home/Product">Shop</a>
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("NewProduct","Product")">Sản phẩm mới</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("ProSelling","Product")">Khuyến mãi</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("ProFeatured","Product")">Bán chạy</a>
+            </li>
+
+
             <li class="nav-item">
                 <a class="nav-link" href="contact.html">Liên hệ</a>
             </li>

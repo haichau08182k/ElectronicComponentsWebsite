@@ -30,6 +30,15 @@ namespace electronicComponents.Service
 
         }
 
+        public int GetTotalProduct()
+        {
+            return _unitOfWork.GetRepositoryInstance<Product>().GetAllRecords().Count();
+        }
+        public int GetTotalProductPurchased()
+        {
+            return (int)_unitOfWork.GetRepositoryInstance<Product>().GetAllRecords().Sum(x => x.purchaseCount.Value);
+        }
+
         public ProductCategory GetProductCateID(int ID)
         {
             return this._unitOfWork.GetRepositoryInstance<ProductCategory>().GetFirstorDefault(ID);
@@ -80,11 +89,15 @@ namespace electronicComponents.Service
 
         }
 
-        public IEnumerable<Product> GetListSellingProduct()
+        public IEnumerable<Product> GetListFeaturedProduct()
         {
             return this._unitOfWork.GetRepositoryInstance<Product>().GetAllRecords().Where(x => x.purchaseCount.Value > 0).OrderBy(x => x.purchaseCount.Value);
         }
 
+        public IEnumerable<Product> GetListSellingProduct()
+        {
+            return this._unitOfWork.GetRepositoryInstance<Product>().GetAllRecords().Where(x => x.discount.Value > 0).OrderBy(x => x.discount.Value);
+        }
         public IEnumerable<Product> GetListProduct()
         {
             return this._unitOfWork.GetRepositoryInstance<Product>().GetListParameter(x => x.isActive == true);
@@ -166,6 +179,13 @@ namespace electronicComponents.Service
         {
             IEnumerable<Product> listProduct = this._unitOfWork.GetRepositoryInstance<Product>().GetAllRecords(x => x.name.Contains(keyWord) && x.isActive == true);
             return listProduct;
+        }
+
+        public void UpdateProduct(Product product)
+        {
+            product.lastUpdatedDate = DateTime.Now;
+            product.promotionPrice = product.price.Value - (product.price.Value / 100 * product.discount.Value);
+            this._unitOfWork.GetRepositoryInstance<Product>().Update(product);
         }
     }
 

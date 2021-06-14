@@ -1,0 +1,111 @@
+﻿@model IEnumerable<electronicComponents.DAL.ImportCoupon>
+
+@{
+    ViewBag.Title = "ImportCoupon";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Template CSS -->
+<link rel="stylesheet" href="~/AdminStyle/assets/css/style-starter.css">
+
+<!-- google fonts -->
+<link href="~/AdminStyle/fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap" rel="stylesheet">
+<div class="main-content">
+
+    <!-- content -->
+    <div class="container-fluid content-top-gap">
+
+        <!-- breadcrumbs -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb my-breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Quản lý</li>
+                <li class="breadcrumb-item active" aria-current="page">Loại sản phẩm</li>
+            </ol>
+        </nav>
+        <!-- //breadcrumbs -->
+        <!-- pricing -->
+        <section class="pricing">
+
+            <div class="card mb-3">
+                <div class="p-3 card card_border">
+                    <div class="pl-0 pt-0 card-header chart-grid__header">
+                        <a href="../Admin/AddCategories" class="btn btn-style border-btn pull-right">Thêm mới </a>
+                    </div>
+                    @using (Html.BeginForm())
+                    {
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Mã Phiếu Nhập
+                                            </th>
+                                            <th>
+                                                NCC
+                                            </th>
+                                            <th>
+                                                Nhân Viên
+                                            </th>
+                                            <th>
+                                                Ngày Nhập
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>
+                                                Mã Phiếu Nhập
+                                            </th>
+                                            <th>
+                                                NCC
+                                            </th>
+                                            <th>
+                                                Nhân Viên
+                                            </th>
+                                            <th>
+                                                Ngày Nhập
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            @Html.Hidden(item.id.ToString())
+                                            <tr>
+                                                <td style="color:brown">
+                                                    <b>@Html.DisplayFor(modelItem => item.id)</b>
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Supplier.name)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Employee.fullName)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.datee)
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-primary btnImport" href="@Url.Action("ImportProductDetail","Admin",new { ID=item.id})">Chi Tiết</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+            </div>
+
+
+        </section>
+
+
+    </div>
+</div>

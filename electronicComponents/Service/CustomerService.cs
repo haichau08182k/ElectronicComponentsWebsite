@@ -29,5 +29,9 @@ namespace electronicComponents.Service
         {
             return _unitOfWork.GetRepositoryInstance<Customer>().GetFirstorDefault(ID).email;
         }
+        public void Update(Customer customer)
+        {
+            _unitOfWork.GetRepositoryInstance<Customer>().Update(customer);
+        }
     }
 }

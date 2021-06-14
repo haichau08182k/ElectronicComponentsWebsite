@@ -11,22 +11,38 @@ using electronicComponents.Service;
 using System.IO;
 using System.Web.Security;
 using System.Net;
+using PagedList;
 
 namespace electronicComponents.Controllers
 {
+
     public class AdminController : Controller
     {
         private IQAService _qAService;
         private IProductService _productService;
         private IMemberService _memberService;
-        private IEmployeeService _emloyeeService;
+        private IEmployeeService _employeeService;
+        private IEmployeeTypeService _employeeTypeService;
+        private IOrderService _orderService;
+        private IDiscountCodeService _discountCodeService;
+        private IImportCouponService _importCouponService;
+        private IImportCouponDetailService _importCouponDetailService;
+        private ISupplierService _supplierService;
 
-        public AdminController(IQAService qAService, IProductService productService, IMemberService memberService, IEmployeeService emloyeeService)
+
+
+        public AdminController(ISupplierService suplierService, IImportCouponDetailService importCouponDetailService, IImportCouponService importCouponService, IDiscountCodeService discountCodeService, IOrderService orderService, IQAService qAService, IProductService productService, IMemberService memberService, IEmployeeService employeeService, IEmployeeTypeService employeeTypeService)
         {
             _qAService = qAService;
             _productService = productService;
             _memberService = memberService;
-            _emloyeeService = emloyeeService;
+            _employeeService = employeeService;
+            _employeeTypeService = employeeTypeService;
+            _orderService = orderService;
+            _discountCodeService = discountCodeService;
+            _importCouponService = importCouponService;
+            _importCouponDetailService = importCouponDetailService;
+            _supplierService = suplierService;
         }
 
         public GenericUnitOfWork _unitOfWork = new GenericUnitOfWork();
@@ -34,13 +50,49 @@ namespace electronicComponents.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            if (Session["Employee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                ViewBag.SumAccessTimes = HttpContext.Application["SumAccessTimes"].ToString();
+                ViewBag.RealAccessTimes = HttpContext.Application["RealAccessTimes"].ToString();
+                Employee employee = Session["Employee"] as Employee;
+                ViewBag.EmloyeeTypeName = (_employeeTypeService.GetEmployeeTypeByID(employee.employeeTypeID.Value)).name;
+                ViewBag.TotalMember = _memberService.GetTotalMember();
+                ViewBag.TotalEmployee = _employeeService.GetTotalEmployee();
+                ViewBag.TotalProduct = _productService.GetTotalProduct();
+                ViewBag.TotalProductPurchased = _productService.GetTotalProductPurchased();
+                decimal TotalRevenue = _orderService.GetTotalRevenue();
+                if (TotalRevenue < 1000000)
+                {
+                    TotalRevenue = TotalRevenue / 1000;
+                    ViewBag.TotalRevenue = TotalRevenue.ToString("0.##") + "K";
+                }
+                else
+                {
+                    TotalRevenue = TotalRevenue / 1000000;
+                    ViewBag.TotalRevenue = TotalRevenue.ToString("0.##") + "M";
+                }
+                ViewBag.TotalOrder = _orderService.GetTotalOrder();
+                return View();
+            }
+
         }
 
+       
+
+        #region Login Logout Manage
 
         public ActionResult Login()
         {
             return View();
+        }
+        public ActionResult Logout()
+        {
+            Session["Employee"] = null;
+            return RedirectToAction("Login");
         }
         [HttpPost]
         public ActionResult Login(Employee employee)
@@ -96,11 +148,11 @@ namespace electronicComponents.Controllers
         }
 
 
+        #endregion
 
 
 
-
-
+        #region CategoryParent Manage
         //Danh mục sản phẩm
         public ActionResult CategoryParent()
         {
@@ -146,10 +198,10 @@ namespace electronicComponents.Controllers
 
         }
 
+        #endregion
 
 
-
-
+        #region Categories Manage
 
         //Loại sản phẩm
         public ActionResult Categories()
@@ -222,15 +274,9 @@ namespace electronicComponents.Controllers
             return RedirectToAction("Categories");
         }
 
-
-
-
-
-
-
-
+        #endregion
         //Sản phẩm
-
+        #region Product Manage
         ////[Authorize(Roles = "ProductManage")]
         public ActionResult Product()
         {
@@ -378,14 +424,38 @@ namespace electronicComponents.Controllers
             _unitOfWork.GetRepositoryInstance<Product>().Add(tbl);
             return RedirectToAction("Product");
         }
+        #endregion
+
+        #region DiscountCode Manage
+        public ActionResult DiscountCode()
+        {
+            if (Session["Employee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
+            IEnumerable<DiscountCode> discountCodes = _discountCodeService.GetDiscountCodeList();
+            return View(discountCodes);
+        }
+        [HttpGet]
+        public ActionResult AddDiscountCode()
+        {
 
 
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddDiscountCode(DiscountCode discountCode, int Quantity)
+        {
+            Employee emloyee = Session["Employee"] as Employee;
+            discountCode.employeeID = emloyee.id;
+            _discountCodeService.AddDiscountCode(discountCode, Quantity);
+            TempData["create"] = "success";
+            return RedirectToAction("DiscountCode");
+        }
 
-
-
-
+        #endregion
         //Nhà cung cấp
-
+        #region Supplier Manage
         public ActionResult Supplier()
         {
             if (Session["Employee"] == null)
@@ -425,8 +495,9 @@ namespace electronicComponents.Controllers
             return RedirectToAction("Supplier");
         }
 
+        #endregion
 
-
+        #region Producer Manage
         //Nhà sẩn xuất
 
         public ActionResult Producer()
@@ -472,12 +543,9 @@ namespace electronicComponents.Controllers
             return RedirectToAction("Producer");
 
         }
-
-        public ActionResult Charts()
-        {
-            return View();
-        }
-
+        #endregion
+       
+        #region QA Manage
         public ActionResult QA()
         {
 
@@ -500,7 +568,7 @@ namespace electronicComponents.Controllers
                 //return 404
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            
+
         }
 
         [HttpGet]
@@ -524,8 +592,8 @@ namespace electronicComponents.Controllers
                 Question = qAs.question,
                 Answer = qAs.answer,
                 status = true,
-                DateQuestion=qAs.dateQuestion
-            }, JsonRequestBehavior.AllowGet);;
+                DateQuestion = qAs.dateQuestion
+            }, JsonRequestBehavior.AllowGet); ;
         }
         [HttpPost]
         public ActionResult Edit(QA qA, string DateQuestion)
@@ -544,6 +612,169 @@ namespace electronicComponents.Controllers
             qA.employeeID = emloyee.id;
             _qAService.UpdateQA(qA);
             return RedirectToAction("QA");
+        }
+        #endregion
+
+        #region ImportManage
+        //Import 
+
+        [HttpGet]
+        public ActionResult ImportProduct()
+        {
+            if (Session["Employee"] == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            ViewBag.listSupplier = _supplierService.GetSupplierList();
+            return View();
+        }
+        [HttpGet]
+        public ActionResult ImportProductBySupplierID(int ID)
+        {
+            if (Session["Employee"] == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            ViewBag.listSupplier = _supplierService.GetSupplierList();
+            ViewBag.SupplierID = ID;
+            ViewBag.SupplierName = _supplierService.GetByID(ID).name;
+            ViewBag.ListProduct = _productService.GetListProduct().OrderBy(x => x.quantity.Value);
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ImportProduct(DAL.ImportCoupon Model, IEnumerable<DAL.ImportCouponDetail> ListModel)
+        {
+            ViewBag.listSupplier = _supplierService.GetSupplierList();
+            ViewBag.ListProduct = _productService.GetListProduct();
+            Employee emloyee = Session["Employee"] as Employee;
+            Model.employeeID = emloyee.id;
+            Model.datee = DateTime.Now;
+            Model.isDelete = false;
+            //Add import coupon
+            _importCouponService.AddImportCoupon(Model);
+            //Update quantity product
+            Product product;
+            foreach (var item in ListModel)
+            {
+                //Set ImportCouponID for all ImportCouponDetail
+                item.importCouponID = Model.id;
+                //Update quanitty number
+                product = _productService.GetProductID(item.productID.Value);
+                product.quantity += item.quantity;
+                _productService.UpdateProduct(product);
+
+                _importCouponDetailService.AddImportCouponDetail(item);
+            }
+            //Set TempData for checking in view to show swal
+            TempData["ImportProduct"] = "Success";
+            return View();
+        }
+       
+        [HttpGet]
+        public ActionResult ImportCoupon(int page = 1)
+        {
+            if (Session["Employee"] == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            var LstImportCoupon = _importCouponService.GetImportCoupon();
+            PagedList<DAL.ImportCoupon> listImportCoupon = new PagedList<DAL.ImportCoupon>(LstImportCoupon, page, 10);
+            ViewBag.Page = page;
+            return View(listImportCoupon);
+        }
+        [HttpGet]
+        public ActionResult ImportProductDetail(int ID)
+        {
+            IEnumerable<DAL.ImportCouponDetail> importCouponDetails = _importCouponDetailService.GetByImportCouponID(ID);
+            ViewBag.ID = ID;
+            return View(importCouponDetails);
+        }
+        
+        [HttpGet]
+        public ActionResult Delete(int ID, int page)
+        {
+            _importCouponService.Delete(ID);
+            return RedirectToAction("ImportCoupon", new { page = page });
+        }
+        [HttpGet]
+        public ActionResult Rehibilitate(int ID, int page)
+        {
+            _importCouponService.Rehibilitate(ID);
+            return RedirectToAction("ImportCoupon", new { page = page });
+        }
+        public ActionResult Incompetent()
+        {
+            return View();
+        }
+        #endregion
+
+        #region UserManage
+        public ActionResult EmployeeManage()
+        {
+            if (Session["Employee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            IEnumerable<Employee> employees = _employeeService.GetList();
+            return View(employees);
+        }
+
+        public ActionResult AddEmployee()
+        {
+            List<SelectListItem> listEmployeeType = _employeeService.GetEmployeeType();
+            ViewBag.ListTypeEmployee = listEmployeeType;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddEmployee(Employee employee, HttpPostedFileBase ImageUpload)
+        {
+            if (Session["Employee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
+            int errorCount = 0;
+            //Check content image
+            if (ImageUpload != null && ImageUpload.ContentLength > 0)
+            {
+                //Check format iamge
+                if (ImageUpload.ContentType != "image/jpeg" && ImageUpload.ContentType != "image/png" && ImageUpload.ContentType != "image/gif")
+                {
+                    //Set viewbag
+                    ViewBag.upload += "Hình ảnh không hợp lệ<br/>";
+                    //increase by 1 unit errorCount
+                    errorCount++;
+                }
+                else
+                {
+                    //Get file name
+                    var fileName = Path.GetFileName(ImageUpload.FileName);
+                    //Get path
+                    var path = Path.Combine(Server.MapPath("~/Content/images"), fileName);
+                    //Check exitst
+                    if (!System.IO.File.Exists(path))
+                    {
+                        //Add image into folder
+                        ImageUpload.SaveAs(path);
+                    }
+                }
+            }
+            //Set new value image for emloyee
+            employee.imagee = ImageUpload.FileName;
+
+            _employeeService.AddEmployee(employee);
+            return RedirectToAction("EmployeeManage");
+        }
+
+        #endregion
+
+        public ActionResult MailBox()
+        {
+            return View();
+        }
+        public ActionResult Charts()
+        {
+            return View();
         }
     }
 }

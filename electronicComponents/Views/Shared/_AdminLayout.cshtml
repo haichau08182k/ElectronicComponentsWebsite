@@ -11,12 +11,13 @@
     <link href="~/AdminStyle/fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap" rel="stylesheet">
     <!-- sb Admin -->
     <!-- Bootstrap core CSS-->
-
     <!-- Page level plugin CSS-->
     <link href="~/AdminStyle/SbAd/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
     <!-- Custom styles for this template-->
     <link href="~/AdminStyle/SbAd/css/sb-admin.css" rel="stylesheet">
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link href="~/Content/sweetalert/sweet-alert.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-2.2.3.min.js"></script>
 </head>
 <body class="sidebar-menu-collapsed">
     <div class="se-pre-con">
@@ -50,58 +51,83 @@
 
             <!-- sidebar nav start -->
             <ul class="nav nav-pills nav-stacked custom-nav">
+                <!-- Trang chủ -->
                 <li class="active">
                     <a href="index.html"><i class="fa fa-tachometer"></i><span> Trang chủ</span></a>
                 </li>
+                <!-- Quản lý sản phẩm -->
                 <li class="menu-list">
                     <a href="#">
                         <i class="fa fa-table"></i>
-                        <span>Quản lý<i class="lnr lnr-chevron-right"></i></span>
+                        <span>Quản lý sản phẩm<i class="lnr lnr-chevron-right"></i></span>
                     </a>
                     <ul class="sub-menu-list">
-                        <li><a href="../Admin/Product">Sản phẩm</a></li>
+                        <li><a href="../Admin/Product">Danh sách sản phẩm</a></li>
                         <li><a href="../Admin/Categories">Loại sản phẩm</a></li>
                         <li><a href="../Admin/CategoryParent">Danh mục sản phẩm</a></li>
-                        <li><a href="../Admin/Supplier">Nhà cung cấp</a></li>
-                        <li><a href="../Admin/Producer">Nhà sản xuất</a></li>
+                        <li><a href="/Admin/DiscountCode">Mã giảm giá</a></li>
                     </ul>
                 </li>
+                <!-- Quản lý đơn hàng-->
+                <li class="menu-list">
+                    <a href="#">
+                        <i class="fa fa-file-text"></i>
+                        <span>Quản lý đơn hàng<i class="fa fa-file-text"></i></span>
+                    </a>
+                    <ul class="sub-menu-list">
+                        <li><a href="/ManageOrder/NotApproval">Chưa duyệt</a></li>
+                        <li><a href="/ManageOrder/ApprovedAndNotDelivery">Đã duyệt</a></li>
+                        <li><a href="/ManageOrder/DeliveredList">Đã giao</a></li>
 
+                    </ul>
+                </li>
+                <!-- Quản lý đối tác -->
+                <li class="menu-list">
+                    <a href="#">
+                        <i class="fa fa-handshake-o"></i>
+                        <span>Quản lý đối tác<i class="lnr lnr-chevron-right"></i></span>
+                    </a>
+                    <ul class="sub-menu-list">
+                        <li><a href="../Admin/Supplier">Nhà cung cấp</a></li>
+                        <li><a href="../Admin/Producer">Nhà sản xuất</a></li>
+
+                    </ul>
+                </li>
+                <!--Quản lý nhập hàng -->
+                <li class="menu-list">
+                    <a href="#">
+                        <i class="fa fa-pencil-square-o"></i>
+                        <span>Quản lý nhập hàng<i class="lnr lnr-exit"></i></span>
+                    </a>
+                    <ul class="sub-menu-list">
+                        <li><a href="../Admin/ImportProduct">Lập phiếu nhập</a></li>
+                        <li><a href="../Admin/ImportCoupon">Phiếu nhập</a></li>
+                    </ul>
+                </li>
+                <!--Biểu đồ -->
                 <li><a href="../Admin/Charts"><i class="fa fa-pie-chart"></i> <span>Biểu đồ</span></a></li>
-                <li><a href="forms.html"><i class="fa fa-envelope"></i> <span>Mail</span></a></li>
+                <!-- Mail -->
+                <li><a href="/Admin/MailBox"><i class="fa fa-envelope"></i> <span>Mail</span></a></li>
+                <!-- QA -->
                 <li><a href="/Admin/QA"><i class="fa fa-question-circle"></i> <span>Hỏi đáp</span></a></li>
+                <!-- Quảng lý người dùng -->
                 <li class="menu-list">
                     <a href="#">
                         <i class="fa fa-user"></i>
                         <span>Người dùng<i class="lnr lnr-chevron-right"></i></span>
                     </a>
                     <ul class="sub-menu-list">
-                        <li><a href="../Admin/Product">Nhân viên</a></li>
+                        <li><a href="/Admin/EmployeeManage">Nhân viên</a></li>
                         <li><a href="../Admin/Categories">Thành viên</a></li>
                         <li><a href="../Admin/CategoryParent">Khách hàng</a></li>
                         <li><a href="../Admin/Supplier">Loại nhân viên</a></li>
                         <li><a href="../Admin/Producer">Loại thành viên</a></li>
                     </ul>
                 </li>
-           
-                <li class="menu-list">
-                    <a href="#">
-                        <i class="fa fa-file-text"></i>
-                        <span>Đơn hàng<i class="fa fa-file-text"></i></span>
-                    </a>
-                    <ul class="sub-menu-list">
-                        <li><a href="/ManageOrder/NotApproval">Chưa duyệt</a></li>
-                        <li><a href="/ManageOrder/ApprovedAndNotDelivery">Đã duyệt</a></li>
-                        <li><a href="/ManageOrder/DeliveredList">Đã giao</a></li>
-                      
-                    </ul>
-                </li>
-
+                <!--Phân quyền -->
                 <li><a href="forms.html"><i class="fa fa-book"></i> <span>Phân quyền</span></a></li>
+                <!--Thống kê -->
                 <li><a href="forms.html"><i class="fa fa-line-chart"></i> <span>Thống kê</span></a></li>
-                <li><a href="forms.html"><i class="fa fa-cogs"></i> <span>Thiết lập</span></a></li>
-
-
             </ul>
             <!-- //sidebar nav end -->
             <!-- toggle button start -->
@@ -232,13 +258,15 @@
                     <div class="profile_details">
                         <ul>
                             @{
-                                //electronicComponents.DAL.Employee employee = Session["Employee"] as electronicComponents.DAL.Employee;
+                                electronicComponents.DAL.Employee employee = Session["Employee"] as electronicComponents.DAL.Employee;
                             }
+                            @if (employee!=null)
+                            {
                             <li class="dropdown profile_details_drop">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu3" aria-haspopup="true"
                                    aria-expanded="false">
                                     <div class="profile_img">
-                                        @*<img src="@Url.Content("~/Content/images/"+employee.imagee)" class="rounded-circle" alt="" />*@
+                                        <img src="@Url.Content("~/Content/images/"+employee.imagee)" class="rounded-circle" alt="" />
                                         <div class="user-active">
                                             <span></span>
                                         </div>
@@ -247,14 +275,16 @@
 
                                 <ul class="dropdown-menu drp-mnu" aria-labelledby="dropdownMenu3">
                                     <li class="user-info">
-                                        @*<h5 class="user-name">@employee.fullName</h5>*@
-                                        @*<span class="status ml-2">@employee.EmployeeType.name</span>*@
+                                        <h5 class="user-name">@employee.fullName</h5>
+                                        <span class="status ml-2">@employee.EmployeeType.name</span>
                                     </li>
                                     <li> <a href="#"><i class="lnr lnr-user"></i>My Profile</a> </li>
                                     <li> <a href="#"><i class="lnr lnr-cog"></i>Setting</a> </li>
-                                    <li class="logout"> <a href="#sign-up.html"><i class="fa fa-power-off"></i> Logout</a> </li>
+                                    <li class="logout"> <a href="/Admin/Logout"><i class="fa fa-power-off"></i> Logout</a> </li>
                                 </ul>
                             </li>
+                            }
+                            
                         </ul>
                     </div>
                 </div>

@@ -89,6 +89,7 @@
           <Property Name="phoneNumber" Type="nchar" MaxLength="20" />
           <Property Name="imagee" Type="varchar(max)" />
           <Property Name="employeeTypeID" Type="int" />
+          <Property Name="isActive" Type="bit" />
         </EntityType>
         <EntityType Name="EmployeeType">
           <Key>
@@ -132,6 +133,7 @@
           <Property Name="emailConfirmed" Type="bit" />
           <Property Name="capcha" Type="varchar(max)" />
           <Property Name="amountPurchased" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="avatar" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="MemberCategory">
           <Key>
@@ -198,7 +200,7 @@
           <Property Name="image2" Type="varchar(max)" />
           <Property Name="image3" Type="varchar(max)" />
           <Property Name="price" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="promotionPrice" Type="int" />
+          <Property Name="promotionPrice" Type="decimal" Precision="18" Scale="0" />
           <Property Name="quantity" Type="int" />
           <Property Name="descriptionn" Type="nvarchar(max)" />
           <Property Name="viewCount" Type="int" />
@@ -209,6 +211,7 @@
           <Property Name="isActive" Type="bit" />
           <Property Name="lastUpdatedDate" Type="datetime" />
           <Property Name="discount" Type="int" />
+          <Property Name="specifications" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -263,6 +266,7 @@
           <Property Name="memberID" Type="int" />
           <Property Name="star" Type="int" />
           <Property Name="content" Type="nvarchar(max)" />
+          <Property Name="dateRating" Type="datetime" />
         </EntityType>
         <EntityType Name="Rolee">
           <Key>
@@ -1051,6 +1055,7 @@
           <Property Name="phoneNumber" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
           <Property Name="imagee" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="employeeTypeID" Type="Int32" />
+          <Property Name="isActive" Type="Boolean" />
           <NavigationProperty Name="DiscountCodes" Relationship="electronicComponents1Model.fk_dcc_id" FromRole="Employee" ToRole="DiscountCode" />
           <NavigationProperty Name="EmployeeType" Relationship="electronicComponents1Model.fk_eml_id" FromRole="Employee" ToRole="EmployeeType" />
           <NavigationProperty Name="ImportCoupons" Relationship="electronicComponents1Model.fk_ipc_ide" FromRole="Employee" ToRole="ImportCoupon" />
@@ -1105,6 +1110,7 @@
           <Property Name="emailConfirmed" Type="Boolean" />
           <Property Name="capcha" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="amountPurchased" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Carts" Relationship="electronicComponents1Model.fk_c_idm" FromRole="Member" ToRole="Cart" />
           <NavigationProperty Name="Comments" Relationship="electronicComponents1Model.fk_cm_idm" FromRole="Member" ToRole="Comment" />
           <NavigationProperty Name="MemberCategory" Relationship="electronicComponents1Model.fk_mb_id" FromRole="Member" ToRole="MemberCategory" />
@@ -1187,7 +1193,7 @@
           <Property Name="image2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="image3" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="price" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="promotionPrice" Type="Int32" />
+          <Property Name="promotionPrice" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="quantity" Type="Int32" />
           <Property Name="descriptionn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="viewCount" Type="Int32" />
@@ -1198,6 +1204,7 @@
           <Property Name="isActive" Type="Boolean" />
           <Property Name="lastUpdatedDate" Type="DateTime" Precision="3" />
           <Property Name="discount" Type="Int32" />
+          <Property Name="specifications" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Carts" Relationship="electronicComponents1Model.fk_c_idp" FromRole="Product" ToRole="Cart" />
           <NavigationProperty Name="Comments" Relationship="electronicComponents1Model.fk_cm_idp" FromRole="Product" ToRole="Comment" />
           <NavigationProperty Name="ImportCouponDetails" Relationship="electronicComponents1Model.fk_ipcd_idp" FromRole="Product" ToRole="ImportCouponDetail" />
@@ -1269,6 +1276,7 @@
           <Property Name="memberID" Type="Int32" />
           <Property Name="star" Type="Int32" />
           <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="dateRating" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Member" Relationship="electronicComponents1Model.fk_rt_idm" FromRole="Rating" ToRole="Member" />
           <NavigationProperty Name="Product" Relationship="electronicComponents1Model.fk_rt_idp" FromRole="Rating" ToRole="Product" />
         </EntityType>
@@ -1752,6 +1760,7 @@
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="electronicComponents1Model.Employee">
               <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="employeeTypeID" ColumnName="employeeTypeID" />
                 <ScalarProperty Name="imagee" ColumnName="imagee" />
                 <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
@@ -1797,6 +1806,7 @@
           <EntitySetMapping Name="Members">
             <EntityTypeMapping TypeName="electronicComponents1Model.Member">
               <MappingFragment StoreEntitySet="Member">
+                <ScalarProperty Name="avatar" ColumnName="avatar" />
                 <ScalarProperty Name="amountPurchased" ColumnName="amountPurchased" />
                 <ScalarProperty Name="capcha" ColumnName="capcha" />
                 <ScalarProperty Name="emailConfirmed" ColumnName="emailConfirmed" />
@@ -1873,6 +1883,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="electronicComponents1Model.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="specifications" ColumnName="specifications" />
                 <ScalarProperty Name="discount" ColumnName="discount" />
                 <ScalarProperty Name="lastUpdatedDate" ColumnName="lastUpdatedDate" />
                 <ScalarProperty Name="isActive" ColumnName="isActive" />
@@ -1945,6 +1956,7 @@
           <EntitySetMapping Name="Ratings">
             <EntityTypeMapping TypeName="electronicComponents1Model.Rating">
               <MappingFragment StoreEntitySet="Rating">
+                <ScalarProperty Name="dateRating" ColumnName="dateRating" />
                 <ScalarProperty Name="content" ColumnName="content" />
                 <ScalarProperty Name="star" ColumnName="star" />
                 <ScalarProperty Name="memberID" ColumnName="memberID" />

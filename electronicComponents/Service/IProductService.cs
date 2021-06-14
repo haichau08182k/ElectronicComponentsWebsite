@@ -14,15 +14,18 @@ namespace electronicComponents.Service
         IEnumerable<Product> GetListProduct();
         List<string> GetProductListName(string keyword);
         IEnumerable<Product> GetProductList(string keyWord);
+        IEnumerable<Product> GetListFeaturedProduct();
         IEnumerable<Product> GetListSellingProduct();
         IEnumerable<Product> GetListProductNew();
         List<SelectListItem> GetProducer();
         IEnumerable<ProductCategory> GetProductCategoryList();
         IEnumerable<ProductCategoryParent> GetProductCategoryParentList();
-       
+        int GetTotalProduct();
+        int GetTotalProductPurchased();
         List<SelectListItem> GetSupplier();
         void AddProductViewByMember(int productID, int memberID);
         void DeleteProductViewed(int memberID);
         void AddViewCount(int ID);
+        void UpdateProduct(Product product);
     }
 }

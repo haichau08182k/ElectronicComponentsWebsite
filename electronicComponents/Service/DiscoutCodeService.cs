@@ -34,9 +34,17 @@ namespace electronicComponents.Service
             {
                 lock (discountCodeDetail)
                 { // synchronize
-
-                    int code = random.Next(100000, 999999);
-                    discountCodeDetail.code = code.ToString();
+                    string strString = "abcdefghijklmnopqrstuvwxyz0123456789";
+                    int randomCharIndex = 0;
+                    char randomChar;
+                    string captcha = "";
+                    for (int j = 0; j < 5; j++)
+                    {
+                        randomCharIndex = random.Next(0, strString.Length);
+                        randomChar = strString[randomCharIndex];
+                        captcha += Convert.ToString(randomChar);
+                    }
+                    discountCodeDetail.code = captcha;
                     _unitOfWork.GetRepositoryInstance<DiscountCodeDetail>().Add(discountCodeDetail);
                 }
             }

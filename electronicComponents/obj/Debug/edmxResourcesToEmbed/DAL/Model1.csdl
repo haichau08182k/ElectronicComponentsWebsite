@@ -244,6 +244,7 @@
     <Property Name="phoneNumber" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
     <Property Name="imagee" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="employeeTypeID" Type="Int32" />
+    <Property Name="isActive" Type="Boolean" />
     <NavigationProperty Name="DiscountCodes" Relationship="electronicComponents1Model.fk_dcc_id" FromRole="Employee" ToRole="DiscountCode" />
     <NavigationProperty Name="EmployeeType" Relationship="electronicComponents1Model.fk_eml_id" FromRole="Employee" ToRole="EmployeeType" />
     <NavigationProperty Name="ImportCoupons" Relationship="electronicComponents1Model.fk_ipc_ide" FromRole="Employee" ToRole="ImportCoupon" />
@@ -298,6 +299,7 @@
     <Property Name="emailConfirmed" Type="Boolean" />
     <Property Name="capcha" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="amountPurchased" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Carts" Relationship="electronicComponents1Model.fk_c_idm" FromRole="Member" ToRole="Cart" />
     <NavigationProperty Name="Comments" Relationship="electronicComponents1Model.fk_cm_idm" FromRole="Member" ToRole="Comment" />
     <NavigationProperty Name="MemberCategory" Relationship="electronicComponents1Model.fk_mb_id" FromRole="Member" ToRole="MemberCategory" />
@@ -380,7 +382,7 @@
     <Property Name="image2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="image3" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="price" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="promotionPrice" Type="Int32" />
+    <Property Name="promotionPrice" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="quantity" Type="Int32" />
     <Property Name="descriptionn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="viewCount" Type="Int32" />
@@ -391,6 +393,7 @@
     <Property Name="isActive" Type="Boolean" />
     <Property Name="lastUpdatedDate" Type="DateTime" Precision="3" />
     <Property Name="discount" Type="Int32" />
+    <Property Name="specifications" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Carts" Relationship="electronicComponents1Model.fk_c_idp" FromRole="Product" ToRole="Cart" />
     <NavigationProperty Name="Comments" Relationship="electronicComponents1Model.fk_cm_idp" FromRole="Product" ToRole="Comment" />
     <NavigationProperty Name="ImportCouponDetails" Relationship="electronicComponents1Model.fk_ipcd_idp" FromRole="Product" ToRole="ImportCouponDetail" />
@@ -462,6 +465,7 @@
     <Property Name="memberID" Type="Int32" />
     <Property Name="star" Type="Int32" />
     <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="dateRating" Type="DateTime" Precision="3" />
     <NavigationProperty Name="Member" Relationship="electronicComponents1Model.fk_rt_idm" FromRole="Rating" ToRole="Member" />
     <NavigationProperty Name="Product" Relationship="electronicComponents1Model.fk_rt_idp" FromRole="Rating" ToRole="Product" />
   </EntityType>

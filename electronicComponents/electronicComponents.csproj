@@ -291,8 +291,6 @@
     <Compile Include="Service\IDecentralizationService.cs" />
     <Compile Include="Service\IDiscountCodeDetailService.cs" />
     <Compile Include="Service\IDiscountCodeService.cs" />
-    <Compile Include="Service\IEmployeeService.cs" />
-    <Compile Include="Service\IEmployeeTypeService.cs" />
     <Compile Include="Service\IImportCouponDetailService.cs" />
     <Compile Include="Service\IImportCouponService.cs" />
     <Compile Include="Service\ILoginService.cs" />
@@ -313,6 +311,7 @@
     <Compile Include="Service\QAService.cs" />
     <Compile Include="Service\RatingService.cs" />
     <Compile Include="Service\RoleService.cs" />
+    <Compile Include="Service\SupplierService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AdminStyle\css\style-starter.css" />
@@ -2040,7 +2039,6 @@
     <Content Include="Views\Member\ConfirmEmail.cshtml" />
     <Content Include="Views\Home\MenuPartial.cshtml" />
     <Content Include="Views\Home\HeaderPartial.cshtml" />
-    <Content Include="Views\Home\NewProductPartial.cshtml" />
     <Content Include="Views\Home\FeaturedProductPartial.cshtml" />
     <Content Include="Views\Cart\CartPartial.cshtml" />
     <Content Include="Views\Cart\Checkout.cshtml" />
@@ -2064,6 +2062,19 @@
     <Content Include="Views\Product\ProductCategory.cshtml" />
     <Content Include="Views\Product\ProductFeaturePartial.cshtml" />
     <Content Include="Views\Product\Search.cshtml" />
+    <Content Include="Views\Product\ProductFeature.cshtml" />
+    <Content Include="Views\Product\ProSelling.cshtml" />
+    <Content Include="Views\Product\ProFeatured.cshtml" />
+    <Content Include="Views\Admin\DiscountCode.cshtml" />
+    <Content Include="Views\Admin\AddDiscountCode.cshtml" />
+    <Content Include="Views\Admin\ImportProduct.cshtml" />
+    <Content Include="Views\Admin\ImportProductBySupplierID.cshtml" />
+    <Content Include="Views\Admin\ImportCoupon.cshtml" />
+    <Content Include="Views\Admin\ImportProductDetail.cshtml" />
+    <Content Include="Views\Admin\MailBox.cshtml" />
+    <Content Include="Views\Admin\Incompetent.cshtml" />
+    <Content Include="Views\Admin\EmployeeManage.cshtml" />
+    <Content Include="Views\Admin\AddEmployee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

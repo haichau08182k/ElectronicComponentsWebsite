@@ -1,0 +1,145 @@
+﻿@model IEnumerable<electronicComponents.DAL.DiscountCode>
+
+@{
+    ViewBag.Title = "DiscoutCode";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Template CSS -->
+<link rel="stylesheet" href="~/AdminStyle/assets/css/style-starter.css">
+
+<!-- google fonts -->
+<link href="~/AdminStyle/fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap" rel="stylesheet">
+@if (TempData["create"] != null)
+{
+    <script>
+        swal({
+            title: "Thông báo",
+            text: "Thêm mã giảm giá thành công!",
+            icon: "success",
+            timer: 1500
+        });
+    </script>
+    @(TempData["create"] = null)}
+<div class="main-content">
+
+    <!-- content -->
+    <div class="container-fluid content-top-gap">
+
+        <!-- breadcrumbs -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb my-breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Quản lý</li>
+                <li class="breadcrumb-item active" aria-current="page">Loại sản phẩm</li>
+            </ol>
+        </nav>
+        <!-- //breadcrumbs -->
+        <!-- pricing -->
+        <section class="pricing">
+
+            <div class="card mb-3">
+                <div class="p-3 card card_border">
+                    <div class="pl-0 pt-0 card-header chart-grid__header">
+                        <a href="../Admin/AddDiscountCode" class="btn btn-style border-btn pull-right">Thêm mới </a>
+                    </div>
+                    @using (Html.BeginForm())
+                    {
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Giảm Giá
+                                            </th>
+                                            <th>
+                                                Ngày Hết Hạn
+                                            </th>
+                                            <th>
+                                                Số Lượng
+                                            </th>
+                                            <th>
+                                                Còn Lại
+                                            </th>
+                                            <th>
+                                                Trạng Thái
+                                            </th>
+                                            <th>
+                                                Tạo Bởi
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Stt</th>
+                                            <th>Tên loại sản phẩm</th>
+                                            <th>Mô tả</th>
+                                            <th>Kích hoạt</th>
+                                            <th>Ngày cập nhật cuối cùng</th>
+                                            <th>Danh mục</th>
+                                            <th>Hình ảnh</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            @Html.Hidden(item.id.ToString())
+                                            <tr>
+                                                <td>-@Html.DisplayFor(modelItem => item.numberDiscount)%</td>
+                                                <td>@Html.DisplayFor(modelItem => item.expirationDate)</td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.DiscountCodeDetails.ToList().Count)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.DiscountCodeDetails.Where(x => x.isUsed == false).ToList().Count)
+                                                </td>
+
+
+                                                <td>
+                                                    @if (item.isActive == true)
+                                                    {
+                                                        <label class="switch block">
+                                                            <input type="checkbox" checked class="ckb" value="@item.id">
+                                                            <span class="slider round"></span>
+                                                        </label> }
+                                                    else
+                                                    {
+                                                        <label class="switch active">
+                                                            <input type="checkbox" class="ckb" value="@item.id">
+                                                            <span class="slider round"></span>
+                                                        </label>}
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Employee.fullName)
+                                                </td>
+                                                <td>
+
+                                                    @Html.ActionLink("Edit", "EditCategories", new { cateID = item.id })
+
+                                                </td>
+
+                                            </tr>
+
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+            </div>
+
+
+        </section>
+
+
+    </div>
+</div>
+
+

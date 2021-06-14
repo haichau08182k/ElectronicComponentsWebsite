@@ -82,6 +82,7 @@
     <EntitySetMapping Name="Employees">
       <EntityTypeMapping TypeName="electronicComponents1Model.Employee">
         <MappingFragment StoreEntitySet="Employee">
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
           <ScalarProperty Name="employeeTypeID" ColumnName="employeeTypeID" />
           <ScalarProperty Name="imagee" ColumnName="imagee" />
           <ScalarProperty Name="phoneNumber" ColumnName="phoneNumber" />
@@ -127,6 +128,7 @@
     <EntitySetMapping Name="Members">
       <EntityTypeMapping TypeName="electronicComponents1Model.Member">
         <MappingFragment StoreEntitySet="Member">
+          <ScalarProperty Name="avatar" ColumnName="avatar" />
           <ScalarProperty Name="amountPurchased" ColumnName="amountPurchased" />
           <ScalarProperty Name="capcha" ColumnName="capcha" />
           <ScalarProperty Name="emailConfirmed" ColumnName="emailConfirmed" />
@@ -203,6 +205,7 @@
     <EntitySetMapping Name="Products">
       <EntityTypeMapping TypeName="electronicComponents1Model.Product">
         <MappingFragment StoreEntitySet="Product">
+          <ScalarProperty Name="specifications" ColumnName="specifications" />
           <ScalarProperty Name="discount" ColumnName="discount" />
           <ScalarProperty Name="lastUpdatedDate" ColumnName="lastUpdatedDate" />
           <ScalarProperty Name="isActive" ColumnName="isActive" />
@@ -275,6 +278,7 @@
     <EntitySetMapping Name="Ratings">
       <EntityTypeMapping TypeName="electronicComponents1Model.Rating">
         <MappingFragment StoreEntitySet="Rating">
+          <ScalarProperty Name="dateRating" ColumnName="dateRating" />
           <ScalarProperty Name="content" ColumnName="content" />
           <ScalarProperty Name="star" ColumnName="star" />
           <ScalarProperty Name="memberID" ColumnName="memberID" />

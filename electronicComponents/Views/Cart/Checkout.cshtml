@@ -199,7 +199,7 @@
                                 decimal total = @cart.Sum(x => x.total.Value) - (@cart.Sum(x => x.total.Value) / 100 * (int)@Session["num"]);
                                 <li>
                                     <label class="control-label">Tổng tiền: <del>@cart.Sum(x => x.total).Value.ToString("#,##")₫</del> @total.ToString("#,##")₫</label>
-                                  
+
 
                                 </li>
                                 <li>
@@ -217,7 +217,7 @@
                             {
                                 <li>
                                     <label class="control-label">Tổng tiền:</label>
-                                    
+
                                     @cart.Sum(x => x.total).Value.ToString("#,##")
 
                                 </li>
@@ -226,14 +226,14 @@
                                         <label class="control-label">Chọn mã giảm giá:</label>
                                         <button id="btnChoose" class="form-control">Chọn</button>
                                     </div>
-                                    
+
                                 </li>
                             }
 
                         </ul>
                     </div>
                     <div class="col-md-8 address_form">
-                        <h4>Add a new Details</h4>
+                        <h4>Thông tin khách hàng</h4>
                         <form action="/Cart/AddOrder" method="post" class="creditly-card-form agileinfo_form">
                             <section class="creditly-wrapper wrapper">
                                 <div class="information-wrapper">
@@ -265,7 +265,7 @@
                                         </div>
                                     </div>
                                     <div class="checkout-right-basket">
-                                        
+
                                         <button class="submit">
                                             Thanh toán
                                         </button>

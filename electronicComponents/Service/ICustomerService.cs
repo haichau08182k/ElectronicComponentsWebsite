@@ -8,5 +8,6 @@ namespace electronicComponents.Service
         Customer AddCustomer(Customer customer);
         IEnumerable<Customer> GetAll();
         string GetEmailByID(int ID);
+        void Update(Customer customer);
     }
 }

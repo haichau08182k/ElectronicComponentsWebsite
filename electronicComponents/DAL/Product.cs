@@ -33,7 +33,7 @@ namespace electronicComponents.DAL
         public string image2 { get; set; }
         public string image3 { get; set; }
         public Nullable<decimal> price { get; set; }
-        public Nullable<int> promotionPrice { get; set; }
+        public Nullable<decimal> promotionPrice { get; set; }
         public Nullable<int> quantity { get; set; }
         public string descriptionn { get; set; }
         public Nullable<int> viewCount { get; set; }
@@ -44,6 +44,7 @@ namespace electronicComponents.DAL
         public Nullable<bool> isActive { get; set; }
         public Nullable<System.DateTime> lastUpdatedDate { get; set; }
         public Nullable<int> discount { get; set; }
+        public string specifications { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cart> Carts { get; set; }

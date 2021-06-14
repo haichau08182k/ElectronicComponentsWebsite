@@ -39,6 +39,8 @@ namespace electronicComponents
             container.RegisterType<IOrderService, OrderService>();
             container.RegisterType<IOrderDetailService, OrderDetailService>();
             container.RegisterType<IRatingService, RatingService>();
+            container.RegisterType<ISupplierService, SupplierService>();
+
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }

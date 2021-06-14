@@ -1,14 +1,14 @@
 ﻿@model PagedList.IPagedList<electronicComponents.DAL.Product>
 @using PagedList.Mvc;
 @{
-    ViewBag.Title = "Product";
+    ViewBag.Title = "ProductSelling";
     Layout = "~/Views/Shared/_ProductLayout.cshtml";
 }
 
 @{
     int couter = 1;
     int couter1 = 1;
-    IEnumerable<electronicComponents.DAL.Product> productsSelling = ViewBag.ListProSelling;
+    IEnumerable<electronicComponents.DAL.Product> productNew = ViewBag.ListNew;
 }
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
@@ -260,67 +260,217 @@
                             {
                                 if (couter == 1)
                                 {
-                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    if (item.isNew == true)
+                                    {
+                                        @Html.Action("ProductPartial", "Product", new { product = item })
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-3 product-men women_two">
+                                            <div class="product-googles-info googles">
+                                                @Html.Action("ProductFeaturePartial", "Product", new { product = item })
+
+                                            </div>
+                                        </div>
+                                    }
+
 
                                     couter++;
                                 }
                                 else if (couter == 2)
                                 {
-                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    if (item.isNew == true)
+                                    {
+                                        @Html.Action("ProductPartial", "Product", new { product = item })
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-3 product-men women_two">
+                                            <div class="product-googles-info googles">
+                                                @Html.Action("ProductFeaturePartial", "Product", new { product = item })
+
+                                            </div>
+                                        </div>
+                                    }
                                     couter++;
                                 }
                                 else if (couter == 3)
                                 {
-                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    if (item.isNew == true)
+                                    {
+                                        @Html.Action("ProductPartial", "Product", new { product = item })
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-3 product-men women_two">
+                                            <div class="product-googles-info googles">
+                                                @Html.Action("ProductFeaturePartial", "Product", new { product = item })
 
+                                            </div>
+                                        </div>
+                                    }
                                     couter++;
                                 }
                                 else if (couter == 4)
                                 {
-                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    if (item.isNew == true)
+                                    {
+                                        @Html.Action("ProductPartial", "Product", new { product = item })
+
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-3 product-men women_two">
+                                            <div class="product-googles-info googles">
+                                                @Html.Action("ProductFeaturePartial", "Product", new { product = item })
+
+                                            </div>
+                                        </div>
+
+                                    }
                                     couter++;
                                 }
                                 else if (couter == 5)
                                 {
-                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    if (item.isNew == true)
+                                    {
+                                        @Html.Action("ProductPartial", "Product", new { product = item })
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-3 product-men women_two">
+                                            <div class="product-googles-info googles">
+                                                @Html.Action("ProductFeaturePartial", "Product", new { product = item })
+
+                                            </div>
+                                        </div>
+                                    }
                                     couter++;
                                 }
                                 else if (couter == 6)
                                 {
-                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    if (item.isNew == true)
+                                    {
+                                        @Html.Action("ProductPartial", "Product", new { product = item })
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-3 product-men women_two">
+                                            <div class="product-googles-info googles">
+                                                @Html.Action("ProductFeaturePartial", "Product", new { product = item })
+
+                                            </div>
+                                        </div>
+                                    }
                                     couter++;
                                 }
                                 else if (couter == 7)
                                 {
-                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    if (item.isNew == true)
+                                    {
+                                        @Html.Action("ProductPartial", "Product", new { product = item })
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-3 product-men women_two">
+                                            <div class="product-googles-info googles">
+                                                @Html.Action("ProductFeaturePartial", "Product", new { product = item })
+
+                                            </div>
+                                        </div>
+                                    }
                                     couter++;
                                 }
                                 else if (couter == 8)
                                 {
-                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    if (item.isNew == true)
+                                    {
+                                        @Html.Action("ProductPartial", "Product", new { product = item })
+
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-3 product-men women_two">
+                                            <div class="product-googles-info googles">
+                                                @Html.Action("ProductFeaturePartial", "Product", new { product = item })
+
+                                            </div>
+                                        </div>
+
+                                    }
                                     couter++;
                                 }
                                 else if (couter == 9)
                                 {
-                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    if (item.isNew == true)
+                                    {
+                                        @Html.Action("ProductPartial", "Product", new { product = item })
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-3 product-men women_two">
+                                            <div class="product-googles-info googles">
+                                                @Html.Action("ProductFeaturePartial", "Product", new { product = item })
+
+                                            </div>
+                                        </div>
+                                    }
                                     couter++;
                                 }
                                 else if (couter == 10)
                                 {
-                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    if (item.isNew == true)
+                                    {
+                                        @Html.Action("ProductPartial", "Product", new { product = item })
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-3 product-men women_two">
+                                            <div class="product-googles-info googles">
+                                                @Html.Action("ProductFeaturePartial", "Product", new { product = item })
+
+                                            </div>
+                                        </div>
+                                    }
                                     couter++;
                                 }
                                 else if (couter == 11)
                                 {
-                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    if (item.isNew == true)
+                                    {
+                                        @Html.Action("ProductPartial", "Product", new { product = item })
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-3 product-men women_two">
+                                            <div class="product-googles-info googles">
+                                                @Html.Action("ProductFeaturePartial", "Product", new { product = item })
+
+                                            </div>
+                                        </div>
+                                    }
                                     couter++;
                                 }
                                 else if (couter == 12)
                                 {
-                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    if (item.isNew == true)
+                                    {
+                                        @Html.Action("ProductPartial", "Product", new { product = item })
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-3 product-men women_two">
+                                            <div class="product-googles-info googles">
+                                                @Html.Action("ProductFeaturePartial", "Product", new { product = item })
+
+                                            </div>
+                                        </div>
+
+                                    }
                                     break;
                                 }
                             }
+
 
                             <!--  -->
 
@@ -343,7 +493,7 @@
                 <h3 class="tittle-w3layouts text-left my-lg-4 my-3">Sản phẩm nổi bật</h3>
                 <div class="mid-slider">
                     <div class="owl-carousel owl-theme row">
-                        @foreach (var item in productsSelling)
+                        @foreach (var item in productNew)
                         {
                             if (couter1 == 1)
                             {
@@ -384,3 +534,5 @@
         </div>
     </div>
 </section>
+
+

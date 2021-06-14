@@ -36,6 +36,7 @@ namespace electronicComponents.DAL
         public Nullable<bool> emailConfirmed { get; set; }
         public string capcha { get; set; }
         public Nullable<decimal> amountPurchased { get; set; }
+        public string avatar { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cart> Carts { get; set; }

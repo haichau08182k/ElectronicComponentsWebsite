@@ -1,0 +1,168 @@
+﻿@using electronicComponents.DAL
+@model ImportCoupon
+@{ ViewBag.Title = "Nhập Hàng";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@if (TempData["ImportProduct"] != null)
+{
+    <script>
+        swal({
+            title: "Thông báo",
+            text: "Lập phiếu nhập thành công!",
+            icon: "success",
+            timer: 1500
+        });</script>
+    @(TempData["ImportProduct"] = null)}
+<script src="~/Scripts/bootbox.js"></script>
+<div class="main-content">
+
+
+    <!-- content -->
+    <div class="container-fluid content-top-gap">
+
+        <!-- breadcrumbs -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb my-breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Quản lý</li>
+                <li class="breadcrumb-item active" aria-current="page">Loại sản phẩm</li>
+            </ol>
+        </nav>
+        <h2>Nhà Cung Cấp: @ViewBag.SupplierName</h2>
+        @using (Html.BeginForm("ImportProduct", "Admin", FormMethod.Post))
+        {
+            <input type="text" name="SupplierID" value="@ViewBag.SupplierID" hidden="hidden" />
+            <table class="tblImportCouponDetail" id="table">
+                @{ IEnumerable<Product> lstProduct = ViewBag.ListProduct as IEnumerable<Product>;}
+                <tr class="trAppend" style="display:none;">
+                    <td>
+                        <select class="ddlProduct" id="ProductID" name="ProductID">
+                            @foreach (var item in lstProduct)
+                            {
+                                <option value="@item.id">@item.name - (SL: @item.quantity)</option>
+                            }
+                        </select>
+                    </td>
+                    <td>
+                        <input name="" class="col-md-10 Price" value="1" />
+                    </td>
+                    <td>
+                        <input name="" class="col-md-10 Quantity" value="1" />
+                    </td>
+                    <td>
+                        <input class="btnDelete btn btn-danger" style="width:30px;height:30px" value="-" />
+                    </td>
+                </tr>
+                <tr class="trFirstChild" data-id="-1">
+                    <th>Sản phẩm</th>
+                    <th>Đơn giá nhập</th>
+                    <th>Số lượng nhập</th>
+                    <th></th>
+                </tr>
+            </table>
+            @*Nút button thêm*@
+            <input type="button" class="btn btn-success" value="+" id="btnAdd" />
+            <input type="submit" class="btn btn-primary" value="Nhập hàng" id="btnImportProduct" />
+        }
+    </div>
+</div>
+<script>
+    $("#btnAdd").click(function () {
+        //Lấy id của thẻ tr cuối cùng thuộc table có class = tblChiTietPhieuNhap
+        //Phương thức find là tìm đến thẻ nào đó: ở đây là thẻ tr (:last-child) là thẻ tr cuối cùng trong table tblChiTietPhieuNhap
+        var id_cuoi = $(".tblImportCouponDetail").find("tr:last-child").attr("data-id");
+        i = parseInt(id_cuoi) + 1;
+        //Bước 1:
+        //lấy nội dung phía trong thẻ trAppend
+        var tdnoidung = $(".trAppend").html();
+        //Bước 2:
+        //Tạo 1 thẻ tr bao ngoài nội dung
+        var trnoidung = "<tr class=\"trAppended\" data-id=\"" + i + "\">" + tdnoidung + "</tr>";
+        //Bước 3:
+        //append trnoidung vào thẻ table Append
+        $(".tblImportCouponDetail").append(trnoidung);
+        LoadIDLenThe();
+    });
+    //Phương thức xử lý gán name cho td
+    function LoadIDLenThe() {
+        $(".trAppended").each(function () {
+            //Lấy data-id của tr
+            var id = $(this).attr("data-id");
+            var nameProductID = "[" + id + "].ProductID";
+            var nameQuantity = "[" + id + "].Quantity";
+            var namePrice = "[" + id + "].Price";
+            $(this).find(".ddlProduct").attr("name", nameProductID); //Gán name cho ddlSanPham
+            $(this).find(".Price").attr("name", namePrice); //Gán name cho txtDonGia
+            $(this).find(".Quantity").attr("name", nameQuantity); //Gán name cho txtSoLuong
+        })
+    };
+    //Cập nhật id
+    function CapNhatID() {
+        //Lấy lại tr 1
+        var id_cuoi = $(".tblImportCouponDetail").find(".trFirstChild").attr("data-id");
+        i = parseInt(id_cuoi) + 1;
+        $(".trAppended").each(function () {
+            var id = i;
+            //Cập nhật lại name khi xóa
+            var nameProductID = "[" + id + "].ProductID";
+            var nameQuantity = "[" + id + "].Quantity";
+            var namePrice = "[" + id + "].Price";
+            $(this).find(".ddlProduct").attr("name", nameProductID); //Gán name cho ddlSanPham
+            $(this).find(".Price").attr("name", namePrice); //Gán name cho txtDonGia
+            $(this).find(".Quantity").attr("name", nameQuantity); //Gán name cho txtSoLuong
+            //Cập nhật lại data-id khi xóa
+            $(this).attr("data-id", i);
+            i++;
+        })
+    };
+    //Sự kiện xóa
+    $("body").on("click", ".btnDelete", function () {
+        $(this).closest("tr").remove();
+        CapNhatID();
+    });
+    //Kiểm tra dữ liệu đầu vào
+    $("#btnImportProduct").click(function () {
+        if (KiemTraDonGia() == false) {
+            swal({
+                title: "Thông báo",
+                text: "Đơn giá không hợp lệ!",
+                icon: "error",
+                timer: 1500
+            });
+            return false;
+        }
+        if (KiemTraSoLuong() == false) {
+            swal({
+                title: "Thông báo",
+                text: "Số lượng không hợp lệ!",
+                icon: "error",
+                timer: 1500
+            });
+            return false;
+        }
+    });
+    //Kiểm tra đơn giá
+    function KiemTraDonGia() {
+        var bl = true;
+        $(".Price").each(function () {
+            var giatri = $(this).val();
+            if (giatri < 1) {
+                bl = false;
+                return bl;
+            }
+        });
+        return bl;
+    }
+    //Kiểm tra số lượng
+    function KiemTraSoLuong() {
+        var bl = true;
+        $(".Quantity").each(function () {
+            var giatri = $(this).val();
+            if (giatri < 1) {
+                bl = false;
+                return bl;
+            }
+        });
+        return bl;
+    }
+</script>

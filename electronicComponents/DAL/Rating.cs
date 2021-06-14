@@ -19,6 +19,7 @@ namespace electronicComponents.DAL
         public Nullable<int> memberID { get; set; }
         public Nullable<int> star { get; set; }
         public string content { get; set; }
+        public Nullable<System.DateTime> dateRating { get; set; }
     
         public virtual Member Member { get; set; }
         public virtual Product Product { get; set; }

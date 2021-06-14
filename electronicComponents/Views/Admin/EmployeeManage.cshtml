@@ -1,0 +1,127 @@
+﻿@model IEnumerable<electronicComponents.DAL.Employee>
+@{
+    ViewBag.Title = "EmployeeManage";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Template CSS -->
+<link rel="stylesheet" href="~/AdminStyle/assets/css/style-starter.css">
+
+<!-- google fonts -->
+<link href="~/AdminStyle/fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap" rel="stylesheet">
+<div class="main-content">
+
+    <!-- content -->
+    <div class="container-fluid content-top-gap">
+
+        <!-- breadcrumbs -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb my-breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Quản lý</li>
+                <li class="breadcrumb-item active" aria-current="page">Loại sản phẩm</li>
+            </ol>
+        </nav>
+        <!-- //breadcrumbs -->
+        <!-- pricing -->
+        <section class="pricing">
+
+            <div class="card mb-3">
+                <div class="p-3 card card_border">
+                    <div class="pl-0 pt-0 card-header chart-grid__header">
+                        <a href="../Admin/AddCategories" class="btn btn-style border-btn pull-right">Thêm mới </a>
+                    </div>
+                    @using (Html.BeginForm())
+                    {
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Tên nhân viên
+                                            </th>
+                                            <th>
+                                                Hình ảnh
+                                            </th>
+                                            <th>
+                                                Email
+                                            </th>
+                                            <th>
+                                                Kích hoạt
+                                            </th>
+                                            <th></th>
+
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>
+                                                Tên nhân viên
+                                            </th>
+                                            <th>
+                                                Hình ảnh
+                                            </th>
+                                            <th>
+                                                Email
+                                            </th>
+                                            <th>
+                                                Kích hoạt
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            @Html.Hidden(item.id.ToString())
+                                            <tr>
+                                                <td style="color:brown">
+                                                    <b>@Html.DisplayFor(modelItem => item.fullName)</b>
+                                                </td>
+                                                <td>
+                                                    <img src="@Url.Content("~/Content/images/" + item.imagee)" width="100" height="100" />
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.email)
+                                                </td>
+                                                <td>
+                                                    @if (item.isActive == true)
+                                                    {
+                                                        <label class="switch block">
+                                                            <input type="checkbox" checked class="ckb" value="@item.id">
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                    }
+                                                    else
+                                                    {
+                                                        <label class="switch active">
+                                                            <input type="checkbox" class="ckb" value="@item.id">
+                                                            <span class="slider round"></span>
+                                                        </label>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-link btnDetail" value="@item.id">Chi tiết</button>
+                                                    <button class="btn btn-primary btnEdit" value="@item.id">Sửa</button>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+            </div>
+
+
+        </section>
+
+
+    </div>
+</div>
+

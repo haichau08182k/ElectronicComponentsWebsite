@@ -6,6 +6,9 @@
 @using electronicComponents.DAL
 @{
     Employee employee = Session["Employee"] as Employee;
+   
+        int counter1 = 0;
+    
 }
 <!-- Template CSS -->
 <link rel="stylesheet" href="~/AdminStyle/assets/css/style-starter.css">
@@ -103,9 +106,7 @@
 
             <div class="card mb-3">
                 <div class="p-3 card card_border">
-                    <div class="pl-0 pt-0 card-header chart-grid__header">
-                        <a href="../Admin/AddCategories" class="btn btn-style border-btn pull-right">Thêm mới </a>
-                    </div>
+                   
                     @using (Html.BeginForm())
                     {
 
@@ -178,9 +179,7 @@
                                         </tr>
                                     </tfoot>
 
-                                    @{
-                                        int counter1 = 0;
-                                    }
+
                                     <tbody>
                                         @foreach (var item in Model)
                                         {
@@ -268,8 +267,8 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Chỉnh sửa</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
                 @using (Html.BeginForm("Answer", "Admin", FormMethod.Post))

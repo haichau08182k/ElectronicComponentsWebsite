@@ -19,7 +19,10 @@ namespace electronicComponents.Service
             this._unitOfWork.GetRepositoryInstance<Member>().Add(member);
             return member;
         }
-
+        public int GetTotalMember()
+        {
+            return _unitOfWork.GetRepositoryInstance<Member>().GetAllRecords().Count();
+        }
         public Member CheckCapcha(int ID, string capcha)
         {
             Member member = GetByID(ID);
@@ -69,6 +72,15 @@ namespace electronicComponents.Service
             IEnumerable<Member> listMember = this._unitOfWork.GetRepositoryInstance<Member>().GetAllRecords();
             return listMember;
         }
+        public void GiftForNewMember(int MemberID)
+        {
+            MemberDiscountCode member = new MemberDiscountCode();
+            string code = _unitOfWork.GetRepositoryInstance<DiscountCode>().GetAllRecords(x => x.numberDiscount == 10).First().DiscountCodeDetails.First(x => x.isUsed == false).code;
+            member.discountCodeDetailID = _unitOfWork.GetRepositoryInstance<DiscountCodeDetail>().GetAllRecords(x => x.code == code).First().id;
+            member.memberID = MemberID;
+            _unitOfWork.GetRepositoryInstance<MemberDiscountCode>().Add(member);
+        }
+
 
     }
 }
