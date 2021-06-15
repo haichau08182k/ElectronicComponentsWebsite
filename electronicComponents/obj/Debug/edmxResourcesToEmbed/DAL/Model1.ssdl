@@ -129,6 +129,7 @@
     <Property Name="capcha" Type="varchar(max)" />
     <Property Name="amountPurchased" Type="decimal" Precision="18" Scale="0" />
     <Property Name="avatar" Type="nvarchar(max)" />
+    <Property Name="isDeleted" Type="bit" />
   </EntityType>
   <EntityType Name="MemberCategory">
     <Key>

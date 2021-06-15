@@ -1,0 +1,63 @@
+﻿@model IEnumerable<electronicComponents.DAL.Product>
+
+@{
+    ViewBag.Title = "StatisticStocking";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="~/Scripts/bootbox.js"></script>
+
+
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="@Url.Action("Index")">Trang chủ</a> <i class="fa fa-angle-right"></i></li>
+    <li class="breadcrumb-item"><a href="@Url.Action("Index")">Chọn hình thức thống kê</a> <i class="fa fa-angle-right"></i></li>
+    <li class="breadcrumb-item"><a href="@Url.Action("List")">Thống kê tồn kho</a> <i class="fa fa-angle-right"></i></li>
+</ol>
+
+<div class="agile-grids">
+    <div class="agile-tables">
+        <div class="w3l-table-info">
+            <h2>Danh sách sản phẩm tồn kho</h2>
+            <ul class="bt-list">
+                <li><a href="@Url.Action("DownloadExcelStatisticStocking","StatisticManage",null)" class="hvr-icon-up col-24" style="background-color:green" id="btnAddNew">Xuất Excel</a></li>
+            </ul>
+            <table id="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Tên sản phẩm
+                        </th>
+                        <th>
+                            Hình ảnh
+                        </th>
+                        <th>
+                            Số lượng
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        @Html.Hidden(item.id.ToString())
+                        <tr>
+                            <td style="color:brown">
+                                <b>@Html.DisplayFor(modelItem => item.name)</b>
+                            </td>
+                            <td>
+                                <img src="@Url.Content("~/Content/images/" + item.image1)" width="100" height="100" />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.quantity)
+                            </td>
+                        </tr>
+}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

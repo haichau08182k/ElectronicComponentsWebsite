@@ -1,4 +1,5 @@
 ﻿using electronicComponents.DAL;
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -6,6 +7,8 @@ namespace electronicComponents.Service
 {
     public interface IProductService
     {
+        void UpdateProduct(Product product);
+        IEnumerable<Product> GetProductListSold(DateTime from, DateTime to);
         Product GetProductID(int ID);
         ProductCategory GetProductCateID(int ID);
         List<SelectListItem> GetCategory();
@@ -26,6 +29,6 @@ namespace electronicComponents.Service
         void AddProductViewByMember(int productID, int memberID);
         void DeleteProductViewed(int memberID);
         void AddViewCount(int ID);
-        void UpdateProduct(Product product);
+        IEnumerable<Product> GetProductListStocking();
     }
 }

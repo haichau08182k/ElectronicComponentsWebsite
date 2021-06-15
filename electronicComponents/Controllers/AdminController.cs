@@ -12,6 +12,7 @@ using System.IO;
 using System.Web.Security;
 using System.Net;
 using PagedList;
+using OfficeOpenXml;
 
 namespace electronicComponents.Controllers
 {
@@ -28,10 +29,14 @@ namespace electronicComponents.Controllers
         private IImportCouponService _importCouponService;
         private IImportCouponDetailService _importCouponDetailService;
         private ISupplierService _supplierService;
+        private IRoleService _roleService;
+        private IDecentralizationService _decentralizationService;
+        private IAccessTimesCountService _accessTimesCountService;
 
 
 
-        public AdminController(ISupplierService suplierService, IImportCouponDetailService importCouponDetailService, IImportCouponService importCouponService, IDiscountCodeService discountCodeService, IOrderService orderService, IQAService qAService, IProductService productService, IMemberService memberService, IEmployeeService employeeService, IEmployeeTypeService employeeTypeService)
+
+        public AdminController(IAccessTimesCountService accessTimesCountService, IDecentralizationService decentralizationService, IRoleService roleService, ISupplierService suplierService, IImportCouponDetailService importCouponDetailService, IImportCouponService importCouponService, IDiscountCodeService discountCodeService, IOrderService orderService, IQAService qAService, IProductService productService, IMemberService memberService, IEmployeeService employeeService, IEmployeeTypeService employeeTypeService)
         {
             _qAService = qAService;
             _productService = productService;
@@ -43,6 +48,9 @@ namespace electronicComponents.Controllers
             _importCouponService = importCouponService;
             _importCouponDetailService = importCouponDetailService;
             _supplierService = suplierService;
+            _roleService = roleService;
+            _decentralizationService = decentralizationService;
+            _accessTimesCountService = accessTimesCountService;
         }
 
         public GenericUnitOfWork _unitOfWork = new GenericUnitOfWork();
@@ -81,7 +89,7 @@ namespace electronicComponents.Controllers
 
         }
 
-       
+
 
         #region Login Logout Manage
 
@@ -544,7 +552,7 @@ namespace electronicComponents.Controllers
 
         }
         #endregion
-       
+
         #region QA Manage
         public ActionResult QA()
         {
@@ -669,7 +677,7 @@ namespace electronicComponents.Controllers
             TempData["ImportProduct"] = "Success";
             return View();
         }
-       
+
         [HttpGet]
         public ActionResult ImportCoupon(int page = 1)
         {
@@ -689,7 +697,7 @@ namespace electronicComponents.Controllers
             ViewBag.ID = ID;
             return View(importCouponDetails);
         }
-        
+
         [HttpGet]
         public ActionResult Delete(int ID, int page)
         {
@@ -767,7 +775,363 @@ namespace electronicComponents.Controllers
         }
 
         #endregion
+        #region Phân quyền
+        public ActionResult DecentralizationEmployeeType(int page = 1)
+        {
+            if (Session["Employee"] == null)
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+            IEnumerable<EmployeeType> emloyeeTypes = _employeeTypeService.GetListEmployeeType();
+            PagedList<EmployeeType> emloyeeTypesList = new PagedList<EmployeeType>(emloyeeTypes, page, 10);
+            return View(emloyeeTypesList);
+        }
+        [HttpGet]
+        public ActionResult Decentralization(int id)
+        {
+            if (id == null)
+            {
+                Response.StatusCode = 404;
+                return null;
+            }
+            EmployeeType emloyeeType = _employeeTypeService.GetEmployeeTypeByID(id);
+            if (emloyeeType == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.RoleList = _roleService.GetRoleList();
+            ViewBag.ListDecentralization = _decentralizationService.GetDecentralizationByEmloyeeTypeID(id);
+            return View(emloyeeType);
+        }
+        [HttpPost]
+        public ActionResult Decentralization(int EmloyeeTypeID, IEnumerable<Decentralization> decentralizations)
+        {
+            //Trường hợp: Nếu đã tiến hành phân quyền rồi nhưng muốn phân quyền lại
+            //Bước 1: Xóa những quyền cũ thuộc loại tv đó
+            var ListDecentralization = _decentralizationService.GetDecentralizationByEmloyeeTypeID(EmloyeeTypeID);
+            if (ListDecentralization.Count() != 0)
+            {
+                _decentralizationService.RemoveRange(ListDecentralization);
+            }
+            if (decentralizations != null)
+            {
+                //Kiểm tra danh sách quyền được check
+                foreach (var item in decentralizations)
+                {
+                    item.employeeTypeID = EmloyeeTypeID;
+                    //Nếu được check thì insert dữ liệu vào bảng phân quyền
+                    _decentralizationService.Add(item);
+                }
+            }
+            return RedirectToAction("Index");
+        }
+        #endregion
 
+
+        #region Statistic
+
+        [Authorize(Roles = "StatisticManage")]
+        [HttpGet]
+        public ActionResult StatisticManage()
+        {
+            return View();
+        }
+        [Authorize(Roles = "StatisticStocking")]
+        [HttpGet]
+        public ActionResult StatisticStocking()
+        {
+            IEnumerable<Product> products = _productService.GetProductListStocking();
+            return View(products);
+        }
+        [HttpGet]
+        public void DownloadExcelStatisticStocking()
+        {
+            Employee emloyee = Session["Employee"] as Employee;
+
+            IEnumerable<Product> products = _productService.GetProductListStocking();
+            ExcelPackage pck = new ExcelPackage();
+            ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
+
+            ws.Cells["A2"].Value = "Người lập";
+            ws.Cells["B2"].Value = emloyee.fullName;
+
+            ws.Cells["A3"].Value = "Ngày lập";
+            ws.Cells["B3"].Value = DateTime.Now.ToShortDateString();
+
+            ws.Cells["A6"].Value = "Mã SP";
+            ws.Cells["B6"].Value = "Tên SP";
+            ws.Cells["C6"].Value = "Số lượng tồn";
+
+            int rowStart = 7;
+            foreach (var item in products)
+            {
+                ws.Cells[string.Format("A{0}", rowStart)].Value = item.id;
+                ws.Cells[string.Format("B{0}", rowStart)].Value = item.name;
+                ws.Cells[string.Format("C{0}", rowStart)].Value = item.quantity;
+                rowStart++;
+            }
+
+            ws.Cells["A:AZ"].AutoFitColumns();
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AddHeader("content-disposition", "attachment: filename=" + "Danh sách tồn kho.xlsx");
+            Response.BinaryWrite(pck.GetAsByteArray());
+            Response.End();
+        }
+        [Authorize(Roles = "StatisticMember")]
+        [HttpGet]
+        public ActionResult StatisticMember()
+        {
+            IEnumerable<Member> members = _memberService.GetMemberListForStatistic();
+            return View(members);
+        }
+        [HttpGet]
+        public void DownloadExcelStatisticMember()
+        {
+            Employee emloyee = Session["Employee"] as Employee;
+
+            IEnumerable<Member> members = _memberService.GetMemberListForStatistic();
+            ExcelPackage pck = new ExcelPackage();
+            ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
+
+            ws.Cells["A2"].Value = "Người lập";
+            ws.Cells["B2"].Value = emloyee.fullName;
+
+            ws.Cells["A3"].Value = "Ngày lập";
+            ws.Cells["B3"].Value = DateTime.Now.ToShortDateString();
+
+            ws.Cells["A6"].Value = "Mã Thành Viên";
+            ws.Cells["B6"].Value = "Tên Thành Viên";
+            ws.Cells["C6"].Value = "Địa Chỉ";
+            ws.Cells["D6"].Value = "Email";
+            ws.Cells["E6"].Value = "Số Điện Thoại";
+            ws.Cells["F6"].Value = "Loại Thành Viên";
+            ws.Cells["G6"].Value = "Doanh Số";
+
+            int rowStart = 7;
+            foreach (var item in members)
+            {
+                ws.Cells[string.Format("A{0}", rowStart)].Value = item.id;
+                ws.Cells[string.Format("B{0}", rowStart)].Value = item.fullName;
+                ws.Cells[string.Format("C{0}", rowStart)].Value = item.addresss;
+                ws.Cells[string.Format("D{0}", rowStart)].Value = item.email;
+                ws.Cells[string.Format("E{0}", rowStart)].Value = item.phoneNumber;
+                if (item.memberCategoryID == 1)
+                    ws.Cells[string.Format("F{0}", rowStart)].Value = "Thường";
+                else
+                {
+                    ws.Cells[string.Format("F{0}", rowStart)].Value = "VIP";
+                }
+                ws.Cells[string.Format("G{0}", rowStart)].Value = item.amountPurchased;
+                rowStart++;
+            }
+
+            ws.Cells["A:AZ"].AutoFitColumns();
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AddHeader("content-disposition", "attachment: filename=" + "Danh sách thành viên.xlsx");
+            Response.BinaryWrite(pck.GetAsByteArray());
+            Response.End();
+        }
+        [Authorize(Roles = "StatisticSupplier")]
+        [HttpGet]
+        public ActionResult StatisticSupplier()
+        {
+            IEnumerable<Supplier> suppliers = _supplierService.GetSupplierList();
+            return View(suppliers);
+        }
+        [HttpGet]
+        public void DownloadExcelStatisticSupplier()
+        {
+            Employee emloyee = Session["Employee"] as Employee;
+
+            IEnumerable<Supplier> suppliers = _supplierService.GetSupplierList();
+            ExcelPackage pck = new ExcelPackage();
+            ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
+
+            ws.Cells["A2"].Value = "Người lập";
+            ws.Cells["B2"].Value = emloyee.fullName;
+
+            ws.Cells["A3"].Value = "Ngày lập";
+            ws.Cells["B3"].Value = DateTime.Now.ToShortDateString();
+
+            ws.Cells["A6"].Value = "Mã Nhà Cung Cấp";
+            ws.Cells["B6"].Value = "Tên Nhà Cung Cấp";
+            ws.Cells["C6"].Value = "Địa Chỉ";
+            ws.Cells["D6"].Value = "Email";
+            ws.Cells["E6"].Value = "Số Điện Thoại";
+            ws.Cells["F6"].Value = "Tình Trạng";
+            ws.Cells["G6"].Value = "Doanh Số";
+
+            int rowStart = 7;
+            foreach (var item in suppliers)
+            {
+                ws.Cells[string.Format("A{0}", rowStart)].Value = item.id;
+                ws.Cells[string.Format("B{0}", rowStart)].Value = item.name;
+                ws.Cells[string.Format("C{0}", rowStart)].Value = item.addresss;
+                ws.Cells[string.Format("D{0}", rowStart)].Value = item.email;
+                ws.Cells[string.Format("E{0}", rowStart)].Value = item.phoneNumber;
+                if (item.isActive.Value)
+                    ws.Cells[string.Format("F{0}", rowStart)].Value = "Đang hợp tác";
+                else
+                {
+                    ws.Cells[string.Format("F{0}", rowStart)].Value = "Đã ngừng hợp tác";
+                }
+                ws.Cells[string.Format("G{0}", rowStart)].Value = item.totalAmount;
+                rowStart++;
+            }
+
+            ws.Cells["A:AZ"].AutoFitColumns();
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AddHeader("content-disposition", "attachment: filename=" + "Nhà cung cấp tốt nhất.xlsx");
+            Response.BinaryWrite(pck.GetAsByteArray());
+            Response.End();
+        }
+        [Authorize(Roles = "StatisticProductSold")]
+        [HttpGet]
+        public ActionResult StatisticProductSold(DateTime from, DateTime to)
+        {
+            IEnumerable<Product> products = _productService.GetProductListSold(from, to);
+            ViewBag.from = from;
+            ViewBag.to = to;
+            return View(products);
+        }
+        [HttpGet]
+        public void DownloadExcelStatisticProductSold(DateTime from, DateTime to)
+        {
+            Employee emloyee = Session["Employee"] as Employee;
+
+            IEnumerable<Product> products = _productService.GetProductListSold(from, to);
+            ExcelPackage pck = new ExcelPackage();
+            ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
+
+            ws.Cells["A2"].Value = "Người lập";
+            ws.Cells["B2"].Value = emloyee.fullName;
+
+            ws.Cells["A3"].Value = "Ngày lập";
+            ws.Cells["B3"].Value = DateTime.Now.ToShortDateString();
+
+            ws.Cells["A6"].Value = "Mã SP";
+            ws.Cells["B6"].Value = "Tên SP";
+            ws.Cells["C6"].Value = "Só Lượng Đã Bán";
+
+            int rowStart = 7;
+            foreach (var item in products)
+            {
+                ws.Cells[string.Format("A{0}", rowStart)].Value = item.id;
+                ws.Cells[string.Format("B{0}", rowStart)].Value = item.name;
+                ws.Cells[string.Format("C{0}", rowStart)].Value = item.purchaseCount;
+                rowStart++;
+            }
+
+            ws.Cells["A:AZ"].AutoFitColumns();
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AddHeader("content-disposition", "attachment: filename=" + "Sản phẩm đã bán.xlsx");
+            Response.BinaryWrite(pck.GetAsByteArray());
+            Response.End();
+        }
+        [Authorize(Roles = "StatisticOrder")]
+        [HttpGet]
+        public ActionResult StatisticOrder(DateTime from, DateTime to)
+        {
+            IEnumerable<OrderShip> orders = _orderService.GetListOrderStatistic(from, to);
+            ViewBag.from = from;
+            ViewBag.to = to;
+            return View(orders);
+        }
+        [HttpGet]
+        public void DownloadExcelStatisticOrder(DateTime from, DateTime to)
+        {
+            Employee emloyee = Session["Employee"] as Employee;
+
+            IEnumerable<OrderShip> orders = _orderService.GetListOrderStatistic(from, to);
+            ExcelPackage pck = new ExcelPackage();
+            ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
+
+            ws.Cells["A2"].Value = "Người lập";
+            ws.Cells["B2"].Value = emloyee.fullName;
+
+            ws.Cells["A3"].Value = "Ngày lập";
+            ws.Cells["B3"].Value = DateTime.Now.ToShortDateString();
+
+            ws.Cells["A6"].Value = "Mã Hóa Đơn";
+            ws.Cells["B6"].Value = "Tên Khách Hàng Thành Viên";
+            ws.Cells["C6"].Value = "Ngày Đặt";
+            ws.Cells["D6"].Value = "Ngày Giao";
+            ws.Cells["E6"].Value = "Ưu Đãi";
+            ws.Cells["F6"].Value = "Tình Trạng";
+            ws.Cells["G6"].Value = "Thành Tiền";
+
+            int rowStart = 7;
+            foreach (var item in orders)
+            {
+                ws.Cells[string.Format("A{0}", rowStart)].Value = item.id;
+                ws.Cells[string.Format("B{0}", rowStart)].Value = item.Customer.fullName;
+                ws.Cells[string.Format("C{0}", rowStart)].Value = item.dateOrder;
+                ws.Cells[string.Format("D{0}", rowStart)].Value = item.dateShip;
+                ws.Cells[string.Format("E{0}", rowStart)].Value = item.offer + "%";
+                if (item.isReceived.Value)
+                    ws.Cells[string.Format("F{0}", rowStart)].Value = "Hoàn thành";
+                else
+                {
+                    ws.Cells[string.Format("F{0}", rowStart)].Value = "Chưa hoàn thành";
+                }
+                ws.Cells[string.Format("G{0}", rowStart)].Value = item.total;
+                rowStart++;
+            }
+
+            ws.Cells["A:AZ"].AutoFitColumns();
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AddHeader("content-disposition", "attachment: filename=" + "Đơn đặt hàng.xlsx");
+            Response.BinaryWrite(pck.GetAsByteArray());
+            Response.End();
+        }
+        [Authorize(Roles = "StatisticAccessTime")]
+        [HttpGet]
+        public ActionResult StatisticAccessTime(DateTime from, DateTime to)
+        {
+            IEnumerable<AccessTimeCount> accessTimesCounts = _accessTimesCountService.GetListAccessTimeCountStatistic(from, to);
+            ViewBag.from = from;
+            ViewBag.to = to;
+            return View(accessTimesCounts);
+        }
+        [HttpGet]
+        public void DownloadExcelStatisticStatisticAccessTime(DateTime from, DateTime to)
+        {
+            Employee emloyee = Session["Employee"] as Employee;
+
+            IEnumerable<AccessTimeCount> accessTimesCounts = _accessTimesCountService.GetListAccessTimeCountStatistic(from, to);
+            ExcelPackage pck = new ExcelPackage();
+            ExcelWorksheet ws = pck.Workbook.Worksheets.Add("Report");
+
+            ws.Cells["A2"].Value = "Người lập";
+            ws.Cells["B2"].Value = emloyee.fullName;
+
+            ws.Cells["A3"].Value = "Ngày lập";
+            ws.Cells["B3"].Value = DateTime.Now.ToShortDateString();
+
+            ws.Cells["A6"].Value = "Ngày";
+            ws.Cells["B6"].Value = "Số Lượng Truy Cập";
+
+            int rowStart = 7;
+            foreach (var item in accessTimesCounts)
+            {
+                ws.Cells[string.Format("A{0}", rowStart)].Value = item.datee.Value.ToShortDateString();
+                ws.Cells[string.Format("B{0}", rowStart)].Value = item.acessTime;
+                rowStart++;
+            }
+
+            ws.Cells["A:AZ"].AutoFitColumns();
+            Response.Clear();
+            Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            Response.AddHeader("content-disposition", "attachment: filename=" + "Số lượng truy cập.xlsx");
+            Response.BinaryWrite(pck.GetAsByteArray());
+            Response.End();
+        }
+        #endregion
         public ActionResult MailBox()
         {
             return View();
@@ -776,5 +1140,6 @@ namespace electronicComponents.Controllers
         {
             return View();
         }
+
     }
 }

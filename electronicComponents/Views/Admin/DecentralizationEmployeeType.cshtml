@@ -1,0 +1,88 @@
+﻿@model IEnumerable<electronicComponents.DAL.EmployeeType>
+@{
+    ViewBag.Title = "Decentralization";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Template CSS -->
+<link rel="stylesheet" href="~/AdminStyle/assets/css/style-starter.css">
+
+<!-- google fonts -->
+<link href="~/AdminStyle/fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap" rel="stylesheet">
+
+
+
+<div class="main-content">
+
+    <!-- content -->
+    <div class="container-fluid content-top-gap">
+
+        <!-- breadcrumbs -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb my-breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Quản lý</li>
+                <li class="breadcrumb-item active" aria-current="page">Loại sản phẩm</li>
+            </ol>
+        </nav>
+        <!-- //breadcrumbs -->
+        <!-- pricing -->
+        <section class="pricing">
+
+            <div class="card mb-3">
+                <div class="p-3 card card_border">
+                   
+                    @using (Html.BeginForm())
+                    {
+
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Loại Nhân Viên
+                                            </th>
+                                            <th>Phân quyền</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>
+                                                Loại Nhân Viên
+                                            </th>
+                                            <th>Phân quyền</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            @Html.Hidden(item.id.ToString())
+                                            <tr>
+                                                <td style="color:brown">
+                                                    <b>@Html.DisplayFor(modelItem => item.name)</b>
+                                                </td>
+                                                <td style="text-align:right">
+                                                    @*<button class="btn btn-primary btnEdit" value="@item.ID">Phân Quyền</button>*@
+                                                    @Html.ActionLink("Phân quyền", "Decentralization", new { id = item.id }, new { @class = "btn btn-primary" })
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+            </div>
+
+
+        </section>
+
+
+    </div>
+</div>
+

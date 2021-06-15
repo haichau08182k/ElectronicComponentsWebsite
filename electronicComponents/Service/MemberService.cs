@@ -80,6 +80,11 @@ namespace electronicComponents.Service
             member.memberID = MemberID;
             _unitOfWork.GetRepositoryInstance<MemberDiscountCode>().Add(member);
         }
+        public IEnumerable<Member> GetMemberListForStatistic()
+        {
+            IEnumerable<Member> listMember = this._unitOfWork.GetRepositoryInstance<Member>().GetAllRecords(x => x.amountPurchased > 0 && x.isDeleted == false).OrderByDescending(x => x.amountPurchased);
+            return listMember;
+        }
 
 
     }

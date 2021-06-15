@@ -15,5 +15,6 @@ namespace electronicComponents.Service
         IEnumerable<Member> GetMemberList();
         int GetTotalMember();
         void GiftForNewMember(int MemberID);
-       }
+        IEnumerable<Member> GetMemberListForStatistic();
+    }
 }

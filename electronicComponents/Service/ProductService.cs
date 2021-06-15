@@ -2,6 +2,7 @@
 using electronicComponents.Repository;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -186,6 +187,27 @@ namespace electronicComponents.Service
             product.lastUpdatedDate = DateTime.Now;
             product.promotionPrice = product.price.Value - (product.price.Value / 100 * product.discount.Value);
             this._unitOfWork.GetRepositoryInstance<Product>().Update(product);
+        }
+
+        public IEnumerable<Product> GetProductListStocking()
+        {
+            return _unitOfWork.GetRepositoryInstance<Product>().GetAllRecords(x => x.quantity > 0 && x.isActive == true);
+        }
+
+        public IEnumerable<Product> GetProductListSold(DateTime from, DateTime to)
+        {
+            IEnumerable<OrderDetail> orderDetails = _unitOfWork.GetRepositoryInstance<OrderDetail>().GetAllRecords(x => DbFunctions.TruncateTime(x.OrderShip.dateOrder) >= from.Date && DbFunctions.TruncateTime(x.OrderShip.dateOrder) <= to.Date);
+
+            List<int> ProductIDs = new List<int>();
+            foreach (var item in orderDetails)
+            {
+                ProductIDs.Add(item.productID.Value);
+            }
+            if (ProductIDs.Count() > 0)
+            {
+                return _unitOfWork.GetRepositoryInstance<Product>().GetAllRecords(x => x.purchaseCount > 0 && ProductIDs.Contains(x.id)).OrderByDescending(x => x.purchaseCount);
+            }
+            return null;
         }
     }
 

@@ -100,3 +100,8 @@ G:\Đồ án 2\project\electronicComponents\electronicComponents\bin\Unity.Conta
 G:\Đồ án 2\project\electronicComponents\electronicComponents\bin\Unity.Mvc.pdb
 G:\Đồ án 2\project\electronicComponents\electronicComponents\bin\Unity.Mvc.xml
 G:\Đồ án 2\project\electronicComponents\electronicComponents\obj\Debug\electronicComponents.csprojAssemblyReference.cache
+G:\Đồ án 2\project\electronicComponents\electronicComponents\bin\EPPlus.dll
+G:\Đồ án 2\project\electronicComponents\electronicComponents\bin\Microsoft.IO.RecyclableMemoryStream.dll
+G:\Đồ án 2\project\electronicComponents\electronicComponents\bin\System.ComponentModel.Annotations.dll
+G:\Đồ án 2\project\electronicComponents\electronicComponents\bin\EPPlus.xml
+G:\Đồ án 2\project\electronicComponents\electronicComponents\bin\Microsoft.IO.RecyclableMemoryStream.xml
