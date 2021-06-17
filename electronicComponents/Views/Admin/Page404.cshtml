@@ -1,0 +1,115 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <!--admin panel-->
+    <link rel="stylesheet" href="~/AdminStyle/css/style-starter.css">
+
+    <!-- google fonts -->
+    <link href="//fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap" rel="stylesheet">
+    <!-- sb Admin -->
+    <!-- Bootstrap core CSS-->
+    <!-- Page level plugin CSS-->
+    <link href="~/AdminStyle/SbAd/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="~/AdminStyle/SbAd/css/sb-admin.css" rel="stylesheet">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link href="~/Content/sweetalert/sweet-alert.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-2.2.3.min.js"></script>
+</head>
+<body>
+
+    <section>
+
+
+
+
+        <!-- content -->
+        <div class="error-bg">
+            <!-- error -->
+            <section class="error py-md-5 py-3">
+                <div class="card-body">
+                    <div class="error-info">
+                        <div class="error__404">404</div>
+                        <div class="not__found">Page not found</div>
+                        <p class="error-text my-3 mb-4">
+                            Oops! The page you are looking for does not exist. It might have
+                            been moved or deleted.
+                        </p>
+                        <a class="btn btn-style btn-primary" href="/Admin/Index">Back to home</a>
+                    </div>
+                </div>
+            </section>
+            <!-- //error -->
+        </div>
+        <!-- //content -->
+
+    </section>
+
+    <script src="~/AdminStyle/js/jquery-3.3.1.min.js"></script>
+    <script src="~/AdminStyle/js/jquery-1.10.2.min.js"></script>
+
+    <!-- chart js -->
+    <script src="~/AdminStyle/js/Chart.min.js"></script>
+    <script src="~/AdminStyle/js/utils.js"></script>
+    <!-- //chart js -->
+    <!-- Different scripts of charts.  Ex.Barchart, Linechart -->
+    <script src="~/AdminStyle/js/bar.js"></script>
+    <script src="~/AdminStyle/js/linechart.js"></script>
+    <!-- //Different scripts of charts.  Ex.Barchart, Linechart -->
+
+
+    <script src="~/AdminStyle/js/jquery.nicescroll.js"></script>
+    <script src="~/AdminStyle/js/scripts.js"></script>
+
+    <!-- close script -->
+    <script>
+        var closebtns = document.getElementsByClassName("close-grid");
+        var i;
+
+        for (i = 0; i < closebtns.length; i++) {
+            closebtns[i].addEventListener("click", function () {
+                this.parentElement.style.display = 'none';
+            });
+        }</script>
+    <!-- //close script -->
+    <!-- disable body scroll when navbar is in active -->
+    <script>
+        $(function () {
+            $('.sidebar-menu-collapsed').click(function () {
+                $('body').toggleClass('noscroll');
+            })
+        });</script>
+    <!-- disable body scroll when navbar is in active -->
+    <!-- loading-gif Js -->
+    <script src="~/AdminStyle/js/modernizr.js"></script>
+    <script>
+        $(window).load(function () {
+            // Animate loader off screen
+            $(".se-pre-con").fadeOut("slow");;
+        });</script>
+    <!--// loading-gif Js -->
+    <!-- Bootstrap Core JavaScript -->
+    <script src="~/AdminStyle/js/bootstrap.min.js"></script>
+
+    <!-- Bootstrap core JavaScript-->
+    <!-- Core plugin JavaScript-->
+
+
+    <script src="~/AdminStyle/SbAd/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="~/AdminStyle/SbAd/vendor/datatables/dataTables.bootstrap4.js"></script>
+    <!-- Custom scripts for all pages-->
+    <!-- Demo scripts for this page-->
+    <script src="~/AdminStyle/SbAd/js/demo/datatables-demo.js"></script>
+
+
+</body>
+
+</html>

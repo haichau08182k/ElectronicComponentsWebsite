@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="~/AdminStyle/css/style-starter.css">
 
     <!-- google fonts -->
-    <link href="~/AdminStyle/fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap" rel="stylesheet">
     <!-- sb Admin -->
     <!-- Bootstrap core CSS-->
     <!-- Page level plugin CSS-->
@@ -62,9 +62,9 @@
                         <span>Quản lý sản phẩm<i class="lnr lnr-chevron-right"></i></span>
                     </a>
                     <ul class="sub-menu-list">
-                        <li><a href="../Admin/Product">Danh sách sản phẩm</a></li>
-                        <li><a href="../Admin/Categories">Loại sản phẩm</a></li>
-                        <li><a href="../Admin/CategoryParent">Danh mục sản phẩm</a></li>
+                        <li><a href="/Admin/Product">Danh sách sản phẩm</a></li>
+                        <li><a href="/Admin/Categories">Loại sản phẩm</a></li>
+                        <li><a href="/Admin/CategoryParent">Danh mục sản phẩm</a></li>
                         <li><a href="/Admin/DiscountCode">Mã giảm giá</a></li>
                     </ul>
                 </li>
@@ -88,8 +88,8 @@
                         <span>Quản lý đối tác<i class="lnr lnr-chevron-right"></i></span>
                     </a>
                     <ul class="sub-menu-list">
-                        <li><a href="../Admin/Supplier">Nhà cung cấp</a></li>
-                        <li><a href="../Admin/Producer">Nhà sản xuất</a></li>
+                        <li><a href="/Admin/Supplier">Nhà cung cấp</a></li>
+                        <li><a href="/Admin/Producer">Nhà sản xuất</a></li>
 
                     </ul>
                 </li>
@@ -100,12 +100,12 @@
                         <span>Quản lý nhập hàng<i class="lnr lnr-exit"></i></span>
                     </a>
                     <ul class="sub-menu-list">
-                        <li><a href="../Admin/ImportProduct">Lập phiếu nhập</a></li>
-                        <li><a href="../Admin/ImportCoupon">Phiếu nhập</a></li>
+                        <li><a href="/Admin/ImportProduct">Lập phiếu nhập</a></li>
+                        <li><a href="/Admin/ImportCoupon">Phiếu nhập</a></li>
                     </ul>
                 </li>
                 <!--Biểu đồ -->
-                <li><a href="../Admin/Charts"><i class="fa fa-pie-chart"></i> <span>Biểu đồ</span></a></li>
+                <li><a href="/Admin/Charts"><i class="fa fa-pie-chart"></i> <span>Biểu đồ</span></a></li>
                 <!-- Mail -->
                 <li><a href="/Admin/MailBox"><i class="fa fa-envelope"></i> <span>Mail</span></a></li>
                 <!-- QA -->
@@ -118,10 +118,8 @@
                     </a>
                     <ul class="sub-menu-list">
                         <li><a href="/Admin/EmployeeManage">Nhân viên</a></li>
-                        <li><a href="../Admin/Categories">Thành viên</a></li>
-                        <li><a href="../Admin/CategoryParent">Khách hàng</a></li>
-                        <li><a href="../Admin/Supplier">Loại nhân viên</a></li>
-                        <li><a href="../Admin/Producer">Loại thành viên</a></li>
+                        <li><a href="/Admin/MemberManage">Thành viên</a></li>
+                        <li><a href="/Admin/Customer">Khách hàng</a></li>
                     </ul>
                 </li>
                 <!--Phân quyền -->
@@ -278,9 +276,9 @@
                                         <h5 class="user-name">@employee.fullName</h5>
                                         <span class="status ml-2">@employee.EmployeeType.name</span>
                                     </li>
-                                    <li> <a href="/Admin/InfoEmloyee"><i class="lnr lnr-user"></i>My Profile</a> </li>
-                                    <li> <a href="#"><i class="lnr lnr-cog"></i>Setting</a> </li>
-                                    <li class="logout"> <a href="/Admin/Logout"><i class="fa fa-power-off"></i> Logout</a> </li>
+                                    <li> <a href="/Admin/InfoEmloyee"><i class="lnr lnr-user"></i>Thông tin tài khoản</a> </li>
+                                    <li> <a href="/Admin/ResetPassword"><i class="lnr lnr-cog"></i>Đổi mật khẩu</a> </li>
+                                    <li class="logout"> <a href="/Admin/Logout"><i class="fa fa-power-off"></i>Đăng xuất</a> </li>
                                 </ul>
                             </li>
                             }

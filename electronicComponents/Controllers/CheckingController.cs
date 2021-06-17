@@ -165,6 +165,42 @@ namespace electronicComponents.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
+        public JsonResult CheckUserNameEmployee(string name, int id = 0)
+        {
+            Employee emloyee = _employeeService.GetByUserNameEmployee(name);
+            if (emloyee != null)
+            {
+                if (emloyee.id == id)
+                {
+                    return Json(new
+                    {
+                        status = true
+                    }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    if (_employeeService.CheckUserNameEmployee(name))
+                    {
+                        return Json(new
+                        {
+                            status = true
+                        }, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            if (_employeeService.CheckUserNameEmployee(name))
+            {
+                return Json(new
+                {
+                    status = true
+                }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new
+            {
+                status = false
+            }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
         public JsonResult CheckPhoneNumberEmployee(string phoneNumber, int id = 0)
         {
             Employee emloyee = _employeeService.GetByPhoneNumberEmployee(phoneNumber);

@@ -25,6 +25,10 @@ namespace electronicComponents.Service
         Employee GetByPhoneNumberEmployee(string PhoneNumber);
         Employee GetByNameEmployee(string Name);
         Employee GetByEmailEmployee(string Email);
+        Employee GetByUserNameEmployee(string userName);
+        bool CheckUserNameEmployee(string userName);
+        void Active(Employee emloyee);
+        void Block(Employee emloyee);
     }
 
     public class EmployeeService : IEmployeeService
@@ -80,6 +84,18 @@ namespace electronicComponents.Service
         {
             return this._unitOfWork.GetRepositoryInstance<Employee>().GetFirstorDefault(ID);
         }
+
+        public void Block(Employee emloyee)
+        {
+            emloyee.isActive = false;
+            this._unitOfWork.GetRepositoryInstance<Employee>().Update(emloyee);
+        }
+        public void Active(Employee emloyee)
+        {
+            emloyee.isActive = true;
+            this._unitOfWork.GetRepositoryInstance<Employee>().Update(emloyee);
+        }
+
         public void Update(Employee employee)
         {
              this._unitOfWork.GetRepositoryInstance<Employee>().Update(employee);
@@ -111,7 +127,15 @@ namespace electronicComponents.Service
             }
             return true;
         }
-
+        public bool CheckUserNameEmployee(string userName)
+        {
+            var check = _unitOfWork.GetRepositoryInstance<Employee>().GetAllRecords(x => x.userName == userName && x.isActive == true);
+            if (check.Count() > 0)
+            {
+                return false;
+            }
+            return true;
+        }
         public bool CheckEmailEmployee(string Email)
         {
             var check = _unitOfWork.GetRepositoryInstance<Employee>().GetAllRecords(x => x.email == Email && x.isActive == true);
@@ -132,7 +156,11 @@ namespace electronicComponents.Service
             Employee emloyee = _unitOfWork.GetRepositoryInstance<Employee>().GetAllRecords().FirstOrDefault(x => x.fullName == Name);
             return emloyee;
         }
-
+        public Employee GetByUserNameEmployee(string userName)
+        {
+            Employee emloyee = _unitOfWork.GetRepositoryInstance<Employee>().GetAllRecords().FirstOrDefault(x => x.userName == userName);
+            return emloyee;
+        }
         public Employee GetByEmailEmployee(string Email)
         {
             Employee emloyee = _unitOfWork.GetRepositoryInstance<Employee>().GetAllRecords().FirstOrDefault(x => x.email == Email);

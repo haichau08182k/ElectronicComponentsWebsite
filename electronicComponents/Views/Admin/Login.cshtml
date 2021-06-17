@@ -24,7 +24,16 @@
 </head>
 <body>
 
-
+    @if (ViewBag.Message == "Success")
+    {
+<script>
+    swal({
+        title: "Thông báo",
+        text: "Tên đăng nhập hoặc tài khoản không đúng!",
+        icon: "error",
+        timer: 1500
+    });
+</script> @(ViewBag.Message = null)}
     <section>
 
         <!-- content -->
@@ -34,7 +43,8 @@
                 <div class="card card_border p-md-4">
                     <div class="card-body">
                         <!-- form -->
-                        <form action="#" method="post">
+                        @using (Html.BeginForm("Login", "Admin", FormMethod.Post))
+                        {
                             <div class="login__header text-center mb-lg-5 mb-4">
                                 <h3 class="login__title mb-2"> Login</h3>
                                 <p>Welcome back, login to continue</p>
@@ -47,6 +57,7 @@
                                 <label for="exampleInputPassword1" class="input__label">Password</label>
                                 <input type="password" name="passwordd" class="form-control login_text_field_bg input-style" id="exampleInputPassword1" placeholder="" required="">
                             </div>
+                            <p class="text text-danger">@ViewBag.Message</p>
                             <div class="form-check check-remember check-me-out">
                                 <input type="checkbox" class="form-check-input checkbox" id="exampleCheck1">
                                 <label class="form-check-label checkmark" for="exampleCheck1">Remember me</label>
@@ -54,7 +65,7 @@
                             <div class="d-flex align-items-center flex-wrap justify-content-between">
                                 <button type="submit" class="btn btn-primary btn-style mt-4">Login now</button>
                             </div>
-                        </form>
+                        }
                         <!-- //form -->
                         <p class="backtohome mt-4"><a href="index.html" class="back"><i class="fa fa-chevron-left" aria-hidden="true"></i>Back to Home </a></p>
                     </div>
@@ -64,47 +75,48 @@
         </div>
         <!-- //content -->
 
-    </section>    <!-- <div class="signinform">
-         <h4></h4>
+    </section>
+    <!-- <div class="signinform">
+        <h4></h4>
 
-         <div class="container">
+        <div class="container">
 
-             <div class="w3l-form-info">
-                 <div class="w3_info">
-                     <form action="#" method="post">
-                         <div class="input-group">
-                             <span><i class="fas fa-user" aria-hidden="true"></i></span>
-                             <input type="text" placeholder="Tên đăng nhập" required="" name="userName">
-                         </div>
-                         <div class="input-group">
-                             <span><i class="fas fa-key" aria-hidden="true"></i></span>
-                             <input type="Password" placeholder="Mật khẩu" required="" name="passwordd">
-                         </div>
-                         <div class="form-row bottom">
-                             <div class="form-check">
-                                 <input type="checkbox" id="remenber" name="remenber" value="remenber">
-                                 <label for="remenber"> Nhớ mật khẩu?</label>
-                             </div>
-                             <a href="#url" class="forgot">Quên mật khẩu?</a>
-                         </div>
-                         <button class="btn btn-primary btn-block" type="submit">Đăng nhập</button>
-                     </form>
+            <div class="w3l-form-info">
+                <div class="w3_info">
+                    <form action="#" method="post">
+                        <div class="input-group">
+                            <span><i class="fas fa-user" aria-hidden="true"></i></span>
+                            <input type="text" placeholder="Tên đăng nhập" required="" name="userName">
+                        </div>
+                        <div class="input-group">
+                            <span><i class="fas fa-key" aria-hidden="true"></i></span>
+                            <input type="Password" placeholder="Mật khẩu" required="" name="passwordd">
+                        </div>
+                        <div class="form-row bottom">
+                            <div class="form-check">
+                                <input type="checkbox" id="remenber" name="remenber" value="remenber">
+                                <label for="remenber"> Nhớ mật khẩu?</label>
+                            </div>
+                            <a href="#url" class="forgot">Quên mật khẩu?</a>
+                        </div>
+                        <button class="btn btn-primary btn-block" type="submit">Đăng nhập</button>
+                    </form>
 
-                 </div>
-             </div>
+                </div>
+            </div>
 
-         </div>
+        </div>
 
-         <div class="footer">
-             <p>
-                 &copy; 2021 Đăng nhập. All Rights Reserved | Design by <a href="https://w3layouts.com/"
-                                                                           target="blank">W3layouts</a>| Develop by<a href="#"> HLG Team</a>
-             </p>
-         </div>
+        <div class="footer">
+            <p>
+                &copy; 2021 Đăng nhập. All Rights Reserved | Design by <a href="https://w3layouts.com/"
+                                                                          target="blank">W3layouts</a>| Develop by<a href="#"> HLG Team</a>
+            </p>
+        </div>
 
-     </div>
+    </div>
 
-     <!-- fontawesome v5-->
+    <!-- fontawesome v5-->
     <script src="~/AdminStyle/Login/js/fontawesome.js"></script>
 
 </body>

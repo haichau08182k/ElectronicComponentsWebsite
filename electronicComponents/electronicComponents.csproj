@@ -2103,6 +2103,9 @@
     <Content Include="Views\Member\ResetPassword.cshtml" />
     <Content Include="Views\Admin\ResetPassword.cshtml" />
     <Content Include="Views\Admin\InfoEmloyee.cshtml" />
+    <Content Include="Views\Admin\MemberManage.cshtml" />
+    <Content Include="Views\Admin\Customer.cshtml" />
+    <Content Include="Views\Admin\Page404.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

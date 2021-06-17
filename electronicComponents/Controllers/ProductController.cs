@@ -126,7 +126,7 @@ namespace electronicComponents.Controllers
             return PartialView(product);
         }
 
-        public ActionResult NewProduct(int page = 1)
+        public ActionResult NewProduct(int page = 1 )
         {
             var listProduct = _productService.GetListProduct().OrderByDescending(x => x.viewCount).Take(5);
             ViewBag.ListProduct = listProduct;

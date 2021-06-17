@@ -3,12 +3,229 @@
     ViewBag.Title = "EmployeeManage";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="~/Scripts/bootbox.js"></script>
 <!-- Template CSS -->
-<link rel="stylesheet" href="~/AdminStyle/assets/css/style-starter.css">
+<link rel="stylesheet" href="~/AdminStyle/css/style-starter.css">
 
 <!-- google fonts -->
-<link href="~/AdminStyle/fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap" rel="stylesheet">
+<link href="//fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap" rel="stylesheet">
+@if (TempData["edit"] != null)
+{
+<script>
+    swal({
+        title: "Thông báo",
+        text: "Cập nhật nhân viên thành công!",
+        icon: "success",
+        timer: 1500
+    });</script>
+@(TempData["edit"] = null)}
+<script>
+    $(document).ready(function () {
+        $(".ckb").change(function () {
+            var id = $(this).prop("value");
+            if ($(this).is(':checked')) {
+                $.ajax({
+                    url: '/Admin/Active',
+                    data: {
+                        id: id
+                    }
+                });
+                swal({
+                    title: "Thông báo",
+                    text: "Kích hoạt nhân viên thành công!",
+                    icon: "success",
+                    timer: 1500
+                });
+            }
+            else {
+                $.ajax({
+                    url: '/Admin/Block',
+                    data: {
+                        id: id
+                    }
+                });
+                swal({
+                    title: "Thông báo",
+                    text: "Khóa nhân viên thành công!",
+                    icon: "success",
+                    timer: 1500
+                });
+            }
+        });
+        $('#btnAddNew').off('click').on('click', function () {
+            $('#modalAdd').modal('show');
+        });
+        $('.btnEdit').off('click').on('click', function () {
+            var id = $(this).attr("data-id");
+            $('#modalUpdate').modal('show');
+            $.ajax({
+                url: '/Admin/EditEmployee',
+                data: {
+                    id: id
+                },
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        $('#IDEdit').val(response.ID);
+                        $('#FullNameEdit').val(response.FullName);
+                        $('#UserNameEdit').val(response.UserName);
+                        $('#AddressEdit').val(response.Address);
+                        $('#EmailEdit').val(response.Email);
+                        $('#PhoneNumberEdit').val(response.PhoneNumber);
+                        $('#TextImageEdit').val(response.Image);
+                        $('#img').attr('src', "/Content/images/" + response.Image);
+                        $('#EmloyeeTypeIDEdit').val(response.EmloyeeTypeID);
+                        $('#IsActiveEdit').prop("checked", response.IsActive);
+                    }
+                    else {
+                        bootbox.alert(response.message);
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+        $('.btnDetail').off('click').on('click', function () {
+            var id = $(this).attr("data-id");
+            $('#modalDetail').modal('show');
+            $.ajax({
+                url: '/Admin/EditEmployee',
+                data: {
+                    id: id
+                },
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        $('#FullNameDetail').val(response.FullName);
+                        $('#UserNameDetail').val(response.UserName);
+                        $('#AddressDetail').val(response.Address);
+                        $('#EmailDetail').val(response.Email);
+                        $('#PhoneNumberDetail').val(response.PhoneNumber);
+                        $('#ImageDetail').attr('src', "/Content/images/" + response.Image);
+                        $('#EmloyeeTypeIDDetail').val(response.EmloyeeTypeID);
+                        $('#IsActiveDetail').prop("checked", response.IsActive);
+                    }
+                    else {
+                        bootbox.alert(response.message);
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        });
+        function checkNameEdit() {
+            var name = $("#FullNameEdit").val();
+            var id = $("#IDEdit").val();
+            var status = false;
+            $.ajax({
+                url: '/Checking/CheckNameEmployee',
+                data: {
+                    fullName: name,
+                    id: id
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        status = true;
+                    }
+                },
+                async: false
+            });
+            if (status) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        function CheckPhoneNumberEdit() {
+            var phone = $("#PhoneNumberEdit").val();
+            var id = $("#IDEdit").val();
+            var status = false;
+            $.ajax({
+                url: '/Checking/CheckPhoneNumberEmployee',
+                data: {
+                    phoneNumber: phone,
+                    id: id
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        status = true;
+                    }
+                },
+                async: false
+            });
+            if (status) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        function CheckEmailEdit() {
+            var email = $("#EmailEdit").val();
+            var id = $("#IDEdit").val();
+            var status = false;
+            $.ajax({
+                url: '/Checking/CheckEmailEmployee',
+                data: {
+                    email: email,
+                    id
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        status = true;
+                    }
+                },
+                async: false
+            });
+            if (status) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        $(document).on('submit', '#formEdit', function (e) {
+            if (checkNameEdit() == false) {
+                swal({
+                    title: "Thông báo",
+                    text: "Tên nhà cung cấp đã tồn tại!",
+                    icon: "error"
+                });
+                return false;
+            }
+            if (CheckPhoneNumberEdit() == false) {
+                swal({
+                    title: "Thông báo",
+                    text: "Số điện thoại đã tồn tại!",
+                    icon: "error"
+                });
+                return false;
+            }
+            if (CheckEmailEdit() == false) {
+                swal({
+                    title: "Thông báo",
+                    text: "Email đã tồn tại!",
+                    icon: "error"
+                });
+                return false;
+            }
+        });
+    });</script>
+
 <div class="main-content">
 
     <!-- content -->
@@ -29,92 +246,90 @@
             <div class="card mb-3">
                 <div class="p-3 card card_border">
                     <div class="pl-0 pt-0 card-header chart-grid__header">
-                        <a href="../Admin/AddCategories" class="btn btn-style border-btn pull-right">Thêm mới </a>
+                        <a href="../Admin/AddEmployee" class="btn btn-style border-btn pull-right">Thêm mới </a>
                     </div>
-                    @using (Html.BeginForm())
-                    {
 
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Tên nhân viên
+                                        </th>
+                                        <th>
+                                            Hình ảnh
+                                        </th>
+                                        <th>
+                                            Email
+                                        </th>
+                                        <th>
+                                            Kích hoạt
+                                        </th>
+                                        <th></th>
+
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>
+                                            Tên nhân viên
+                                        </th>
+                                        <th>
+                                            Hình ảnh
+                                        </th>
+                                        <th>
+                                            Email
+                                        </th>
+                                        <th>
+                                            Kích hoạt
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        @Html.Hidden(item.id.ToString())
                                         <tr>
-                                            <th>
-                                                Tên nhân viên
-                                            </th>
-                                            <th>
-                                                Hình ảnh
-                                            </th>
-                                            <th>
-                                                Email
-                                            </th>
-                                            <th>
-                                                Kích hoạt
-                                            </th>
-                                            <th></th>
-
+                                            <td style="color:brown">
+                                                <b>@Html.DisplayFor(modelItem => item.fullName)</b>
+                                            </td>
+                                            <td>
+                                                <img src="@Url.Content("~/Content/images/" + item.imagee)" width="100" height="100" />
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.email)
+                                            </td>
+                                            <td>
+                                                @if (item.isActive == true)
+                                                {
+                                                    <label class="switch block">
+                                                        <input type="checkbox" checked class="ckb" value="@item.id">
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                }
+                                                else
+                                                {
+                                                    <label class="switch active">
+                                                        <input type="checkbox" class="ckb" value="@item.id">
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                }
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-link btnDetail" id="btnEdit" data-id="@item.id">Chi tiết</button>
+                                                <button class="btn btn-primary btnEdit" id="btnEdit" data-id="@item.id">Sửa</button>
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>
-                                                Tên nhân viên
-                                            </th>
-                                            <th>
-                                                Hình ảnh
-                                            </th>
-                                            <th>
-                                                Email
-                                            </th>
-                                            <th>
-                                                Kích hoạt
-                                            </th>
-                                            <th></th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        @foreach (var item in Model)
-                                        {
-                                            @Html.Hidden(item.id.ToString())
-                                            <tr>
-                                                <td style="color:brown">
-                                                    <b>@Html.DisplayFor(modelItem => item.fullName)</b>
-                                                </td>
-                                                <td>
-                                                    <img src="@Url.Content("~/Content/images/" + item.imagee)" width="100" height="100" />
-                                                </td>
-                                                <td>
-                                                    @Html.DisplayFor(modelItem => item.email)
-                                                </td>
-                                                <td>
-                                                    @if (item.isActive == true)
-                                                    {
-                                                        <label class="switch block">
-                                                            <input type="checkbox" checked class="ckb" value="@item.id">
-                                                            <span class="slider round"></span>
-                                                        </label>
-                                                    }
-                                                    else
-                                                    {
-                                                        <label class="switch active">
-                                                            <input type="checkbox" class="ckb" value="@item.id">
-                                                            <span class="slider round"></span>
-                                                        </label>
-                                                    }
-                                                </td>
-                                                <td>
-                                                    <button class="btn btn-link btnDetail" value="@item.id">Chi tiết</button>
-                                                    <button class="btn btn-primary btnEdit" value="@item.id">Sửa</button>
-                                                </td>
-                                            </tr>
-                                        }
+                                    }
 
-                                    </tbody>
-                                </table>
-                            </div>
-
+                                </tbody>
+                            </table>
                         </div>
-                    }
+
+                    </div>
+
                 </div>
             </div>
 
@@ -125,3 +340,106 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="modalUpdate" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Chỉnh sửa</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("EditEmployee", "Admin", FormMethod.Post, new { @enctype = "multipart/form-data", id = "formEdit" }))
+                {
+                    <input type="text" name="ID" id="IDEdit" hidden />
+                    <div class="form-group">
+                        <label for="Name">Tên nhân viên:</label>
+                        <input type="text" class="form-control" name="fullName" id="FullNameEdit" pattern=".{,30}" required title="Tên nhân viên tối đa 30 ký tự!">
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Tên tài khoản:</label>
+                        <input type="text" class="form-control" name="userName" id="UserNameEdit" pattern=".{,30}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Loại nhân viên:</label>
+                        @Html.DropDownList("EmployeeTypeIDEdit", null, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label>Địa chỉ:</label>
+                        <input type="text" class="form-control" name="addresss" id="AddressEdit" required maxlength="200" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Email:</label>
+                        <input type="text" class="form-control" name="email" id="EmailEdit" required pattern="[a-z0-9._%+-]+&#64;[a-z0-9.-]+\.[a-z]{2,}$" title="Nhập vào đúng đinh dạng mail của bạn (vd: abc@gmail.com)">
+                    </div>
+                    <div class="form-group">
+                        <label>Số điện thoại:</label>
+                        <input type="text" class="form-control" name="phoneNumber" id="PhoneNumberEdit" pattern=".{10,12}" required title="Số điện thoại phải từ 10 đến 12 số!">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Hình ảnh:</label>
+                        <input type="text" class="form-control" name="Image" id="TextImageEdit" readonly>
+                        <input type="file" name="ImageUpload" id="ImageEdit" accept="image/png, image/gif, image/jpeg" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalDetail" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Chi tiết</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="Name">Tên nhân viên:</label>
+                    <input type="text" class="form-control" name="fullName" id="FullNameDetail" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="Name">Tên tài khoản:</label>
+                    <input type="text" class="form-control" name="userName" id="UserNameDetail" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Loại nhân viên:</label>
+                    @Html.DropDownList("EmployeeTypeIDDetail", null, new { @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    <label>Hình ảnh:</label>
+                    <img name="imagee" id="ImageDetail" style="height:200px;width:200px" />
+                </div>
+                <div class="form-group">
+                    <label for="Name">Email:</label>
+                    <input type="text" class="form-control" name="email" id="EmailDetail" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Số điện thoại:</label>
+                    <input type="text" class="form-control" name="phoneNumber" id="PhoneNumberDetail" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Địa chỉ:</label>
+                    <textarea class="form-control" name="addresss" id="AddressDetail" readonly></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Kích hoạt:</label>
+                    <input class="form-control" data-val="true" id="IsActiveDetail" name="isActive" type="checkbox" value="true" checked readonly>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

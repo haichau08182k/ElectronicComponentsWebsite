@@ -9,6 +9,152 @@
 
 <!-- google fonts -->
 <link href="~/AdminStyle/fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap" rel="stylesheet">
+
+@if (TempData["create"] != null)
+{
+<script>
+    swal({
+        title: "Thông báo",
+        text: "Thêm nhân viên thành công!",
+        icon: "success",
+        timer: 1500
+    });</script>
+@(TempData["create"] = null)}
+<script>
+    $(document).ready(function () {
+       
+        function checkNameAdd() {
+            var name = $("#FullNameAdd").val();
+            var status = false;
+            $.ajax({
+                url: '/Checking/CheckNameEmployee',
+                data: {
+                    name: name
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        status = true;
+                    }
+                },
+                async: false
+            });
+            if (status) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        function checkUserNameAdd() {
+            var name = $("#UserNameAdd").val();
+            var status = false;
+            $.ajax({
+                url: '/Checking/CheckUserNameEmployee',
+                data: {
+                    name: name
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        status = true;
+                    }
+                },
+                async: false
+            });
+            if (status) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        function CheckPhoneNumberAdd() {
+            var phone = $("#PhoneNumberAdd").val();
+            var status = false;
+            $.ajax({
+                url: '/Checking/CheckPhoneNumberEmployee',
+                data: {
+                    phoneNumber: phone
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        status = true;
+                    }
+                },
+                async: false
+            });
+            if (status) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        function CheckEmailAdd() {
+            var email = $("#EmailAdd").val();
+            var status = false;
+            $.ajax({
+                url: '/Checking/CheckEmailEmployee',
+                data: {
+                    email: email
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        status = true;
+                    }
+                },
+                async: false
+            });
+            if (status) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        $(document).on('submit', '#formAdd', function (e) {
+            if (checkNameAdd() == false) {
+                swal({
+                    title: "Thông báo",
+                    text: "Tên nhân viên đã tồn tại!",
+                    icon: "error"
+                });
+                return false;
+            }
+            if (checkUserNameAdd() == false) {
+                swal({
+                    title: "Thông báo",
+                    text: "Tên tài khoản đã tồn tại!",
+                    icon: "error"
+                });
+                return false;
+            }
+            if (CheckPhoneNumberAdd() == false) {
+                swal({
+                    title: "Thông báo",
+                    text: "Số điện thoại đã tồn tại!",
+                    icon: "error"
+                });
+                return false;
+            }
+            if (CheckEmailAdd() == false) {
+                swal({
+                    title: "Thông báo",
+                    text: "Email đã tồn tại!",
+                    icon: "error"
+                });
+                return false;
+            }
+        });
+    });</script>
+
 <div class="main-content">
 
     <div class="container-fluid content-top-gap">
@@ -28,7 +174,7 @@
             <!-- forms 1 -->
             <div class="card card_border py-2 mb-4">
                 <div class="card-body">
-                    @using (Html.BeginForm("AddEmployee", "Admin", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm("AddEmployee", "Admin", FormMethod.Post, new { @enctype = "multipart/form-data", id = "formAdd" }))
                     {
                         @Html.AntiForgeryToken()
 
@@ -37,13 +183,13 @@
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             <div class="form-group">
                                 <h5 class="card-title">Tên nhân viên</h5>
-                                <input type="text" name="fullName" value="" class="form-control input-style" placeholder="Nhập tên nhân viên" />
+                                <input type="text" name="fullName" value="" id="FullNameAdd" class="form-control input-style" placeholder="Nhập tên nhân viên" />
                                 @Html.ValidationMessageFor(model => model.fullName, "", new { @class = "text-danger" })
 
                             </div>
                             <div class="form-group">
                                 <h5 class="card-title">Tên tài khoản</h5>
-                                <input type="text" name="userName" value="" class="form-control input-style" placeholder="Nhập tên tài khoản" />
+                                <input type="text" name="userName" id="UserNameAdd" value="" class="form-control input-style" placeholder="Nhập tên tài khoản" />
                                 @Html.ValidationMessageFor(model => model.userName, "", new { @class = "text-danger" })
 
                             </div>
@@ -76,13 +222,13 @@
                         </div>
                         <div class="form-group">
                             <h5 class="card-title">Email:</h5>
-                            <input type="email" name="email" value="" class="form-control input-style" placeholder="email" />
+                            <input type="email" name="email" id="EmailAdd" value="" class="form-control input-style" placeholder="email" />
                             @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
 
                         </div>
                         <div class="form-group">
                             <h5 class="card-title">Số điện thoại</h5>
-                            <input type="text" name="phoneNumber" value="" class="form-control input-style" placeholder="Nhập số điện thoại" />
+                            <input type="text" name="phoneNumber" id="PhoneNumberAdd" value="" class="form-control input-style" placeholder="Nhập số điện thoại" />
                             @Html.ValidationMessageFor(model => model.phoneNumber, "", new { @class = "text-danger" })
 
                         </div>

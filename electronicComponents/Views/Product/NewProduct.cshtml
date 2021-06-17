@@ -10,11 +10,16 @@
     int couter1 = 1;
     IEnumerable<electronicComponents.DAL.Product> productsSelling = ViewBag.ListProSelling;
 }
+<link href="~/Content/PagedList.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
+        @*$("#btnGetCurrentPage").click(function () {
+            var item = @Model.PageNumber;  //get current page number
+            alert(item);
+        });*@
         $('.AddItemInCart').click(function (e) {
             var id = $(this).attr("data-id");
             $.ajax({
@@ -325,19 +330,23 @@
                             <!--  -->
 
                         </div>
-                        <div class="product-sec1" id="ProductContainer">
-                            <br />
-                            <div class="container" id='Paging' style="text-align: right">
-                                @Html.PagedListPager(Model, page => Url.Action("NewProduct", new { ID = ViewBag.productCategoryID, page , currentFilter = ViewBag.CurrentFilter }), new PagedListRenderOptions
-                           {
-                               DisplayLinkToFirstPage = PagedListDisplayMode.Never,
-                               DisplayLinkToLastPage = PagedListDisplayMode.Never,
-                               DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
-                               DisplayLinkToNextPage = PagedListDisplayMode.Always,
-                               MaximumPageNumbersToDisplay = 3
-                           }))
-                            </div>
+                        <div class="container" id="btnGetCurrentPage">
+                            @Html.PagedListPager(Model, page => Url.Action("NewProduct", new { page, ID = ViewBag.productCategoryID }))
+
                         </div>
+                        <!--<div class="product-sec1" id="ProductContainer">
+                            <br />
+                            <div class="container" id='Paging' style="text-align: right">-->
+                        @*@Html.PagedListPager(Model, page => Url.Action("NewProduct", new { ID = ViewBag.productCategoryID, page , currentFilter = ViewBag.CurrentFilter }), new PagedListRenderOptions
+                            {
+                                DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+                                DisplayLinkToLastPage = PagedListDisplayMode.Never,
+                                DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                                DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                                MaximumPageNumbersToDisplay = 3
+                            }))*@
+                        <!--</div>
+                        </div>-->
                     </div>
 
                 </div>

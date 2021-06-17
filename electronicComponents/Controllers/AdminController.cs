@@ -135,7 +135,13 @@ namespace electronicComponents.Controllers
                 Session["Employee"] = employeeCheck;
                 return RedirectToAction("Index");
             }
-            return View("index");
+            else
+            {
+                
+                    ViewBag.Message = "Success";
+                
+            }
+            return View("Page404");
         }
         private void Decentralization(string Username, string Role)
         {
@@ -254,6 +260,10 @@ namespace electronicComponents.Controllers
         [HttpGet]
         public ActionResult ResetPassword()
         {
+            if (Session["Employee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
             return View();
         }
         [HttpPost]
@@ -322,7 +332,6 @@ namespace electronicComponents.Controllers
         }
 
         #endregion
-
 
         #region Categories Manage
 
@@ -398,7 +407,7 @@ namespace electronicComponents.Controllers
         }
 
         #endregion
-        //Sản phẩm
+
         #region Product Manage
         ////[Authorize(Roles = "ProductManage")]
         public ActionResult Product()
@@ -578,7 +587,7 @@ namespace electronicComponents.Controllers
         }
 
         #endregion
-        //Nhà cung cấp
+
         #region Supplier Manage
         public ActionResult Supplier()
         {
@@ -839,13 +848,21 @@ namespace electronicComponents.Controllers
             {
                 return RedirectToAction("Login");
             }
+            ViewBag.EmployeeTypeID = new SelectList(_employeeTypeService.GetListEmployeeType().OrderBy(x => x.name), "id", "name");
 
+            ViewBag.EmployeeTypeIDEdit = ViewBag.EmployeeTypeID;
+
+            ViewBag.EmployeeTypeIDDetail = ViewBag.EmployeeTypeID;
             IEnumerable<Employee> employees = _employeeService.GetList();
             return View(employees);
         }
 
         public ActionResult AddEmployee()
         {
+            if (Session["Employee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
             List<SelectListItem> listEmployeeType = _employeeService.GetEmployeeType();
             ViewBag.ListTypeEmployee = listEmployeeType;
             return View();
@@ -853,10 +870,7 @@ namespace electronicComponents.Controllers
         [HttpPost]
         public ActionResult AddEmployee(Employee employee, HttpPostedFileBase ImageUpload)
         {
-            if (Session["Employee"] == null)
-            {
-                return RedirectToAction("Login");
-            }
+            
             int errorCount = 0;
             //Check content image
             if (ImageUpload != null && ImageUpload.ContentLength > 0)
@@ -885,12 +899,117 @@ namespace electronicComponents.Controllers
             }
             //Set new value image for emloyee
             employee.imagee = ImageUpload.FileName;
+            TempData["create"] = "Success";
 
             _employeeService.AddEmployee(employee);
             return RedirectToAction("EmployeeManage");
         }
 
+        [HttpGet]
+        public ActionResult EditEmployee(int id)
+        {
+            if (Session["Employee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
+            //Get emloyee
+            var emloyee = _employeeService.GetByID(id);
+
+            //Get data for DropdownList
+            ViewBag.EmployeeTypeIDEdit = new SelectList(_employeeTypeService.GetListEmployeeType().OrderBy(x => x.name), "id", "name", emloyee.employeeTypeID);
+
+            //Check null
+            if (emloyee != null)
+            {
+                //Return view
+                return Json(new
+                {
+                    ID = emloyee.id,
+                    FullName = emloyee.fullName,
+                    UserName= emloyee.userName,
+                    Address = emloyee.addresss,
+                    Email = emloyee.email,
+                    PhoneNumber = emloyee.phoneNumber,
+                    Image = emloyee.imagee,
+                    EmloyeeTypeID = emloyee.employeeTypeID,
+                    IsActive = emloyee.isActive,
+                    status = true
+                }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                //Return 404
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+        }
+        [HttpPost]
+        public ActionResult EditEmployee(Employee emloyee, HttpPostedFileBase ImageUpload, int EmployeeTypeIDEdit)
+        {
+            if (Session["Employee"] == null)
+            {
+                return RedirectToAction("Login");
+            }
+            //Get data for DropdownList
+            ViewBag.EmployeeTypeIDEdit = new SelectList(_employeeTypeService.GetListEmployeeType().OrderBy(x => x.name), "id", "name");
+
+            if (ImageUpload != null)
+            {
+                int errorCount = 0;
+                //Check content image
+                if (ImageUpload != null && ImageUpload.ContentLength > 0)
+                {
+                    //Check format iamge
+                    if (ImageUpload.ContentType != "image/jpeg" && ImageUpload.ContentType != "image/png" && ImageUpload.ContentType != "image/gif")
+                    {
+                        //Set viewbag
+                        ViewBag.upload += "Hình ảnh không hợp lệ<br/>";
+                        //increase by 1 unit errorCount
+                        errorCount++;
+                    }
+                    else
+                    {
+                        //Get file name
+                        var fileName = Path.GetFileName(ImageUpload.FileName);
+                        //Get path
+                        var path = Path.Combine(Server.MapPath("~/Content/images"), fileName);
+                        //Check exitst
+                        if (!System.IO.File.Exists(path))
+                        {
+                            //Add image into folder
+                            ImageUpload.SaveAs(path);
+                        }
+                    }
+                }
+                //Set new value image for emloyee
+                emloyee.imagee = ImageUpload.FileName;
+            }
+            //Set TempData for checking in view to show swal
+            TempData["edit"] = "Success";
+            //Update emloyeetype
+            Employee e = _employeeService.GetByID(emloyee.id);
+            e.fullName = emloyee.fullName;
+            e.addresss = emloyee.addresss;
+            e.email = emloyee.email;
+            e.imagee = emloyee.imagee;
+            e.employeeTypeID = EmployeeTypeIDEdit;
+            _employeeService.Update(e);
+          
+            return RedirectToAction("EmployeeManage");
+        }
+        public void Block(int id)
+        {
+            //Get emloyee by ID
+            var emloyee = _employeeService.GetByID(id);
+            _employeeService.Block(emloyee);
+        }
+        public void Active(int id)
+        {
+            //Get emloyee by ID
+            var emloyee = _employeeService.GetByID(id);
+            _employeeService.Active(emloyee);
+        }
         #endregion
+
         #region Phân quyền
         public ActionResult DecentralizationEmployeeType(int page = 1)
         {
@@ -942,7 +1061,6 @@ namespace electronicComponents.Controllers
             return RedirectToAction("Index");
         }
         #endregion
-
 
         #region Statistic
 
@@ -1248,6 +1366,8 @@ namespace electronicComponents.Controllers
             Response.End();
         }
         #endregion
+
+        #region Developing
         public ActionResult MailBox()
         {
             return View();
@@ -1256,6 +1376,18 @@ namespace electronicComponents.Controllers
         {
             return View();
         }
-
+        public ActionResult MemberManage()
+        {
+            return View();
+        }
+        public ActionResult Customer()
+        {
+            return View();
+        }
+        public ActionResult Page404()
+        {
+            return View();
+        }
+        #endregion
     }
 }
