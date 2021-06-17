@@ -4,6 +4,47 @@
     ViewBag.Title = "EditProduct";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+<script>
+    $(document).ready(function () {
+        function checkNameEdit() {
+            var name = $("#name").val();
+            var id = $("#id").val();
+            var status = false;
+            $.ajax({
+                url: '/Checking/CheckNameProduct',
+                data: {
+                    name: name,
+                    id: id
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        status = true;
+                    }
+                },
+                async: false
+            });
+            if (status) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        $(document).on('submit', '#formEdit', function (e) {
+            if (checkNameEdit() == false) {
+                swal({
+                    title: "Thông báo",
+                    text: "Tên sản phẩm đã tồn tại!",
+                    icon: "error"
+                });
+                return false;
+            }
+        });
+    });
+
+    </script>
 <div class="main-content">
     <div class="container-fluid content-top-gap">
 
@@ -22,7 +63,7 @@
             <!-- forms 1 -->
             <div class="card card_border py-2 mb-4">
                 <div class="card-body">
-                    @using (Html.BeginForm("EditProduct", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm("EditProduct", "Admin", FormMethod.Post, new { enctype = "multipart/form-data",id = "formEdit" }))
                     {
                         @Html.AntiForgeryToken()
 
@@ -35,7 +76,7 @@
                             <div class="form-group">
                                 <h5 class="card-title">Tên sản phẩm</h5>
 
-                                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control input-style" } })
+                                @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control input-style",id="name" } })
                                 @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
 
                             </div>
@@ -76,7 +117,7 @@
                             </div>
 
 
-                           
+
                             <div class="form-group">
                                 <h5 class="card-title">Hình ảnh 1</h5>
                                 <div class="custom-file">
@@ -125,7 +166,7 @@
                             @{
                                 List<SelectListItem> dataSup = ViewBag.SupplierList;
                             }
-                        
+
                             @{
                                 List<SelectListItem> dataPro = ViewBag.ProducerList;
                             }

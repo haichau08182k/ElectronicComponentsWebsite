@@ -10,5 +10,6 @@ namespace electronicComponents.Service
         QA GetQAByID(int ID);
         void UpdateQA(QA qA);
         IEnumerable<QA> GetQAList();
+        IEnumerable<QA> GetQAListInHome();
     }
 }

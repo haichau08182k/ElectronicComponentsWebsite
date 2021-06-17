@@ -127,13 +127,12 @@
 
                     @if (Model.discount > 0)
                     {
-                        <p><span class="money">@Model.promotionPrice.Value.ToString("#,##")₫</span></p>
-                        <p class="pric1"><del>@Model.price.Value.ToString("#,##")₫</del></p>
+                        <p><span class="money">@Model.promotionPrice.Value.ToString("#,##")₫</span><del>@Model.price.Value.ToString("#,##")₫</del></p>
                     }
                     else
                     {
                         <p><span class="money">@Model.price.Value.ToString("#,##")₫</span></p>
-                        <p class="pric1">.</p>
+
                     }
 
                     <div class="rating1">

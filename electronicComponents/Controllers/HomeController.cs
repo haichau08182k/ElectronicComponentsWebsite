@@ -18,8 +18,9 @@ namespace electronicComponents.Controllers
         private ICustomerService _customerService;
         private IRatingService _ratingService;
         private ICommentService _commentService;
+        private IQAService _qAService;
 
-        public HomeController(ICommentService commentService, ICustomerService customerService,IMemberService memberService, IProductService productService, ICartService cartService, IOrderDetailService orderDetailService, IRatingService ratingService)
+        public HomeController(IQAService qAService, ICommentService commentService, ICustomerService customerService,IMemberService memberService, IProductService productService, ICartService cartService, IOrderDetailService orderDetailService, IRatingService ratingService)
         {
             _memberService = memberService;
             _productService = productService;
@@ -28,6 +29,7 @@ namespace electronicComponents.Controllers
             _ratingService = ratingService;
             _customerService = customerService;
             _commentService = commentService;
+            _qAService = qAService;
         }
         public ActionResult Index(Member member)
         {
@@ -36,9 +38,11 @@ namespace electronicComponents.Controllers
             ViewBag.ListProSelling = ProSelling;
             IEnumerable<Product> product = _productService.GetListProductNew();
 
-            //var listComment = _commentService.GetCommentByMember(member.id = 1);
 
-            //ViewBag.listComment = listComment;
+
+            var listComment = _qAService.GetQAListInHome();
+
+            ViewBag.listComment = listComment;
             return View(product);
         }
         [HttpPost]
@@ -76,16 +80,28 @@ namespace electronicComponents.Controllers
                         }
                     }
                 }
-                else
-                {
-                    ViewBag.Message = "Tên đăng nhập/Email hoặc mật khẩu không đúng.";
-                    return RedirectToAction("Index");
-                }
             }
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public JsonResult CheckLogin(string username,string password)
+        {
+            Member memberCheck = _memberService.CheckLogin(username, password);
+            if (memberCheck != null)
+            {
 
-        public ActionResult SignOut()
+                return Json(new
+                {
+                    status = true
+                }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new
+            {
+                status = false
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult LogOut()
         {
             Session["Member"] = null;
             Session["Cart"] = null;
@@ -138,5 +154,6 @@ namespace electronicComponents.Controllers
             string urlBase = Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~");
             return Redirect(urlBase);
         }
+        
     }
 }

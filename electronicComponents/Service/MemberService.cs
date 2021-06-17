@@ -16,6 +16,7 @@ namespace electronicComponents.Service
         {
             member.memberCategoryID = 1;
             member.amountPurchased = 0;
+            member.isDeleted = false;
             this._unitOfWork.GetRepositoryInstance<Member>().Add(member);
             return member;
         }
@@ -80,7 +81,17 @@ namespace electronicComponents.Service
             member.memberID = MemberID;
             _unitOfWork.GetRepositoryInstance<MemberDiscountCode>().Add(member);
         }
-
+        public IEnumerable<Member> GetMemberListForStatistic()
+        {
+            IEnumerable<Member> listMember = this._unitOfWork.GetRepositoryInstance<Member>().GetAllRecords(x => x.amountPurchased > 0 && x.isDeleted == false).OrderByDescending(x => x.amountPurchased);
+            return listMember;
+        }
+        public void ResetPassword(int MemberID, string NewPassword)
+        {
+            Member member = GetByID(MemberID);
+            member.passwordd = NewPassword;
+            _unitOfWork.GetRepositoryInstance<Member>().Update(member);
+        }
 
     }
 }

@@ -98,6 +98,7 @@ namespace electronicComponents.Repository
             if (_DBEntity.Entry(entity).State == EntityState.Detached)
                 _dbSet.Attach(entity);
             _dbSet.Remove(entity);
+            _DBEntity.SaveChanges();
         }
 
         public void RemovebyWhereClause(Expression<Func<Tbl_Entity, bool>> wherePredict)

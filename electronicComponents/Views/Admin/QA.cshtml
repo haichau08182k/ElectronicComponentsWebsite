@@ -7,7 +7,7 @@
 @{
     Employee employee = Session["Employee"] as Employee;
    
-        int counter1 = 0;
+      
     
 }
 <!-- Template CSS -->
@@ -27,7 +27,7 @@
             var id = $(this).attr("data-id");
             $('#modalAdd').modal('show');
             $.ajax({
-                url: '/Admin/Edit',
+                url: '/Admin/EditQA',
                 data: {
                     id: id
                 },
@@ -56,7 +56,7 @@
             var id = $(this).attr("data-id");
             $('#modalAdd').modal('show');
             $.ajax({
-                url: '/Admin/Edit',
+                url: '/Admin/EditQA',
                 data: {
                     id: id
                 },
@@ -210,7 +210,7 @@
                                                     @Html.DisplayFor(modelItem => item.Employee.fullName)
                                                 </td>
                                                 <td>
-                                                    <div id="DivActive@(counter1)">
+                                                 
                                                         @if (item.statuss == true)
                                                         {
                                                             <span class="label label-success">Đã trả lời</span>
@@ -219,7 +219,7 @@
                                                         {
                                                             <span class="label label-danger">Chưa trả lời</span>
                                                         }
-                                                    </div>
+                                                   
                                                 </td>
                                                 <td>
                                                     @if (item.statuss == true)
@@ -241,9 +241,9 @@
                                                     }
                                                 </td>
                                             </tr>
-                                            @(counter1++)
+                                           
                                         }
-                                        @(counter1 = 0)
+                                       
 
                                     </tbody>
                                 </table>

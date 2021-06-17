@@ -2,6 +2,48 @@
 @{
     electronicComponents.DAL.Member member = Session["Member"] as Member;
 }
+<script>
+//import { json } from "../../Content/js/minicart";
+
+    $(document).ready(function () {
+        function Check() {
+            var userName = $("#userName").val();
+            var passwordd = $("#passwordd").val();
+            var status = false;
+            $.ajax({
+                url: '/Home/CheckLogin',
+                data: {
+                    username: userName,
+                    password: passwordd
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        status = true;
+                    }
+                },
+                async: false
+            });
+            if (status) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        $(document).on('submit', '#formLogin', function (e) {
+            if (Check() == false) {
+                swal({
+                    title: "Thông báo",
+                    text: "Tài khoản hoặc mật khẩu không đúng!",
+                    icon: "error"
+                });
+                return false;
+            }
+        });
+    });
+</script>
 <link href="~/AdminStyle/css/style-starter.css" rel="stylesheet" />
 <div class="banner-top container-fluid" id="home">
     <!-- header -->
@@ -10,19 +52,33 @@
 
         <div class="col-md-3 top-info text-left mt-lg-4">
 
-            <ul>
-                <li>
-                    &nbsp;
-                    <i class="fas fa-map-marker"></i>
-                </li>
-                <li class="mt-3">Liên hệ</li>
-            </ul>
+            @if (member == null)
+            {
+                <ul>
+                    <li class="button-log">
+                        <a href="#" class="btn-open">
+                            &nbsp;
+                            @*<i class="fa fa-user" style="color:#454546"></i>&nbsp;*@
+                            <span class="fa fa-user" aria-hidden="true"><small style="color:#FF4E00;font-size:16px"> Đăng nhập</small></span>
+                        </a>
+                    </li>
+                    <li class="col-4 col-sm-7"> </li>
+                    <li>
+                        <a href="/Home/Register">
+                            &nbsp;
+                            @*<i class="fa fa-user-plus" style="color:#454546"></i>&nbsp;*@
+                            <span class="fa fa-user-plus" style="color:#454546" aria-hidden="true"><small style="color:#FF4E00;font-size:16px"> Đăng kí tài khoản</small></span>
+                        </a>
+                    </li>
+                </ul>
+
+            }
 
         </div>
         <div class="col-md-6 logo-w3layouts text-center">
             <h1 class="logo-w3layouts">
                 <a class="navbar-brand" href="@Url.Action("Index","Home")">
-                    Linh kiện store
+                    <span style="color:#FF4E00">e-components</span> <small>store</small>
                 </a>
             </h1>
         </div>
@@ -30,12 +86,6 @@
         {
             <div class="col-md-3 top-info-cart text-right mt-lg-4">
                 <ul class="cart-inner-info">
-                    <li class="button-log">
-                        <a class="btn-open">
-                            <span class="fa fa-user" aria-hidden="true"><span style="color:#FF4E00">&nbsp;Đăng nhập</span></span>
-                        </a>
-                    </li>
-
                     <li class="galssescart galssescart2 cart cart box_1">
                         <div id="cart" class="last">
                             @Html.Action("CartPartial", "Cart")
@@ -47,36 +97,45 @@
             </div>
         }
         else
-        { 
+        {
             <div class="col-md-3 top-info-cart text-right mt-lg-4">
                 <div class="profile_details">
                     <ul>
-                        <li class="dropdown profile_details_drop">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu3" aria-haspopup="true"
-                               aria-expanded="false">
-                                <div class="profile_img pull-right">
-                                    <img src="~/Content/images/user.png" class="rounded-circle" alt="" />
-                                    @*<div class="user-active">
-                                            <span></span>
-                                        </div>*@
-                                </div>
-                            </a>
-                            <ul class="dropdown-menu drp-mnu" aria-labelledby="dropdownMenu3">
-                                <li class="user-info">
-                                    <h5 class="user-name">@member.fullName</h5>
-                                    <span class="status">@member.email</span>
+                        <li>
+                            <ul>
+                                <li class="dropdown profile_details_drop">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu3" aria-haspopup="true"
+                                       aria-expanded="false">
+                                        <div class="profile_img pull-right">
+                                            <img src="@Url.Content("~/Content/images/"+member.avatar)" class="rounded-circle" alt="" />
+                                            <div class="user-active">
+                                                <span></span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <ul class="dropdown-menu drp-mnu" aria-labelledby="dropdownMenu3">
+                                        <li class="user-info">
+                                            <h5 class="user-name">@member.fullName</h5>
+                                            <span class="status">@member.email</span>
+                                        </li>
+                                        <li> <a href="@Url.Action("Index","Member",new { ID=member.id})"><i class="lnr lnr-user"></i>Thông tin tài khoản</a> </li>
+                                        <li> <a href="@Url.Action("CheckoutOrder","Member",new { ID=member.id})"><i class="fa fa-calendar-check"></i>Đơn hàng</a> </li>
+                                        <li> <a href="@Url.Action("ProductViewed","Product")"><i class="lnr lnr-history"></i>Lịch sử xem hàng</a> </li>
+
+                                        <li> <a href="#"><i class="lnr lnr-cog"></i>Setting</a> </li>
+
+                                        <li class="logout"> <a href="@Url.Action("LogOut","Home")"><i class="fa fa-power-off"></i> Đăng xuất</a> </li>
+                                    </ul>
                                 </li>
-                                <li> <a href="#"><i class="lnr lnr-user"></i>My Profile</a> </li>
-                                <li> <a href="@Url.Action("CheckoutOrder","Member",new { ID=member.id})"><i class="fa fa-calendar-check"></i>Đơn hàng</a> </li>
-                                <li> <a href="#"><i class="lnr lnr-cog"></i>Setting</a> </li>
-                                <li class="logout"> <a href="@Url.Action("SignOut","Home")"><i class="fa fa-power-off"></i> Logout</a> </li>
                             </ul>
                         </li>
+                        <li>
+                            <div id="cart" class="pull-right">
+                                @Html.Action("CartPartial", "Cart")
+                            </div>
+                        </li>
+
                     </ul>
-                    <br/>
-                    <div id="cart" class="pull-right">
-                        @Html.Action("CartPartial", "Cart")
-                    </div>
                 </div>
             </div>
 
@@ -117,23 +176,22 @@
     <div class="wrap">
         <h5 class="text-center mb-4">Đăng nhập</h5>
         <div class="login p-5 bg-dark mx-auto mw-100">
-            @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+            @using (Html.BeginForm("Login", "Home", FormMethod.Post,new { id="formLogin"}))
             {
                 <div class="form-group">
                     <label class="mb-2">Tên đăng nhập</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" name="userName" aria-describedby="emailHelp" placeholder="" required="" value="khachhang1">
+                    <input type="text" class="form-control" id="userName" name="userName" aria-describedby="emailHelp" placeholder="" required="" value="khachhang1">
 
                 </div>
                 <div class="form-group">
                     <label class="mb-2">Mật khẩu</label>
-                    <input type="password" class="form-control" name="passwordd" id="exampleInputPassword1" placeholder="" required="" value="khachhang1">
+                    <input type="password" class="form-control" name="passwordd" id="passwordd" placeholder="" required="" value="khachhang1">
                 </div>
-                <small id="emailHelp" class="form-text text-muted">@ViewBag.Message</small>
                 <div class="form-check mb-2">
 
                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
                     <label class="form-check-label" for="exampleCheck1">Ghi nhớ</label>
-                    <a style="color:orangered" href="#">Quên mật khẩu</a>
+
 
                 </div>
 

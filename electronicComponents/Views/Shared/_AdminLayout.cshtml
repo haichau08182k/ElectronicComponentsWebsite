@@ -43,7 +43,7 @@
         <!-- //image logo -->
 
         <div class="logo-icon text-center">
-            <a href="index.html" title="logo"><img src="~/AdminStyle/images/logo.png" alt="logo-icon"> </a>
+            <a href="/Admin/Index" title="logo"><img src="~/AdminStyle/images/logo.png" alt="logo-icon"> </a>
         </div>
         <!-- //logo end -->
 
@@ -53,7 +53,7 @@
             <ul class="nav nav-pills nav-stacked custom-nav">
                 <!-- Trang chủ -->
                 <li class="active">
-                    <a href="index.html"><i class="fa fa-tachometer"></i><span> Trang chủ</span></a>
+                    <a href="/Admin/Index"><i class="fa fa-tachometer"></i><span> Trang chủ</span></a>
                 </li>
                 <!-- Quản lý sản phẩm -->
                 <li class="menu-list">
@@ -125,9 +125,9 @@
                     </ul>
                 </li>
                 <!--Phân quyền -->
-                <li><a href="forms.html"><i class="fa fa-book"></i> <span>Phân quyền</span></a></li>
+                <li><a href="/Admin/DecentralizationEmployeeType"><i class="fa fa-book"></i> <span>Phân quyền</span></a></li>
                 <!--Thống kê -->
-                <li><a href="forms.html"><i class="fa fa-line-chart"></i> <span>Thống kê</span></a></li>
+                <li><a href="/Admin/StatisticManage"><i class="fa fa-line-chart"></i> <span>Thống kê</span></a></li>
             </ul>
             <!-- //sidebar nav end -->
             <!-- toggle button start -->
@@ -278,7 +278,7 @@
                                         <h5 class="user-name">@employee.fullName</h5>
                                         <span class="status ml-2">@employee.EmployeeType.name</span>
                                     </li>
-                                    <li> <a href="#"><i class="lnr lnr-user"></i>My Profile</a> </li>
+                                    <li> <a href="/Admin/InfoEmloyee"><i class="lnr lnr-user"></i>My Profile</a> </li>
                                     <li> <a href="#"><i class="lnr lnr-cog"></i>Setting</a> </li>
                                     <li class="logout"> <a href="/Admin/Logout"><i class="fa fa-power-off"></i> Logout</a> </li>
                                 </ul>

@@ -10,10 +10,22 @@
                         <img src="@Url.Content("~/Content/images/" + Model.image1)" style="height:250px;width:350px" class="img-fluid" alt="">
                         <div class="men-cart-pro">
                             <div class="inner-men-cart-pro">
-                                <a href="@Url.Action("Details","Product",new { ID=Model.id})" class="link-product-add-cart">Quick View</a>
+                                <a href="@Url.Action("Details","Product",new { ID=Model.id})" class="link-product-add-cart">Xem chi tiết</a>
                             </div>
                         </div>
-                        <span class="product-new-top">New</span>
+                        @if (Model.discount > 0 && Model.isNew == true)
+                        {
+                            <span class="product-new-top">@Model.discount%</span>
+                        }
+                        else if (Model.discount == 0 && Model.isNew == true)
+                        {
+                            <span class="product-new-top">New</span>
+
+                        }
+                        else
+                        {
+
+                        }
                     </div>
                     <div class="item-info-product">
 

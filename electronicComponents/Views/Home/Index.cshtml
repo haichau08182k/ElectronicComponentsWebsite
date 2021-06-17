@@ -11,7 +11,7 @@
     int couter1 = 1;
     int couter2 = 1;
     IEnumerable<electronicComponents.DAL.Product> productsSelling = ViewBag.ListProSelling;
-    IEnumerable<electronicComponents.DAL.Member> listComment = ViewBag.listComment;
+    IEnumerable<electronicComponents.DAL.QA> listComment = ViewBag.listComment;
 }
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
@@ -210,53 +210,61 @@
             <!-- /testimonials -->
             <div class="testimonials py-lg-4 py-3 mt-4">
                 <div class="testimonials-inner py-lg-4 py-3">
-                    <h3 class="tittle-w3layouts text-center my-lg-4 my-4">Bình luận từ khách hàng</h3>
+                    <h3 class="tittle-w3layouts text-center my-lg-4 my-4">Q & A</h3>
                     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner" role="listbox">
-                            @*@foreach (var item in listComment)
+                            @foreach (var item in listComment)
                             {
-                                if (couter2==1)
-                                {*@
-                            <div class="carousel-item active">
-                                <div class="testimonials_grid text-center">
-                                    <h3>
-                                        @*@item.fullName*@
-                                        <span>Customer</span>
-                                    </h3>
-                                    <label>Việt Nam</label>
-                                    <p>
-                                        @*@item.Comments*@
-                                    </p>
-                                </div>
-                            </div>
-                                
-                                
-                                <div class="carousel-item">
-                                    <div class="testimonials_grid text-center">
-                                        <h3>
-                                            Esmeralda
-                                            <span>Customer</span>
-                                        </h3>
-                                        <label>United States</label>
-                                        <p>
-                                            Maecenas interdum, metus vitae tincidunt porttitor, magna quam egestas sem, ac scelerisque nisl nibh vel lacus.
-                                            Proin eget gravida odio. Donec ullamcorper est eu accumsan cursus.
-                                        </p>
+                                if (couter2 == 1)
+                                {
+                                    <div class="carousel-item active">
+                                        <div class="testimonials_grid text-center">
+                                            <h3>
+                                                @item.Member.fullName
+                                                <span>Customer</span>
+                                            </h3>
+                                            <label><a href="/Product/Details/@item.productID">@item.Product.name</a></label>
+                                            <p>
+                                                @item.question
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="carousel-item">
-                                    <div class="testimonials_grid text-center">
-                                        <h3>
-                                            Gretchen
-                                            <span>Customer</span>
-                                        </h3>
-                                        <label>United States</label>
-                                        <p>
-                                            Maecenas interdum, metus vitae tincidunt porttitor, magna quam egestas sem, ac scelerisque nisl nibh vel lacus.
-                                            Proin eget gravida odio. Donec ullamcorper est eu accumsan cursus.
-                                        </p>
+                                    couter2++;
+                                }
+                                else if (couter2 == 2)
+                                {
+                                    <div class="carousel-item">
+                                        <div class="testimonials_grid text-center">
+                                            <h3>
+                                                @item.Member.fullName
+                                                <span>Customer</span>
+                                            </h3>
+                                            <label><a href="/Product/Details/+ @item.productID">@item.Product.name</a></label>
+                                            <p>
+                                                @item.question
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
+                                    couter2++;
+                                }
+                                else if (couter2 == 3)
+                                {
+                                    <div class="carousel-item">
+                                        <div class="testimonials_grid text-center">
+                                            <h3>
+                                                @item.Member.fullName
+                                                <span>Customer</span>
+                                            </h3>
+                                            <label><a href="/Product/Details/+ @item.productID">@item.Product.name</a></label>
+                                            <p>
+                                                @item.question
+                                            </p>
+                                        </div>
+                                    </div>
+                                    break;
+                                }
+
+
                                 <a class="carousel-control-prev test" href="#carouselExampleControls" role="button" data-slide="prev">
                                     <span class="fas fa-long-arrow-alt-left"></span>
                                     <span class="sr-only">Previous</span>
@@ -266,8 +274,8 @@
                                     <span class="sr-only">Next</span>
 
                                 </a>
-                            }
 
+                            }
                         </div>
                     </div>
                 </div>

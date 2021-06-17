@@ -260,64 +260,64 @@
                             {
                                 if (couter == 1)
                                 {
-                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    @Html.Action("ProductNewPartial", "Product", new { product = item })
 
                                     couter++;
                                 }
                                 else if (couter == 2)
                                 {
-                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    @Html.Action("ProductNewPartial", "Product", new { product = item })
                                     couter++;
                                 }
                                 else if (couter == 3)
                                 {
-                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    @Html.Action("ProductNewPartial", "Product", new { product = item })
 
                                     couter++;
                                 }
                                 else if (couter == 4)
                                 {
-                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    @Html.Action("ProductNewPartial", "Product", new { product = item })
                                     couter++;
                                 }
                                 else if (couter == 5)
                                 {
-                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    @Html.Action("ProductNewPartial", "Product", new { product = item })
                                     couter++;
                                 }
                                 else if (couter == 6)
                                 {
-                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    @Html.Action("ProductNewPartial", "Product", new { product = item })
                                     couter++;
                                 }
                                 else if (couter == 7)
                                 {
-                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    @Html.Action("ProductNewPartial", "Product", new { product = item })
                                     couter++;
                                 }
                                 else if (couter == 8)
                                 {
-                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    @Html.Action("ProductNewPartial", "Product", new { product = item })
                                     couter++;
                                 }
                                 else if (couter == 9)
                                 {
-                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    @Html.Action("ProductNewPartial", "Product", new { product = item })
                                     couter++;
                                 }
                                 else if (couter == 10)
                                 {
-                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    @Html.Action("ProductNewPartial", "Product", new { product = item })
                                     couter++;
                                 }
                                 else if (couter == 11)
                                 {
-                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    @Html.Action("ProductNewPartial", "Product", new { product = item })
                                     couter++;
                                 }
                                 else if (couter == 12)
                                 {
-                                    @Html.Action("ProductPartial", "Product", new { product = item })
+                                    @Html.Action("ProductNewPartial", "Product", new { product = item })
                                     break;
                                 }
                             }
@@ -327,8 +327,15 @@
                         </div>
                         <div class="product-sec1" id="ProductContainer">
                             <br />
-                            <div id='Paging' style="text-align: right">
-                                @Html.PagedListPager(Model, page => Url.Action("NewProduct", new { ID = ViewBag.productCategoryID, page }))
+                            <div class="container" id='Paging' style="text-align: right">
+                                @Html.PagedListPager(Model, page => Url.Action("NewProduct", new { ID = ViewBag.productCategoryID, page , currentFilter = ViewBag.CurrentFilter }), new PagedListRenderOptions
+                           {
+                               DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+                               DisplayLinkToLastPage = PagedListDisplayMode.Never,
+                               DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                               DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                               MaximumPageNumbersToDisplay = 3
+                           }))
                             </div>
                         </div>
                     </div>

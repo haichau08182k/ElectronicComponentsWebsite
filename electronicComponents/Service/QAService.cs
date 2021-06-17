@@ -44,5 +44,10 @@ namespace electronicComponents.Service
             qA.statuss = true;
             this._unitOfWork.GetRepositoryInstance<QA>().Update(qA);
         }
+        public IEnumerable<QA> GetQAListInHome()
+        {
+            IEnumerable<QA> listQA = this._unitOfWork.GetRepositoryInstance<QA>().GetAllRecords(x=>x.question!=null).Skip(3).OrderByDescending(x=>x.dateQuestion);
+            return listQA;
+        }
     }
 }

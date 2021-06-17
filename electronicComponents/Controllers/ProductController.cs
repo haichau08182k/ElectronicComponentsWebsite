@@ -119,7 +119,12 @@ namespace electronicComponents.Controllers
             return PartialView(product);
         }
 
+        public ActionResult ProductNewPartial(Product product)
+        {
 
+            ViewBag.Rating = _ratingService.GetRating(product.id);
+            return PartialView(product);
+        }
 
         public ActionResult NewProduct(int page = 1)
         {
@@ -180,6 +185,8 @@ namespace electronicComponents.Controllers
             return View(listProductPaging);
         }
 
+
+
         public ActionResult Search(string keyword, int page = 1)
         {
             var listProduct = _productService.GetProductList(keyword);
@@ -223,6 +230,26 @@ namespace electronicComponents.Controllers
                 //return 404
                 return null;
             }
+        }
+
+
+        public ActionResult ProductViewed(int page = 1)
+        {
+            var listProduct = _productService.GetListProduct().OrderByDescending(x => x.viewCount).Take(5);
+            ViewBag.ListProduct = listProduct;
+
+            Member member = Session["Member"] as Member;
+            PagedList<Product> listProductPaging;
+            IEnumerable<Product> products = _productService.GetProductListViewedByMemberID(member.id);
+            listProductPaging = new PagedList<Product>(products, page, 10);
+            return View(listProductPaging);
+        }
+        public ActionResult DeleteHistoryView()
+        {
+            Member member = Session["Member"] as Member;
+            _productService.Delete(member.id);
+            TempData["DeleteHistoryView"] = "Sucess";
+            return RedirectToAction("ProductViewed");
         }
     }
 }

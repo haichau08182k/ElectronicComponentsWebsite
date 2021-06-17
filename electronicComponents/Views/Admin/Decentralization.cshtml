@@ -1,0 +1,93 @@
+﻿@using electronicComponents.DAL;
+@model EmployeeType
+@{
+    ViewBag.Title = "Decentralization";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="main-content">
+
+    <!-- content -->
+    <div class="container-fluid content-top-gap">
+
+        <!-- breadcrumbs -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb my-breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Quản lý</li>
+                <li class="breadcrumb-item active" aria-current="page">Loại sản phẩm</li>
+            </ol>
+        </nav>
+        <!-- //breadcrumbs -->
+        <!-- pricing -->
+        <section class="pricing">
+
+            <div class="card mb-3">
+                <h1>Phân quyền</h1>
+                <h2>Loại nhân viên: <b style="color:crimson;">@Model.name</b></h2>
+                <br />
+                @{ 
+                    IEnumerable<Rolee> roles = (IEnumerable<Rolee>)ViewBag.RoleList;
+                    IEnumerable<Decentralization> decentralizations = (IEnumerable<Decentralization>)ViewBag.ListDecentralization; 
+                 }
+                @using (Html.BeginForm("Decentralization", "Admin", FormMethod.Post))
+                {
+                    //Mã loại tv
+                    @Html.Hidden("EmloyeeTypeID", Model.id) if (decentralizations.Count() > 0)
+                    {
+                        //Đối với trường hợp loại thành viên đã phân quyền rồi
+                        for (int i = 0; i < roles.Count(); i++)
+                        {
+                            int k = 0;
+                            for (int j = 0; j < decentralizations.Count(); j++)
+                            {
+                                if (roles.ElementAt(i).id == decentralizations.ElementAt(j).roleID)
+                                {
+                                    k++;
+                                    break;
+                                }
+                            }
+                            if (k != 0)
+                            {
+                                <div class="col-md-4" style="font-size:15pt;">
+                                    <input class="ckb_click" checked="checked" style="width:20px;height:20px;" type="checkbox" name="@Url.Content("["+i+"].RoleID")" value="@roles.ElementAt(i).id" />
+                                    <label for="@Url.Content("["+i+"].RoleID")"> @roles.ElementAt(i).namedDisplay</label><br>
+                                </div> }
+                            else
+                            {
+                                <div class="col-md-4" style="font-size:15pt;">
+                                    <input class="ckb_click" style="width:20px;height:20px;" type="checkbox" name="@Url.Content("["+i+"].MaQuyen")" value="@roles.ElementAt(i).id" />
+                                    <label for="@Url.Content("["+i+"].RoleID")"> @roles.ElementAt(i).namedDisplay</label><br>
+                                </div> }
+                            k = 0;
+                        }
+                    }
+                    else
+                    {
+                        //Đối với trường hợp loại thành viên chưa phân quyền rồi
+                        for (int i = 0; i < roles.Count(); i++)
+                        {
+                            //Lấy danh danh sách quyền
+                            <div class="col-md-4" style="font-size:15pt;">
+                                <input class="ckb_click" style="width:20px;height:20px;" type="checkbox" name="@Url.Content("["+i+"].RoleID")" value="@roles.ElementAt(i).id" />
+                                <label for="@Url.Content("["+i+"].RoleID")"> @roles.ElementAt(i).namedDisplay</label><br>
+                            </div> }
+                    }
+                    <div class="clearfix"></div>
+                    <input type="submit" class="btn btn-success" value="Lưu" />}
+            </div>
+        </section>
+    </div>
+</div>
+@*Xử lý duyệt lại [i]*@
+<script>
+    $(".ckb_click").click(function () {
+        i = 0;
+        $(".ckb_click").each(function () {
+            if ($(this).is(':checked')) {
+                $(this).attr("name", "[" + i + "].RoleID");
+                i++;
+            }
+        })
+    })</script>
+
+

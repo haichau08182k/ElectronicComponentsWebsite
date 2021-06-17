@@ -25,7 +25,7 @@ namespace electronicComponents
             container.RegisterType<IQAService, QAService>();
             container.RegisterType<IEmployeeTypeService, EmloyeeTypeService>();
             container.RegisterType<IEmployeeService, EmployeeService>();
-            //container.RegisterType<IAccessTimesCountService, AccessTimesCountService>();
+            container.RegisterType<IAccessTimesCountService, AccessTimesCountService>();
             container.RegisterType<ICartService, CartService>();
             container.RegisterType<IImportCouponService, ImportCouponService>();
             container.RegisterType<IImportCouponDetailService, ImportCouponDetailService>();

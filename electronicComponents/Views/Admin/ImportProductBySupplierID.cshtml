@@ -24,46 +24,58 @@
         <nav aria-label="breadcrumb" class="mb-4">
             <ol class="breadcrumb my-breadcrumb">
                 <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Quản lý</li>
-                <li class="breadcrumb-item active" aria-current="page">Loại sản phẩm</li>
+                <li class="breadcrumb-item active" aria-current="page">Quản lý nhập hàng</li>
+                <li class="breadcrumb-item active" aria-current="page">Nhập sản phẩm</li>
             </ol>
         </nav>
-        <h2>Nhà Cung Cấp: @ViewBag.SupplierName</h2>
-        @using (Html.BeginForm("ImportProduct", "Admin", FormMethod.Post))
-        {
-            <input type="text" name="SupplierID" value="@ViewBag.SupplierID" hidden="hidden" />
-            <table class="tblImportCouponDetail" id="table">
-                @{ IEnumerable<Product> lstProduct = ViewBag.ListProduct as IEnumerable<Product>;}
-                <tr class="trAppend" style="display:none;">
-                    <td>
-                        <select class="ddlProduct" id="ProductID" name="ProductID">
-                            @foreach (var item in lstProduct)
-                            {
-                                <option value="@item.id">@item.name - (SL: @item.quantity)</option>
-                            }
-                        </select>
-                    </td>
-                    <td>
-                        <input name="" class="col-md-10 Price" value="1" />
-                    </td>
-                    <td>
-                        <input name="" class="col-md-10 Quantity" value="1" />
-                    </td>
-                    <td>
-                        <input class="btnDelete btn btn-danger" style="width:30px;height:30px" value="-" />
-                    </td>
-                </tr>
-                <tr class="trFirstChild" data-id="-1">
-                    <th>Sản phẩm</th>
-                    <th>Đơn giá nhập</th>
-                    <th>Số lượng nhập</th>
-                    <th></th>
-                </tr>
-            </table>
-            @*Nút button thêm*@
-            <input type="button" class="btn btn-success" value="+" id="btnAdd" />
-            <input type="submit" class="btn btn-primary" value="Nhập hàng" id="btnImportProduct" />
-        }
+
+        <section class="pricing">
+            <div class="card mb-3">
+                <div class="p-3 card card_border">
+                    <div class="pl-0 pt-0 card-header chart-grid__header">
+                        <h2>Nhà Cung Cấp: @ViewBag.SupplierName</h2>
+                    </div>
+
+                    @using (Html.BeginForm("ImportProduct", "Admin", FormMethod.Post))
+                    {
+                        <div class="card-body">
+                            <input type="text" name="SupplierID" value="@ViewBag.SupplierID" hidden="hidden" />
+                            <table class="tblImportCouponDetail" id="table">
+                                @{ IEnumerable<Product> lstProduct = ViewBag.ListProduct as IEnumerable<Product>;}
+                                <tr class="trAppend" style="display:none;">
+                                    <td>
+                                        <select class="ddlProduct" id="ProductID" name="ProductID">
+                                            @foreach (var item in lstProduct)
+                                            {
+                                                <option value="@item.id">@item.name - (SL: @item.quantity)</option>
+                                            }
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input name="" class="col-md-10 Price" value="1" />
+                                    </td>
+                                    <td>
+                                        <input name="" class="col-md-10 Quantity" value="1" />
+                                    </td>
+                                    <td>
+                                        <input class="btnDelete btn btn-danger" style="width:30px;height:30px" value="-" />
+                                    </td>
+                                </tr>
+                                <tr class="trFirstChild" data-id="-1">
+                                    <th>Sản phẩm</th>
+                                    <th>Đơn giá nhập</th>
+                                    <th>Số lượng nhập</th>
+                                    <th></th>
+                                </tr>
+                            </table>
+                            @*Nút button thêm*@
+                            <input type="button" class="btn btn-success" value="+" id="btnAdd" />
+                            <input type="submit" class="btn btn-primary" value="Nhập hàng" id="btnImportProduct" />
+                         </div>
+                     }
+                </div>
+            </div>
+        </section>
     </div>
 </div>
 <script>

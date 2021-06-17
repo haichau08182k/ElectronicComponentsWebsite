@@ -15,6 +15,16 @@ namespace electronicComponents.Service
         int GetTotalEmployee();
         Employee AddEmployee(Employee employee);
         List<SelectListItem> GetEmployeeType();
+        Employee GetByID(int ID);
+        void Update(Employee employee);
+        void ResetPassword(int EmloyeeID, string NewPassword);
+        Employee CheckLogin1(int id, string password);
+        bool CheckPhoneNumberEmployee(string PhoneNumber);
+        bool CheckNameEmployee(string Name);
+        bool CheckEmailEmployee(string Email);
+        Employee GetByPhoneNumberEmployee(string PhoneNumber);
+        Employee GetByNameEmployee(string Name);
+        Employee GetByEmailEmployee(string Email);
     }
 
     public class EmployeeService : IEmployeeService
@@ -34,6 +44,11 @@ namespace electronicComponents.Service
             return emloyee;
         }
 
+        public Employee CheckLogin1(int id, string password)
+        {
+            Employee emloyee = this._unitOfWork.GetRepositoryInstance<Employee>().GetAllRecords().SingleOrDefault(x => x.id == id && x.passwordd == password);
+            return emloyee;
+        }
         public Employee AddEmployee(Employee employee)
         {
             this._unitOfWork.GetRepositoryInstance<Employee>().Add(employee);
@@ -61,5 +76,68 @@ namespace electronicComponents.Service
             return list;
 
         }
+        public Employee GetByID(int ID)
+        {
+            return this._unitOfWork.GetRepositoryInstance<Employee>().GetFirstorDefault(ID);
+        }
+        public void Update(Employee employee)
+        {
+             this._unitOfWork.GetRepositoryInstance<Employee>().Update(employee);
+           
+        }
+        public void ResetPassword(int EmloyeeID, string NewPassword)
+        {
+            Employee emloyee = GetByID(EmloyeeID);
+            emloyee.passwordd = NewPassword;
+            _unitOfWork.GetRepositoryInstance<Employee>().Update(emloyee);
+        }
+
+        public bool CheckPhoneNumberEmployee(string PhoneNumber)
+        {
+            var check = _unitOfWork.GetRepositoryInstance<Employee>().GetAllRecords(x => x.phoneNumber == PhoneNumber && x.isActive == true);
+            if (check.Count() > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool CheckNameEmployee(string Name)
+        {
+            var check = _unitOfWork.GetRepositoryInstance<Employee>().GetAllRecords(x => x.fullName == Name && x.isActive == true);
+            if (check.Count() > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool CheckEmailEmployee(string Email)
+        {
+            var check = _unitOfWork.GetRepositoryInstance<Employee>().GetAllRecords(x => x.email == Email && x.isActive == true);
+            if (check.Count() > 0)
+            {
+                return false;
+            }
+            return true;
+        }
+        public Employee GetByPhoneNumberEmployee(string PhoneNumber)
+        {
+            Employee emloyee = _unitOfWork.GetRepositoryInstance<Employee>().GetAllRecords().FirstOrDefault(x => x.phoneNumber == PhoneNumber);
+            return emloyee;
+        }
+
+        public Employee GetByNameEmployee(string Name)
+        {
+            Employee emloyee = _unitOfWork.GetRepositoryInstance<Employee>().GetAllRecords().FirstOrDefault(x => x.fullName == Name);
+            return emloyee;
+        }
+
+        public Employee GetByEmailEmployee(string Email)
+        {
+            Employee emloyee = _unitOfWork.GetRepositoryInstance<Employee>().GetAllRecords().FirstOrDefault(x => x.email == Email);
+            return emloyee;
+        }
+
     }
 }

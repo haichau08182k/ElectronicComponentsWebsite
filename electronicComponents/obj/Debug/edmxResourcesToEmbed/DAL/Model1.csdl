@@ -300,6 +300,7 @@
     <Property Name="capcha" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="amountPurchased" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="isDeleted" Type="Boolean" />
     <NavigationProperty Name="Carts" Relationship="electronicComponents1Model.fk_c_idm" FromRole="Member" ToRole="Cart" />
     <NavigationProperty Name="Comments" Relationship="electronicComponents1Model.fk_cm_idm" FromRole="Member" ToRole="Comment" />
     <NavigationProperty Name="MemberCategory" Relationship="electronicComponents1Model.fk_mb_id" FromRole="Member" ToRole="MemberCategory" />

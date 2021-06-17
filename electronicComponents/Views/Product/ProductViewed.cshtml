@@ -1,0 +1,88 @@
+﻿@model PagedList.IPagedList<electronicComponents.DAL.Product>
+@using PagedList.Mvc;
+
+@{ ViewBag.Title = "ProductViewed";
+    Layout = "~/Views/Shared/_CheckoutLayout.cshtml"; 
+  }
+
+@if (TempData["DeleteHistoryView"] != null)
+{
+    <script>
+    swal({
+        title: "Thông báo",
+        text: "Xóa lịch sử xem hàng thành công!",
+        icon: "success",
+        timer: 1500
+    });
+</script> 
+    @(TempData["DeleteHistoryView"] = null)
+}
+
+
+@if (Model.Count() > 0)
+{
+    if (Model != null)
+    {<!-- banner -->
+       <div class="banner_inner">
+           <div class="services-breadcrumb">
+               <div class="inner_breadcrumb">
+
+                   <ul class="short">
+                       <li>
+                           <a href="index.html">Trang chủ</a>
+                           <i>|</i>
+                       </li>
+                       <li>Lịch sử xem</li>
+                   </ul>
+               </div>
+           </div>
+
+       </div> <!--//banner -->
+     <section class="banner-bottom-wthreelayouts py-lg-5 py-3">
+         <div class="container">
+             <div class="inner-sec-shop px-lg-4 px-3">
+                 <h3 class="tittle-w3layouts my-lg-4 mt-3">Đã xem</h3>
+                 <a class="btn btn-danger" style="color:white">
+                     @Html.ActionLink("Xóa Lịch Sử", "DeleteHistoryView", "Product")
+                 </a>
+                 <div class="checkout-right">
+                     <table class="timetable_sub">
+                         <thead>
+                             <tr>
+                                 <th>Tên sản phẩm</th>
+                                 <th>Hình ảnh</th>
+                                 <th>Giá</th>
+                                 <th>Số lượng</th>
+                             </tr>
+                         </thead>
+                         <tbody>
+                             @{ int counter = 1; }
+
+                             @foreach (var item in Model)
+                             {
+
+                             <tr class="rem1">
+                                 <td class="invert">@item.name</td>
+                                 <td class="invert-image">
+                                     <a href="single.html">
+                                         <img src="@Url.Content("~/Content/images/" + item.image1)" alt=" " class="img-responsive">
+                                     </a>
+                                 </td>
+                                 <td class="invert">
+                                     @item.quantity
+                                 </td>
+                                 <td class="invert">@item.price.Value.ToString("#,##")</td>
+                             </tr>
+                             @(counter++)}
+                         </tbody>
+                     </table>
+
+                 </div>
+
+
+             </div>
+
+         </div>
+    </section>
+    }
+}

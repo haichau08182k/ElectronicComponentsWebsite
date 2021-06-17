@@ -26,6 +26,7 @@
         evt.currentTarget.className += " active";
     }
     $(document).ready(function () {
+        $('.tablinks').click();
         $('.btnCancel').off('click').on('click', function () {
             var id = $(this).attr("data-id");
             $.ajax({

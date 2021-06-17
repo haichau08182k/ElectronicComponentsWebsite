@@ -1,0 +1,349 @@
+﻿@using electronicComponents.DAL;
+@model Employee
+@{ ViewBag.Title = "InfoEmloyee";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml"; }
+
+@if (TempData["ResetPassword"] != null)
+{
+<script>
+    swal({
+        title: "Thông báo",
+        text: "Đổi mật khẩu thành công!",
+        icon: "success",
+        timer: 3000
+    });</script>
+@(TempData["ResetPassword"] = null)}
+@if (TempData["edit"] != null)
+{
+<script>
+    swal({
+        title: "Thông báo",
+        text: "Cập nhật thông tin thành công!",
+        icon: "success",
+        timer: 1500
+    });</script>
+@(TempData["edit"] = null)}
+<script>
+    $(document).ready(function () {
+        $('.btnEdit').off('click').on('click', function () {
+            var id = $(this).val();
+            $('#modalUpdate').modal('show');
+            $.ajax({
+                url: '/Admin/Edit',
+                data: {
+                    id: id
+                },
+                type: 'GET',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        $('#IDEdit').val(response.ID);
+                        $('#FullNameEdit').val(response.FullName);
+                        $('#AddressEdit').val(response.Address);
+                        $('#EmailEdit').val(response.Email);
+                        $('#PhoneNumberEdit').val(response.PhoneNumber);
+                        $('#TextImageEdit').val(response.Image);
+                        $('#img').attr('src', "/Content/images/" + response.Image);
+                    }
+                    else {
+                        bootbox.alert(response.message);
+                    }
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        });
+
+        function checkNameAdd() {
+            var name = $("#FullNameAdd").val();
+            var status = false;
+            $.ajax({
+                url: '/EmloyeeManage/CheckName',
+                data: {
+                    name: name
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        status = true;
+                    }
+                },
+                async: false
+            });
+            if (status) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        function CheckPhoneNumberAdd() {
+            var phone = $("#PhoneNumberAdd").val();
+            var status = false;
+            $.ajax({
+                url: '/EmloyeeManage/CheckPhoneNumber',
+                data: {
+                    phoneNumber: phone
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        status = true;
+                    }
+                },
+                async: false
+            });
+            if (status) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        function CheckEmailAdd() {
+            var email = $("#EmailAdd").val();
+            var status = false;
+            $.ajax({
+                url: '/EmloyeeManage/CheckEmail',
+                data: {
+                    email: email
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        status = true;
+                    }
+                },
+                async: false
+            });
+            if (status) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        $(document).on('submit', '#formAdd', function (e) {
+            if (checkNameAdd() == false) {
+                swal({
+                    title: "Thông báo",
+                    text: "Tên nhà cung cấp đã tồn tại!",
+                    icon: "error"
+                });
+                return false;
+            }
+            if (CheckPhoneNumberAdd() == false) {
+                swal({
+                    title: "Thông báo",
+                    text: "Số điện thoại đã tồn tại!",
+                    icon: "error"
+                });
+                return false;
+            }
+            if (CheckEmailAdd() == false) {
+                swal({
+                    title: "Thông báo",
+                    text: "Email đã tồn tại!",
+                    icon: "error"
+                });
+                return false;
+            }
+        });
+        function checkNameEdit() {
+            var name = $("#FullNameEdit").val();
+            var id = $("#IDEdit").val();
+            var status = false;
+            $.ajax({
+                url: '/EmloyeeManage/CheckName',
+                data: {
+                    name: name,
+                    id: id
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        status = true;
+                    }
+                },
+                async: false
+            });
+            if (status) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        function CheckPhoneNumberEdit() {
+            var phone = $("#PhoneNumberEdit").val();
+            var id = $("#IDEdit").val();
+            var status = false;
+            $.ajax({
+                url: '/EmloyeeManage/CheckPhoneNumber',
+                data: {
+                    phoneNumber: phone,
+                    id: id
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        status = true;
+                    }
+                },
+                async: false
+            });
+            if (status) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        function CheckEmailEdit() {
+            var email = $("#EmailEdit").val();
+            var id = $("#IDEdit").val();
+            var status = false;
+            $.ajax({
+                url: '/EmloyeeManage/CheckEmail',
+                data: {
+                    email: email,
+                    id
+                },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        status = true;
+                    }
+                },
+                async: false
+            });
+            if (status) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        $(document).on('submit', '#formEdit', function (e) {
+            if (checkNameEdit() == false) {
+                swal({
+                    title: "Thông báo",
+                    text: "Tên nhà cung cấp đã tồn tại!",
+                    icon: "error"
+                });
+                return false;
+            }
+            if (CheckPhoneNumberEdit() == false) {
+                swal({
+                    title: "Thông báo",
+                    text: "Số điện thoại đã tồn tại!",
+                    icon: "error"
+                });
+                return false;
+            }
+            if (CheckEmailEdit() == false) {
+                swal({
+                    title: "Thông báo",
+                    text: "Email đã tồn tại!",
+                    icon: "error"
+                });
+                return false;
+            }
+        });
+    });</script>
+
+<div class="main-content">
+
+    <!-- content -->
+    <div class="container-fluid content-top-gap">
+
+        <!-- breadcrumbs -->
+     
+        <!-- //breadcrumbs -->
+        <!-- pricing -->
+        <section class="pricing">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="@Url.Action("Index","Admin")">Trang chủ</a> <i class="fa fa-angle-right"></i></li>
+                <li class="breadcrumb-item"><a href="@Url.Action("","")">Thông tin tài khoản</a> <i class="fa fa-angle-right"></i></li>
+            </ol>
+            <div class="card mb-3">
+                <div class="p-3 card card_border">
+                    <div class="pl-0 pt-0 card-header chart-grid__header">
+
+                        <h2>Thông tin tài khoản</h2>
+                        <div class="form-group">
+                            <label>Hình ảnh:</label><br />
+                            <img src="@Url.Content("~/Content/images/" + Model.imagee)" style="height:200px;width:180px">
+                        </div>
+                        <div class="form-group">
+                            <label>Họ tên:</label> @Model.fullName
+                        </div>
+                        <div class="form-group">
+                            <label>Địa chỉ:</label> @Model.addresss
+                        </div>
+                        <div class="form-group">
+                            <label>Số điện thoại:</label> @Model.phoneNumber
+                        </div>
+                        <div class="form-group">
+                            <label>Email:</label> @Model.email
+                        </div>
+                        <button class="btn btn-primary btnEdit">Chỉnh sửa</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modalUpdate" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            
+                            <h4 class="modal-title">Chỉnh sửa</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            @using (Html.BeginForm("Edit", "Admin", FormMethod.Post, new { @enctype = "multipart/form-data",id= "formEdit" }))
+                            {
+                                     <input type="text" name="ID" id="IDEdit" hidden />
+                                     <div class="form-group">
+                                         <label for="Name">Tên nhân viên:</label>
+                                         <input type="text" class="form-control" name="FullName" id="FullNameEdit" readonly>
+                                         <input type="hidden" id="hidID" value="0" />
+                                     </div>
+                                     <div class="form-group">
+                                         <label>Địa chỉ:</label>
+                                         <input type="text" class="form-control" name="Addresss" id="AddressEdit" required maxlength="200"/>
+                                     </div>
+                                     <div class="form-group">
+                                         <label for="Name">Email:</label>
+                                         <input type="text" class="form-control" name="Email" id="EmailEdit" required pattern="[a-z0-9._%+-]+&#64;[a-z0-9.-]+\.[a-z]{2,}$" title="Nhập vào đúng đinh dạng mail của bạn (vd: abc@gmail.com)">
+                                     </div>
+                                     <div class="form-group">
+                                         <label>Số điện thoại:</label>
+                                         <input type="text" class="form-control" name="PhoneNumber" id="PhoneNumberEdit" pattern=".{10,12}" required title="Số điện thoại phải từ 10 đến 12 số!">
+                                     </div>
+
+                                     <div class="form-group">
+                                         <label>Hình ảnh:</label>
+                                         <input type="text" class="form-control" name="Image" id="TextImageEdit" readonly>
+                                         <input type="file" name="ImageUpload" id="ImageEdit" accept="image/png, image/gif, image/jpeg" />
+                                     </div>
+                                     <div class="modal-footer">
+                                         <button type="submit" class="btn btn-primary" id="btnSave">Lưu</button>
+                                         <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                                     </div>
+                           }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+</div>
+</div>

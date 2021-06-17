@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "StatisticManage";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<script src="~/Scripts/bootbox.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#btnSupplier').off('click').on('click', function () {
+            $('#modalSupplier').modal('show');
+        });
+    });
+    $(window).load(function () {
+        $('#modalSupplier').modal('show');
+    });</script>
+
+<div class="main-content">
+    <div class="container-fluid content-top-gap">
+
+        <div class="agile-grids">
+            <div class="agile-tables">
+                <div class="w3l-table-info">
+                    <h2>Thống Kê</h2>
+                    <input type="button" class="btn btn-success" value="Chọn Hình Thức Thống Kê" id="btnSupplier" />
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modalSupplier" role="dialog">
+            <div class="modal-dialog">
+
+                <!--Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <h4 class="modal-title">Chọn Hình Thức Thống Kê</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        @using (Html.BeginForm("ImportProductBySupplierID", "Admin", FormMethod.Get))
+                        {
+                            <div class="form-group">
+                                <label>Hình Thức Thống Kê:</label>
+                                <br />
+                                <a href="@Url.Action("StatisticStocking","Admin")" class="btn btn-style border-btn">Tồn kho</a><br />
+                                <a href="@Url.Action("StatisticMember","Admin")" class="btn btn-style border-btn">Khách hàng thành viên tiềm năng</a><br />
+                                <a href="@Url.Action("StatisticSupplier","Admin")" class="btn btn-style border-btn">Nhà cung cấp tốt nhất</a><br />
+                                <a href="@Url.Action("StatisticProductSold","Admin",new { from=DateTime.Now,to=DateTime.Now})" class="btn btn-style border-btn">Sản phẩm bán chạy</a><br />
+                                <a href="@Url.Action("StatisticOrder","Admin",new { from=DateTime.Now,to=DateTime.Now})" class="btn btn-style border-btn">Đơn đặt hàng</a><br />
+                                <a href="@Url.Action("StatisticAccessTime","Admin",new { from=DateTime.Now,to=DateTime.Now})" class="btn btn-style border-btn">Lượt truy cập</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

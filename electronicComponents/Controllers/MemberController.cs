@@ -39,6 +39,12 @@ namespace electronicComponents.Controllers
             _ratingService = ratingService;
         }
 
+
+        public ActionResult Index()
+        {
+            Member member = Session["Member"] as Member;
+            return View(member);
+        }
         [HttpGet]
         public ActionResult EditName(int id)
         {
@@ -270,6 +276,29 @@ namespace electronicComponents.Controllers
                 status = true
             }, JsonRequestBehavior.AllowGet);
         }
-      
+
+        [HttpGet]
+        public ActionResult ResetPassword()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ResetPassword(string CurrentPassword, string NewPassword)
+        {
+            Member member = Session["Member"] as Member;
+            Member memberCheck = _memberService.CheckLogin(member.email, CurrentPassword);
+            if (memberCheck != null)
+            {
+                _memberService.ResetPassword(memberCheck.id, NewPassword);
+                TempData["ResetPassword"] = "Success";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ViewBag.Message = "Mật khẩu hiện tại không đúng!";
+            }
+            return RedirectToAction("Index");
+        }
+
     }
 }

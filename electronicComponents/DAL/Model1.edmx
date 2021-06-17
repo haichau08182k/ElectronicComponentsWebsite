@@ -134,6 +134,7 @@
           <Property Name="capcha" Type="varchar(max)" />
           <Property Name="amountPurchased" Type="decimal" Precision="18" Scale="0" />
           <Property Name="avatar" Type="nvarchar(max)" />
+          <Property Name="isDeleted" Type="bit" />
         </EntityType>
         <EntityType Name="MemberCategory">
           <Key>
@@ -1111,6 +1112,7 @@
           <Property Name="capcha" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="amountPurchased" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="isDeleted" Type="Boolean" />
           <NavigationProperty Name="Carts" Relationship="electronicComponents1Model.fk_c_idm" FromRole="Member" ToRole="Cart" />
           <NavigationProperty Name="Comments" Relationship="electronicComponents1Model.fk_cm_idm" FromRole="Member" ToRole="Comment" />
           <NavigationProperty Name="MemberCategory" Relationship="electronicComponents1Model.fk_mb_id" FromRole="Member" ToRole="MemberCategory" />
@@ -1806,6 +1808,7 @@
           <EntitySetMapping Name="Members">
             <EntityTypeMapping TypeName="electronicComponents1Model.Member">
               <MappingFragment StoreEntitySet="Member">
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
                 <ScalarProperty Name="avatar" ColumnName="avatar" />
                 <ScalarProperty Name="amountPurchased" ColumnName="amountPurchased" />
                 <ScalarProperty Name="capcha" ColumnName="capcha" />

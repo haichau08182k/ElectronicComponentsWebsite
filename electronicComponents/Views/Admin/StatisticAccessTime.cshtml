@@ -1,0 +1,68 @@
+﻿@model IEnumerable<electronicComponents.DAL.AccessTimeCount>
+
+@{
+    ViewBag.Title = "StatisticAccessTime";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="~/Scripts/bootbox.js"></script>
+
+
+<div class="main-content">
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="@Url.Action("Index","Admin")">Trang chủ</a> <i class="fa fa-angle-right"></i></li>
+        <li class="breadcrumb-item"><a href="@Url.Action("StatisticManage","Admin")">Chọn hình thức thống kê</a> <i class="fa fa-angle-right"></i></li>
+        <li class="breadcrumb-item"><a href="@Url.Action("List")">Thống kê lượt truy cập</a> <i class="fa fa-angle-right"></i></li>
+    </ol>
+
+    <section class="pricing">
+        <div class="card mb-3">
+            <div class="p-3 card card_border">
+                <div class="pl-0 pt-0 card-header chart-grid__header">
+                    <h2>Danh sách lượt truy cập</h2>
+                    <form action="/Admin/StatisticAccessTime" method="get">
+                        Từ: <input type="date" name="from" value="@ViewBag.from.ToString("yyyy-MM-dd")" />
+                        Đến: <input type="date" name="to" value="@ViewBag.to.ToString("yyyy-MM-dd")" />
+                        <input type="submit" value="Xem" class="btn btn-info" />
+                    </form>
+                    <ul class="bt-list">
+                        <li><a href="@Url.Action("DownloadExcelStatisticStatisticAccessTime","StatisticManage",new { from=ViewBag.from,to=ViewBag.to})" class="hvr-icon-up col-24" style="background-color:green" id="btnAddNew">Xuất Excel</a></li>
+                    </ul>
+                    @if (Model.Count() > 0)
+                    {
+                        <table id="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Ngày
+                                    </th>
+                                    <th>
+                                        Số lượt truy cập
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <b>@Html.DisplayFor(modelItem => item.datee)</b>
+                                        </td>
+                                        <td style="color:brown">
+                                            <b>@Html.DisplayFor(modelItem => item.acessTime.Value)</b>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table> }
+                    else
+                    {
+                        <span>Không có dữ liệu...</span>}
+                </div>
+            </div>
+        </div>
+</section>
+</div>
